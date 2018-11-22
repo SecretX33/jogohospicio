@@ -1,0 +1,180 @@
+create database projeto_jogo;
+use projeto_jogo;
+
+drop table if exists etapas cascade;
+drop table if exists save cascade;
+drop table if exists jogador cascade;
+
+
+create table etapas(
+	cod INT NOT NULL,				   #Ao trocar o local, sobe para o 100 mais próximo
+    descricao VARCHAR(5000) NOT NULL,
+	textobt1 VARCHAR(150) NOT NULL,
+    textobt2 VARCHAR(150) NOT NULL,
+	tipo_quadro INT NOT NULL,          #0 = quadro decisão / 1 = quadro avançar   
+    ref_op1 INT NOT NULL,              #ref_op1 == referência opção 1
+	ref_op2 INT NOT NULL,			   #ref_op2 == referência opção 2
+    imp_sanidade1 INT NOT NULL,        #imp == impacto nos status do jogador
+    imp_emocional1 INT NOT NULL,
+    imp_carisma1 INT NOT NULL,
+    imp_coragem1 INT NOT NULL,
+	imp_sanidade2 INT NOT NULL,
+    imp_emocional2 INT NOT NULL,
+    imp_carisma2 INT NOT NULL,
+    imp_coragem2 INT NOT NULL,
+    timer INT NOT NULL,                #timer > 0 = timer ativo / timer == -1 » timer desativado
+	ref_optimer INT NOT NULL,          #ref_optimer == entra quando o usuario nao seleciona nada durante o tempo do timer / colocar -1 quando timer == -1
+    PRIMARY KEY(cod),
+    FOREIGN KEY(ref_op1) REFERENCES etapas(cod),
+    FOREIGN KEY(ref_op2) REFERENCES etapas(cod),
+	FOREIGN KEY(ref_optimer) REFERENCES etapas(cod)
+);
+
+create table jogador(
+	cod_usuario INT NOT NULL AUTO_INCREMENT,
+	usuario VARCHAR(50) NOT NULL,      
+    senha VARCHAR(50) NOT NULL,
+    apelido VARCHAR(50) NOT NULL,
+    tempo_jogo TIME,
+    PRIMARY KEY(cod_usuario),
+    CONSTRAINT UNIQUE_jogador_usuario UNIQUE(usuario)  #Se assegura que o login escolhido seja unico para que não haja conflitos
+);
+
+create table save(
+	slot_save INT NOT NULL,
+	cod_usuario INT NOT NULL,
+	etapa_atual INT NOT NULL,   #etapa_atual == -2 indica que o save ainda não está em uso
+    #tempo_jogo TIME,            #tempo_jogo == null indica que o save ainda não está em uso
+    sanidade INT NOT NULL,
+    emocional INT NOT NULL,
+    carisma INT NOT NULL,
+    coragem INT NOT NULL,
+    escolhas VARCHAR(1000) NOT NULL,
+    PRIMARY KEY(slot_save),
+	CONSTRAINT PK_save_cod_usuario FOREIGN KEY(cod_usuario) 
+    REFERENCES jogador(cod_usuario)
+);
+
+#no max22/n por quadro
+
+SET foreign_key_checks = 0;
+
+INSERT INTO etapas VALUES
+(0,"A vida, a minha em questão, é complicada. Teve tantos altos e baixos que nem/nconsigo me recordar de momento. Recebi centenas de avisos e conselhos, de/ndiversos tipos. Me disseram que a aposentadoria seria boa. Que enfim, eu poderia/ndescansar minha alma e corpo, atormentados por balas e desejos de vingança./nEu nunca acreditei muito nessas baboseiras de que pensamentos positivos nos/ntrazem coisas boas. Se isso fosse real, de fato, eu não estaria velho, com o pulmão/nse arrastando, e escrevendo algumas de minhas histórias num caderno - Esse foi o/nmeio que encontrei de passar o tempo, até que a morte, que disseram ser um/nalívio, me abrace e me leve desse mundo./nque possuía a fama de ser “a cidade do demônio”. Ficava distante de qualquer /nmetrópole. Era onde a ralé vivia. Onde pessoas da pior espécie habitam e/nafogavam-se em seus prazeres psicóticos. Verdadeiros delinquentes./nAcho que fui enviado aquele lugar medíocre por ter um talento, se é que posso/ncada movimento de suas faces quase em câmera lenta, descobrindo, quase/nsempre, quais são suas intenções e o porquê delas./nIsso não é um poder sobrenatural ou químico. Não me recordo de ser exposto a um/nmaterial radioativo, muito menos abençoado por alguma divindade. Sempre fui/napenas um tanto... observador./nEu o descobri aos vinte e cinco anos, há trinta e oito anos atrás, num hospício/nchamado “recanto da coroa”. Estava recém formado em psiquiatria, na área/nanalítica para ser mais específico, e fui mandado para lá num breve estágio./nMe recordo bem daquele dia. 18 de maio de 1979. Uma sexta feira. Havia um/nrelógio que despertava sempre às 6:00 em ponto em meu apartamento,/nsimultaneamente há um programa de TV o qual não me recordo./n","","",
+1,1,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(1,"A casa sempre estava fedendo a cigarros baratos. Jonas fumava pelo menos quatro/nmaços por dia, além de não fazer absolutamente nada da vida. Mas curiosamente/ntinha uma disposição invejável para acordar antes do despertador e assistir aquele/ncoisa pop colorida que passava na TV./n",
+"Cumprimentar Jonas","Não Cumprimentar Jonas",
+0,2,3,0,0,1,0,0,0,-1,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(2,"- Bom dia, Jonas. – eu disse naquela manhã, revirando os olhos pra aquela idiotice./n- Bom dia, cara. – ele respondeu após uma tragada naquilo./nConfesso que era como morar sozinho. Jonas era um cara legal, mas sua mente/ninfelizmente era pequena. Fora as festas para onde íamos de vez em quando, não/nvia outra utilidade em nossa amizade./nEstava nublado. Eu tinha de ir até o faculdade e aguardar pelo ônibus branco./nEstava muito encardido, e levaria os recém psiquiatras até um hospício no final de/numa estrada de barro que ficava na beira da estrada./nEu sempre observei as pessoas. Era um costume de criança. Ler lábios, identificar/nvariações na pupila, desvios de olhar, e mudanças sutis no comportamento sempre/nforam algo extraordinário para mim./nMe sentei nos assentos do centro. Nem muito atrás, nem muito à frente. Onde eu/nteria visibilidade suficiente para observar as pessoas que iam comigo. Lá estava/nClotilde, na sétima fileira da esquerda, no assento da janela. Uma moça de cabelos/nnegros e curtos mascando um chiclete. Acho incrível o fato de que naquele primeiro/nmomento, ela não fez absoluta diferença, mas faria, e de uma forma muito/npeculiar./n",
+"","",
+1,4,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(3,"Confesso que era como morar sozinho. Jonas era um cara legal, mas sua mente/ninfelizmente era pequena. Fora as festas para onde íamos de vez em quando, não/nvia outra utilidade em nossa amizade./nEstava nublado. Eu tinha de ir até o faculdade e aguardar pelo ônibus branco./nEstava muito encardido, e levaria os recém psiquiatras até um hospício no final de/numa estrada de barro que ficava na beira da estrada./nEu sempre observei as pessoas. Era um costume de criança. Ler lábios, identificar/nvariações na pupila, desvios de olhar, e mudanças sutis no comportamento sempre/nforam algo extraordinário para mim./nMe sentei nos assentos do centro. Nem muito atrás, nem muito à frente. Onde eu/nteria visibilidade suficiente para observar as pessoas que iam comigo. Lá estava/nClotilde, na sétima fileira da esquerda, no assento da janela. Uma moça de cabelos/nnegros e curtos mascando um chiclete. Acho incrível o fato de que naquele primeiro/nmomento, ela não fez absoluta diferença, mas faria, e de uma forma muito/npeculiar./n",
+"","",
+1,4,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(4,"A chegada foi assustadora, de certo modo. Era um lugar bem cliché, valorizado pelo/ndia cinzento que fazia. Após aquela rua de barro, com uma única casa que havia/nficado para trás fazia uns dez minutos, estávamos num terreno cercado de árvores,/ne uma única trilha./nO hospital psiquiátrico parecia estar vazio. O motorista já estava manobrando o/nônibus e nos deixando para trás. Seriam três dias naquele lugar aparentemente/nabandonado, sem nada em volta. Cenas típicas de um filme de terror./nUm homem esquisito, de jaleco sujo e óculos empoeirados apareceu. Me lembro de/nsua prancheta, e na sua demora em nos dirigir a palavra. No grupo, existiam/nassustados de várias formas: Os que limitam seus movimentos. Os que são/ntomados pela ansiedade. E o pior, os que fingem não ter medo. Geralmente/nprejudicam quem está próximo. O fato é que se ali existisse um maníaco ou similar,/ntodos morreriam facilmente./n",
+"","",
+1,5,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(5,"- Bem vindos ao abrigo “Recanto da coroa”. – disse ele./n“Só pode ser piada”, eu pensei. Aquele lugar? Abrigo? Aquilo era no mínimo um/nhospício de grau cinco, com aquelas pessoas que cortam os parentes como peças/nde carne e colocam pros cachorros comerem. Ele só queria manter os recém/nformados calmos, mas com a estratégia errada, é claro./nO tour não foi nada agradável. Nem parecia ter funcionários. Me recordo de ter/nvisto apenas um homem podando um pequeno jardim, de resto, só o homem do/nóculos de poeira./n- Perdão. – disse uma garota. – Só você trabalha aqui?/n- Não. – ele respondeu irritado. Já haviam feito aquela pergunta antes. A sua/npostura educada forçada e o tom cortante em direção a garota, indicavam uma/ncerta intolerância a figura colegial. Questionamentos sobre as instalações o/nirritavam, e como excursões acadêmicas provavelmente o visitavam com/nfrequência, talvez um outro estudante a tivesse feito antes./n- Nós funcionamos por conta própria. Com poucos patrocínios. Mais alguma pergunta? – ele não queria/nmais perguntas./n",
+"","",
+1,6,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(6,"Você tem a oportunidade de quebrar o clima tenso que está no ar com um comentário descontraido./n",
+"Fazer a piada","Não fazer a piada",
+0,7,8,1,1,1,1,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(7,"- Deve ser ótimo trabalhar aqui sozinho e relaxado levando seu próprio tempo, não é mesmo?/nvocê falha miseravelmente em sua tentativa e todos te ignoram/nNão demoraram a nos mostrar os dormitórios, que mais pareciam quartos/nreaproveitados de antigos pacientes – haviam beliches, um criado mudo, e a/ncompanhia de alguns ratos que se esconderam ao ver nossa chegada./n- Vocês ficarão aqui até amanhã de manhã. – disse o óculos de poeira./n- Mas ainda é cedo. – retrucou um dos que dormiram lá./n- Como pode ver, senhor. Não há muito que fazer aqui. - ele fechou a porta antes que alguém pudesse responder./nNaquela madrugada, foi inevitável que as conversas curiosas sobre o lugar/nsurgissem. Eu havia me deitado próximo a um basculante no alto, e como todos ali,/nnão dormiria naquele horário./n- Como acham que vão ser os testes amanhã? – disse um cara que deveria estar/ndormindo, assim como todos nós./n- Vão ser “testes”? – outro retrucou./n- Não vão? – disse mais um outro./n- Acho que querem ver os nossos temperamentos. – finalmente eu disse./n- Por que acha isso, Teobaldo? – o cara que iniciou a conversa me questionou./n- Qualé! Olha a sua volta. Olhe onde estamos. Deve ter gente perigosa aqui./nTodos se entreolharam, apreensivos./n- Aposto que todos aqui marcaram a opção de psiquiatria forense. – continuei./nTodos concordaram num gesto de cabeça./n- Foi o que pensei./n",
+"","",
+1,9,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(8,"Não demoraram a nos mostrar os dormitórios, que mais pareciam quartos/nreaproveitados de antigos pacientes – haviam beliches, um criado mudo, e a/ncompanhia de alguns ratos que se esconderam ao ver nossa chegada./n- Vocês ficarão aqui até amanhã de manhã. – disse o óculos de poeira./n- Mas ainda é cedo. – retrucou um dos que dormiram lá./n- Como pode ver, senhor. Não há muito que fazer aqui. - ele fechou a porta antes que alguém pudesse responder./nNaquela madrugada, foi inevitável que as conversas curiosas sobre o lugar/nsurgissem. Eu havia me deitado próximo a um basculante no alto, e como todos ali,/nnão dormiria naquele horário./n- Como acham que vão ser os testes amanhã? – disse um cara que deveria estar/ndormindo, assim como todos nós./n- Vão ser “testes”? – outro retrucou./n- Não vão? – disse mais um outro./n- Acho que querem ver os nossos temperamentos. – finalmente eu disse./n- Por que acha isso, Teobaldo? – o cara que iniciou a conversa me questionou./n- Qualé! Olha a sua volta. Olhe onde estamos. Deve ter gente perigosa aqui./nTodos se entreolharam, apreensivos./n- Aposto que todos aqui marcaram a opção de psiquiatria forense. – continuei./nTodos concordaram num gesto de cabeça./n- Foi o que pensei.",
+"","",
+1,9,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(9,"E como eu imaginava: Haviam pessoas perigosas. Após um breve café da manhã,/nduplas foram formadas. Foi quando eu fiquei próximo de Clotilde pela primeira vez,/nonde nossa parceria deu indícios de que poderia acontecer./n- Estagiários, - disse o homem do óculos de poeira. – vocês receberão placas com a/nnumeração de suas respectivas salas. E lembrem-se, não se separem de seus/nparceiros./nAté aquele momento, Clotilde não havia sequer me cumprimentado, e eu, estava/nlonge disso também. Gosto de pensar que estávamos focados no que iríamos fazer,/njá que um verdadeiro suspense estava sendo montado./nNão nos deram jalecos nem nada, só nos conduziram para um lugar que eu tenho/nplena certeza de que faz parte dos pesadelos de muitos, então jovens, que/nestariam ali. Era um corredor. Tinha grades, iguais aquelas redes que protegem/nquadras esportivas. Estavam no chão, nas paredes e no teto, como uma tubulação,/nque nos separava das várias portas medonhas por quais passávamos./nHaviam pessoas nos olhando. Eu sabia. Pessoas perversas, daquelas que a/nimaginação explode em como torturar e fazer alguém desejar a morte rápida como/nmelhor presente. Talvez estupradores, serial Killers, pedófilos e até canibais. Minha/ncerteza era que a atmosfera era pesada, e que ali, muitas mentes perturbadas/nestavam em cárcere./n",
+"","",
+1,10,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(10,"- Sala 404. – disse o homem do óculos de poeira./nEra nossa numeração. Eu queria pergunta-la como se sentia, mas achei melhor que/nela perguntasse a mim. Eu estava apavorado, mas curioso. Queria muito trocar/npalavras com uma pessoa doente. Saber o que faz, porque faz. O que sente, o que/npensa./n- Preparados? – ele perguntou./nFoi a primeira vez que Clotilde olhou para mim por mais que três segundos. Todos/nolhavam para nós, afinal, seríamos os primeiros a entrar em uma, das que eu gosto/nde chamar, celas./nFizemos que sim, e a porta 403 foi aberta.",
+"","",
+1,10,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(11,"Lá vimos a figura. Não era amedrontadora. E foi justamente por isso que fiquei/napavorado. Com certeza era um serial killer da pior espécie, daqueles que são/ncapazes de manter uma amizade durante anos, e talvez cortar algumas gargantas/npor esporte./nVestia duas camisas de força, e suas pernas estavam presas por algemas/ndescartáveis. Havia uma pequena ficha no chão, com seu nome e atos: “Robert/nSósia, serial killer. Foi responsável pelo desaparecimento de dezoito mulheres em/n- Vamos nos aproximar dele? – Clotilde perguntou.",
+"Sim","Não",
+0,12,13,0,0,0,0,-1,-1,-1,-1,-1,-1);
+
+INSERT INTO etapas VALUES
+(12,"- Acho que sim. De qualquer forma, ele está preso./nEle nos olhava diretamente, sem piscar. Sabia que tínhamos medo. Que de certa/nforma, o respeitamos. Clotilde e eu respiramos com mais intensidade, parados,/ntomando coragem para iniciarmos uma possível conversa./n- Robert? – Clotilde o chamou./n- Eu. – ele respondeu./nO falar era lento, muito lento. Uma voz bufante, que parecia se arrastar pelo ar ao/nfinal de cada sílaba. Até o momento, seu rosto ainda era carismático. Fora as/nroupas, nenhum sinal de que fosse perigoso. Foi quando eu o desafiei:/n- Quantas pessoas matou?/n- Mais do que possa imaginar, Doutor./n/n/n/n/n",
+"","",
+1,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1);
+
+INSERT INTO etapas VALUES
+(13,"- Acho que não estou preparado. De qualquer forma, ele está preso, vamos./nEle nos olhava diretamente, sem piscar. Sabia que tínhamos medo. Que de certa/nforma, o respeitamos. Clotilde e eu respiramos com mais intensidade, parados,/ntomando coragem para iniciarmos uma possível conversa./n- Robert? – Clotilde o chamou./n- Eu. – ele respondeu./nO falar era lento, muito lento. Uma voz bufante, que parecia se arrastar pelo ar ao/nfinal de cada sílaba. Até o momento, seu rosto ainda era carismático. Fora as/nroupas, nenhum sinal de que fosse perigoso. Foi quando eu o desafiei:/n- Quantas pessoas matou?/n- Mais do que possa imaginar, Doutor./n/n/n/n/n",
+"","",
+1,14,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(14,"Mentiroso! Só queria me assustar. Suas vítimas provavelmente eram as da ficha. E/na julgar os movimentos sutis do canto de sua boca em direção a Clotilde, eu estava/ncerto de que o foco dele era minha futura parceira. O safado queria me tirar da/njogada./n- O que fez com suas vítimas? – Clotilde disse/n- Porque não se aproximam? – Nós conseguimos ouvir o estalo de sua boca ao/nabrir. Era medonho. – Assim, posso lhes contar um de meus grandes feitos./nClotilde queria se aproximar. Eu também queria. Robert queria também. Talvez/nquisesse sentir o cheiro do shampoo de minha parceira, ou quisesse observa-la/nmais de perto. Eu tinha certeza de que sua mente maquinava coisas diabólicas que/npoderiam ser feitas se não fossem aquelas camisas./n",
+"","",
+1,14,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(15,"Mentiroso! Só queria me assustar. Suas vítimas provavelmente eram as da ficha. E/na julgar os movimentos sutis do canto de sua boca em direção a Clotilde, eu estava/ncerto de que o foco dele era minha futura parceira. O safado queria me tirar da/njogada./n- O que fez com suas vítimas? – Clotilde disse/n- Porque não se aproximam? – Nós conseguimos ouvir o estalo de sua boca ao/nabrir. Era medonho. – Assim, posso lhes contar um de meus grandes feitos./nClotilde queria se aproximar. Eu também queria. Robert queria também. Talvez/nquisesse sentir o cheiro do shampoo de minha parceira, ou quisesse observa-la/nmais de perto. Eu tinha certeza de que sua mente maquinava coisas diabólicas que/npoderiam ser feitas se não fossem aquelas camisas./n",
+"","",
+1,16,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(16,"Mesmo com toda aquela tensão, Clotilde e eu nos aproximamos, e vimos aquele par/nde olhos serenos. Aquele desgraçado conseguiria fazer alguém confiar em sua/npessoa num piscar de olhos, eu imaginava./n- Nos conte! – Clotilde mostrou-se curiosa. Talvez como eu me sentia/n- Minha última mulher, – olha como o porco falava. “Minha mulher”. – trabalhava/naqui./n- Matou alguém daqui? – eu perguntei abismado./n- Sim. – ele respondeu lentamente. Havia percebido/n- Então quer dizer que você nos mataria. – insisti./n- Você não faz meu tipo. Mas ela – referindo-se a Clotilde. – É magnifica. Eu adoraria/narrastar seu corpo sem vida até o lago./nNaquele momento, sua verdadeira face se mostrou. Aquele desenho simpático/ndesapareceu num largo sorriso de canto. Seus olhos arregalaram-se de uma forma/nmacabra. Era como se Clotilde houvesse se transformado em sua obsessão.",
+"","",
+1,17,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(17,"- Como fez? – ela perguntou./n- Ora! Eu me soltei no meio da noite, atravessei a janela, e caminhei pelos/ncorredores desse lugar imundo. Então a vi. Margareth. Pobrezinha, andando no/nmeio da noite, sendo a sentinela. Tcs tcs tcs. Foi uma das melhores sensações que/neu já pude provar./n- O que você fez? – Clotilde se via como uma vítima./n- Eu cheguei por detrás. A abracei primeiro. Não queria perder tempo tomando/ncuidado para que não gritasse, então cortei sua língua. Depois, a carreguei até o/nlago, onde joguei seu corpo sem vida. – ele riu. – Foi lindo! Apaixonado!",
+"","",
+1,18,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(18,"Clotilde se calou. Estava em choque/n- Você vai ser a próxima. É tão linda. Sei que me quer. – ele baixou a cabeça logo/ndepois./n- Seu doente! – ela disse. – Doente! – berrou e saiu desesperadamente da sala./n",
+"Ir atrás de Clotilde","Continuar na sala",
+0,19,20,0,1,0,2,-5,-5,0,-5,20,20);
+
+INSERT INTO etapas VALUES
+(19,"Por alguns segundos eu a amparei. Ela estava fraca. Uma vez um pastor me disse/nsobre o poder da palavra, e eu acabara de presenciar o que elas podem fazer. Não/ntive coragem de olhar para o monstro diante de nós, só dei as costas e ajudei Clotilde/nchegar até a porta./n- Você está bem? – perguntei./n- Vou ficar. O desgraçado conseguiu me provocar./n- Eles são bons nisso./nO inspetor do corredor veio em nossa direção, com passadas apertadas, e eu pude/njurar que era por preocupação com as pessoas frente a porta número 404. Ele deu/nduas breves olhadas em direção ao paciente. Duas olhadas? Estava se/ncomunicando. Eu tive certeza.",
+"","",
+1,21,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(20,"Por alguns segundos eu fiquei parado na sala, sem reação, eu estava fraco. Uma vez um pastor me disse/nsobre o poder da palavra, e eu acabei de presenciar o que elas podem fazer. Não/ntive coragem de olhar para o monstro diante de nós, só dei as costas e sai da sala./nO inspetor do corredor veio em minha direção, com passadas apertadas, e eu pude/njurar que era por preocupação com as pessoas frente a porta número 404. Ele deu/nduas breves olhadas em direção ao paciente. Duas olhadas? Estava se/ncomunicando. Eu tive certeza.",
+"","",
+1,22,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(21,"- O que houve? – ele perguntou./n- Ele disse umas coisas bem pesadas pra nós. – respondi./n- Contou sobre a história dele aqui?/n- Sim. – Clotilde respondeu./n- O princípio de incêndio foi tenso./n- Ele não disse nada sobre incêndio. – eu disse./nO inspetor não respondeu e seguiu seu caminho./n",
+"","",
+1,-1,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+INSERT INTO etapas VALUES
+(22,"- O que houve? – ele perguntou./n- Ele disse umas coisas bem pesadas pra nós. – respondi./n- Contou sobre a história dele aqui?/n- Sim. – Respondi novamente./n- O princípio de incêndio foi tenso./n- Ele não disse nada sobre incêndio. – eu disse./nO inspetor não respondeu e seguiu seu caminho./n",
+"","",
+1,-1,-1,0,0,0,0,0,0,0,0,-1,-1);
+
+SET foreign_key_checks = 1;
+
+select * from etapas;
+select * from jogador;
+select * from information_schema.table_constraints where constraint_schema = 'projeto_jogo'
