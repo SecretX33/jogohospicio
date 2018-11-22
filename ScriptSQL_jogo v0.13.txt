@@ -1,10 +1,10 @@
 create database projeto_jogo;
 use projeto_jogo;
 
+
 drop table if exists etapas cascade;
 drop table if exists save cascade;
 drop table if exists jogador cascade;
-
 
 create table etapas(
 	cod INT NOT NULL,				   #Ao trocar o local, sobe para o 100 mais próximo
@@ -44,7 +44,7 @@ create table save(
 	slot_save INT NOT NULL,
 	cod_usuario INT NOT NULL,
 	etapa_atual INT NOT NULL,   #etapa_atual == -2 indica que o save ainda não está em uso
-    #tempo_jogo TIME,            #tempo_jogo == null indica que o save ainda não está em uso
+    tempo_jogo TIME DEFAULT "12:34:56",           #tempo_jogo == null indica que o save ainda não está em uso
     sanidade INT NOT NULL,
     emocional INT NOT NULL,
     carisma INT NOT NULL,
