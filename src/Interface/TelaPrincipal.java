@@ -34,7 +34,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Stats = new javax.swing.JPanel();
+        status = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         barraEmocional = new javax.swing.JProgressBar();
         barraSanidade = new javax.swing.JProgressBar();
@@ -49,11 +49,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         percEmocional = new javax.swing.JLabel();
         percCarisma = new javax.swing.JLabel();
         percCoragem = new javax.swing.JLabel();
-        Decisao = new javax.swing.JPanel();
+        alternar = new javax.swing.JPanel();
+        decisao = new javax.swing.JPanel();
         botaoOpcao1 = new javax.swing.JButton();
         botaoOpcao2 = new javax.swing.JButton();
         areaTexto = new javax.swing.JFormattedTextField();
-        Avancar = new javax.swing.JPanel();
+        avancar = new javax.swing.JPanel();
         botaoAvancar = new javax.swing.JButton();
         areaTexto1 = new javax.swing.JFormattedTextField();
 
@@ -92,31 +93,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         percCoragem.setText("%");
 
-        javax.swing.GroupLayout StatsLayout = new javax.swing.GroupLayout(Stats);
-        Stats.setLayout(StatsLayout);
-        StatsLayout.setHorizontalGroup(
-            StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(StatsLayout.createSequentialGroup()
+        javax.swing.GroupLayout statusLayout = new javax.swing.GroupLayout(status);
+        status.setLayout(statusLayout);
+        statusLayout.setHorizontalGroup(
+            statusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(statusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(barraSanidade, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(nomeJogador, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                     .addComponent(barraEmocional, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(barraCarisma, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(barraCoragem, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(StatsLayout.createSequentialGroup()
+                    .addGroup(statusLayout.createSequentialGroup()
                         .addComponent(labelCoragem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(percCoragem))
-                    .addGroup(StatsLayout.createSequentialGroup()
+                    .addGroup(statusLayout.createSequentialGroup()
                         .addComponent(labelSanidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(percSanidade))
-                    .addGroup(StatsLayout.createSequentialGroup()
+                    .addGroup(statusLayout.createSequentialGroup()
                         .addComponent(labelEmocional)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(percEmocional))
-                    .addGroup(StatsLayout.createSequentialGroup()
+                    .addGroup(statusLayout.createSequentialGroup()
                         .addComponent(labelCarisma)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(percCarisma)))
@@ -124,34 +125,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(473, 473, 473))
         );
-        StatsLayout.setVerticalGroup(
-            StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(StatsLayout.createSequentialGroup()
+        statusLayout.setVerticalGroup(
+            statusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jSeparator3))
-            .addGroup(StatsLayout.createSequentialGroup()
+            .addGroup(statusLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
-                .addGroup(StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(statusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelSanidade)
                     .addComponent(percSanidade))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraSanidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(statusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelEmocional)
                     .addComponent(percEmocional))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraEmocional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(statusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCarisma)
                     .addComponent(percCarisma))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraCarisma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(StatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(statusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCoragem)
                     .addComponent(percCoragem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -181,27 +182,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
         areaTexto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         areaTexto.setRequestFocusEnabled(false);
 
-        javax.swing.GroupLayout DecisaoLayout = new javax.swing.GroupLayout(Decisao);
-        Decisao.setLayout(DecisaoLayout);
-        DecisaoLayout.setHorizontalGroup(
-            DecisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DecisaoLayout.createSequentialGroup()
+        javax.swing.GroupLayout decisaoLayout = new javax.swing.GroupLayout(decisao);
+        decisao.setLayout(decisaoLayout);
+        decisaoLayout.setHorizontalGroup(
+            decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(decisaoLayout.createSequentialGroup()
                 .addContainerGap(173, Short.MAX_VALUE)
-                .addGroup(DecisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DecisaoLayout.createSequentialGroup()
+                .addGroup(decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, decisaoLayout.createSequentialGroup()
                         .addComponent(botaoOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoOpcao2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(areaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
-        DecisaoLayout.setVerticalGroup(
-            DecisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DecisaoLayout.createSequentialGroup()
+        decisaoLayout.setVerticalGroup(
+            decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, decisaoLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(areaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(DecisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -222,23 +223,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
         areaTexto1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         areaTexto1.setRequestFocusEnabled(false);
 
-        javax.swing.GroupLayout AvancarLayout = new javax.swing.GroupLayout(Avancar);
-        Avancar.setLayout(AvancarLayout);
-        AvancarLayout.setHorizontalGroup(
-            AvancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AvancarLayout.createSequentialGroup()
+        javax.swing.GroupLayout avancarLayout = new javax.swing.GroupLayout(avancar);
+        avancar.setLayout(avancarLayout);
+        avancarLayout.setHorizontalGroup(
+            avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(avancarLayout.createSequentialGroup()
                 .addContainerGap(173, Short.MAX_VALUE)
-                .addGroup(AvancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AvancarLayout.createSequentialGroup()
+                .addGroup(avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
                         .addComponent(areaTexto1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AvancarLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
                         .addComponent(botaoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(130, 130, 130))))
         );
-        AvancarLayout.setVerticalGroup(
-            AvancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AvancarLayout.createSequentialGroup()
+        avancarLayout.setVerticalGroup(
+            avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(areaTexto1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -246,19 +247,40 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        javax.swing.GroupLayout alternarLayout = new javax.swing.GroupLayout(alternar);
+        alternar.setLayout(alternarLayout);
+        alternarLayout.setHorizontalGroup(
+            alternarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(alternarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(alternarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(avancar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(decisao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        alternarLayout.setVerticalGroup(
+            alternarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(alternarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(alternarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(avancar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(decisao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Avancar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Decisao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Stats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(alternar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Avancar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Decisao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Stats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(alternar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -314,11 +336,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Avancar;
-    private javax.swing.JPanel Decisao;
-    private javax.swing.JPanel Stats;
+    private javax.swing.JPanel alternar;
     private javax.swing.JFormattedTextField areaTexto;
     private javax.swing.JFormattedTextField areaTexto1;
+    private javax.swing.JPanel avancar;
     private javax.swing.JProgressBar barraCarisma;
     private javax.swing.JProgressBar barraCoragem;
     private javax.swing.JProgressBar barraEmocional;
@@ -326,6 +347,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botaoAvancar;
     private javax.swing.JButton botaoOpcao1;
     private javax.swing.JButton botaoOpcao2;
+    private javax.swing.JPanel decisao;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel labelCarisma;
     private javax.swing.JLabel labelCoragem;
@@ -336,6 +358,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel percCoragem;
     private javax.swing.JLabel percEmocional;
     private javax.swing.JLabel percSanidade;
+    private javax.swing.JPanel status;
     // End of variables declaration//GEN-END:variables
 
     private void atualizarStatus(){

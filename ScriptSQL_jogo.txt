@@ -1,4 +1,4 @@
-create database projeto_jogo;
+create database if not exists projeto_jogo;
 use projeto_jogo;
 
 
@@ -43,17 +43,50 @@ create table jogador(
 create table save(
 	slot_save INT NOT NULL,
 	cod_usuario INT NOT NULL,
-	etapa_atual INT NOT NULL,   #etapa_atual == -2 indica que o save ainda não está em uso
-    tempo_jogo TIME DEFAULT "12:34:56",           #tempo_jogo == null indica que o save ainda não está em uso
-    sanidade INT NOT NULL,
-    emocional INT NOT NULL,
-    carisma INT NOT NULL,
-    coragem INT NOT NULL,
-    escolhas VARCHAR(1000) NOT NULL,
-    PRIMARY KEY(slot_save),
+	etapa_atual INT,   #etapa_atual == -2 indica que o save ainda não está em uso
+    tempo_jogo TIME,           #tempo_jogo == null indica que o save ainda não está em uso
+    sanidade INT,
+    emocional INT,
+    carisma INT,
+    coragem INT,
+    escolhas VARCHAR(1000),
+    #PRIMARY KEY(slot_save),
 	CONSTRAINT PK_save_cod_usuario FOREIGN KEY(cod_usuario) 
     REFERENCES jogador(cod_usuario)
 );
+
+
+#criando os 4 slots de save automaticamente após o usuario ser criado
+DROP TRIGGER IF EXISTS TRIGGER_Jogador_Insert;
+DELIMITER $$
+CREATE TRIGGER TRIGGER_Jogador_Insert AFTER INSERT
+ON jogador FOR EACH ROW
+BEGIN
+	INSERT INTO save(slot_save,cod_usuario) VALUES(1,NEW.cod_usuario);
+	INSERT INTO save(slot_save,cod_usuario) VALUES(2,NEW.cod_usuario);
+	INSERT INTO save(slot_save,cod_usuario) VALUES(3,NEW.cod_usuario);
+	INSERT INTO save(slot_save,cod_usuario) VALUES(4,NEW.cod_usuario);
+END$$
+DELIMITER ;
+
+#deletando os 4 slots de save automaticamente antes do usuario ser deletado, para manter a integridade do DB
+DROP TRIGGER IF EXISTS TRIGGER_Jogador_Delete;
+DELIMITER $$
+CREATE TRIGGER TRIGGER_Jogador_Delete BEFORE DELETE
+ON jogador FOR EACH ROW
+BEGIN
+	DELETE FROM save WHERE save.cod_usuario = OLD.cod_usuario;
+END$$
+DELIMITER ;
+
+INSERT INTO jogador(usuario, senha, apelido) VALUES("joao","gameplays","Louco");
+INSERT INTO jogador(usuario, senha, apelido) VALUES("mariana","abcde","Sara");
+INSERT INTO jogador(usuario, senha, apelido) VALUES("poliana","natural","Leão");
+select * from jogador;
+select * from save order by cod_usuario, slot_save ASC;
+
+DELETE FROM jogador WHERE jogador.cod_usuario = 1;
+
 
 #no max22/n por quadro
 
@@ -176,5 +209,4 @@ INSERT INTO etapas VALUES
 SET foreign_key_checks = 1;
 
 select * from etapas;
-select * from jogador;
 select * from information_schema.table_constraints where constraint_schema = 'projeto_jogo'
