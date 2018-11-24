@@ -202,7 +202,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
-                              <Component id="botaoRegistrar" min="-2" pref="87" max="-2" attributes="0"/>
+                              <Component id="botaoRegistrarRegistro" min="-2" pref="87" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
@@ -233,7 +233,7 @@
                           <Component id="labelApelidoRegistro" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="botaoRegistrar" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoRegistrarRegistro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -252,12 +252,13 @@
             </Component>
             <Component class="javax.swing.JTextField" name="tbUsuarioRegistro">
             </Component>
-            <Component class="javax.swing.JButton" name="botaoRegistrar">
+            <Component class="javax.swing.JButton" name="botaoRegistrarRegistro">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Registrar"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRegistrarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRegistrarRegistroActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelApelidoRegistro">
@@ -277,7 +278,7 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registro"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Padr&#xe3;o"/>
+                  <Color id="Default Cursor"/>
                 </Property>
               </Properties>
             </Component>

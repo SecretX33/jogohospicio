@@ -4,7 +4,15 @@
  * and open the template in the editor.
  */
 package Interface;
+import BancoDados.OperacoesBD;
+import Elementos.Jogador;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Set;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -14,12 +22,34 @@ import javax.swing.JPanel;
 public class TelaLogin extends javax.swing.JFrame {
     JPanel j1;
     int tipoTela;
+    KeyListener loginKL;
+    KeyListener registroKL;
     
     public TelaLogin() {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
         tipoTela=0; // 0 = login, 1 = registro
+        loginKL = new KeyAdapter() {
+        public void keyPressed(KeyEvent e) {
+            if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
+               !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+                botaoLogar.setEnabled(true);
+            else
+                botaoLogar.setEnabled(false);
+        }};
+        
+        registroKL = new KeyAdapter() {
+        public void keyPressed(KeyEvent e) {
+            if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
+               !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
+               !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
+                botaoRegistrarRegistro.setEnabled(true);
+            else
+                botaoRegistrarRegistro.setEnabled(false);
+        }};
+        
+        AddKeyListenersOnEvent();
     }
 
     /**
@@ -44,7 +74,7 @@ public class TelaLogin extends javax.swing.JFrame {
         labelUsuarioRegistro = new javax.swing.JLabel();
         labelSenhaRegistro = new javax.swing.JLabel();
         tbUsuarioRegistro = new javax.swing.JTextField();
-        botaoRegistrar = new javax.swing.JButton();
+        botaoRegistrarRegistro = new javax.swing.JButton();
         labelApelidoRegistro = new javax.swing.JLabel();
         tbApelidoRegistro = new javax.swing.JTextField();
         labelRegistro = new javax.swing.JLabel();
@@ -143,10 +173,11 @@ public class TelaLogin extends javax.swing.JFrame {
 
         labelSenhaRegistro.setText("Senha");
 
-        botaoRegistrar.setText("Registrar");
-        botaoRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        botaoRegistrarRegistro.setText("Registrar");
+        botaoRegistrarRegistro.setEnabled(false);
+        botaoRegistrarRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRegistrarActionPerformed(evt);
+                botaoRegistrarRegistroActionPerformed(evt);
             }
         });
 
@@ -180,7 +211,7 @@ public class TelaLogin extends javax.swing.JFrame {
                                     .addComponent(tbSenhaRegistro)))))
                     .addGroup(registroLayout.createSequentialGroup()
                         .addGap(98, 98, 98)
-                        .addComponent(botaoRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botaoRegistrarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(registroLayout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(labelRegistro)))
@@ -203,7 +234,7 @@ public class TelaLogin extends javax.swing.JFrame {
                     .addComponent(tbApelidoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelApelidoRegistro))
                 .addGap(18, 18, 18)
-                .addComponent(botaoRegistrar)
+                .addComponent(botaoRegistrarRegistro)
                 .addContainerGap())
         );
 
@@ -223,16 +254,41 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarActionPerformed
-        trocarTela();
-    }//GEN-LAST:event_botaoRegistrarActionPerformed
+    private void botaoRegistrarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarRegistroActionPerformed
+        if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
+           !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
+           !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
+        {
+            if(OperacoesBD.checkIfUserExists(String.valueOf(tbUsuarioRegistro.getText())))
+                JOptionPane.showMessageDialog(null, "Esse usuário já existe, tente outro nome.", "Erro ao cadastrar", JOptionPane.WARNING_MESSAGE);
+            else{
+                try{
+                    OperacoesBD.InserirJogador(new Jogador(tbUsuarioRegistro.getText(), String.valueOf(tbSenhaRegistro.getPassword()), tbApelidoRegistro.getText()));              
+                    trocarTela();
+                } catch(SQLIntegrityConstraintViolationException e){
+                    JOptionPane.showMessageDialog(null, "Esse usuário já existe, tente outro nome.\n\n" + e, "Erro ao cadastrar", JOptionPane.WARNING_MESSAGE);
+                }     
+            }
+        }
+        else JOptionPane.showMessageDialog(null, "Existem campos em branco, então não é possível realizar o cadastro.","Aviso", JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_botaoRegistrarRegistroActionPerformed
 
     private void botaoRegistrarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarLoginActionPerformed
-        trocarTela();        
+        trocarTela();
     }//GEN-LAST:event_botaoRegistrarLoginActionPerformed
 
     private void botaoLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogarActionPerformed
-        
+        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
+           !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+        {
+            if(!OperacoesBD.verifyLogin(String.valueOf(tbUsuarioLogin.getText()),String.valueOf(tbSenhaLogin.getPassword()))){
+                System.out.println("Erro ao logar, usuario ou senha incorretos.");
+                JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos, tente novamente.", "Erro ao logar", JOptionPane.WARNING_MESSAGE);
+            }    
+            else
+                System.out.println("Login realizado com sucesso.");
+        }
+        else JOptionPane.showMessageDialog(null, "Existem campos em branco, então não é possível realizar o cadastro.","Aviso", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_botaoLogarActionPerformed
 
     private void tbSenhaLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbSenhaLoginActionPerformed
@@ -281,6 +337,7 @@ public class TelaLogin extends javax.swing.JFrame {
             tbUsuarioLogin.setText("");
             tbSenhaRegistro.setText(String.valueOf(tbSenhaLogin.getPassword()));
             tbSenhaLogin.setText("");
+            botaoRegistrarRegistro.setEnabled(false);
             tela.add(registro);
         }
         else{
@@ -288,6 +345,7 @@ public class TelaLogin extends javax.swing.JFrame {
             tbUsuarioRegistro.setText("");
             tbSenhaRegistro.setText("");
             tbApelidoRegistro.setText("");
+            botaoLogar.setEnabled(false);
             tela.add(login);
         }
         tipoTela=1-tipoTela;
@@ -298,8 +356,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoLogar;
-    private javax.swing.JButton botaoRegistrar;
     private javax.swing.JButton botaoRegistrarLogin;
+    private javax.swing.JButton botaoRegistrarRegistro;
     private javax.swing.JLabel labelApelidoRegistro;
     private javax.swing.JLabel labelLogin;
     private javax.swing.JLabel labelRegistro;
@@ -316,4 +374,22 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JTextField tbUsuarioRegistro;
     private javax.swing.JPanel tela;
     // End of variables declaration//GEN-END:variables
+
+    private void AddKeyListenersOnEvent() {   
+        tbUsuarioLogin.addKeyListener(loginKL);
+        tbSenhaLogin.addKeyListener(loginKL);
+        tbUsuarioRegistro.addKeyListener(registroKL);
+        tbSenhaRegistro.addKeyListener(registroKL);
+        tbApelidoRegistro.addKeyListener(registroKL);
+              
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(null, "Você apertou um botão muito bonito!\nDessa vez funcionou", "OMEDETOU", JOptionPane.WARNING_MESSAGE);
+        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
+               !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+                botaoLogar.setEnabled(true);
+            else
+                botaoLogar.setEnabled(false);
+    }
 }

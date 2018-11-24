@@ -82,11 +82,13 @@ DELIMITER ;
 INSERT INTO jogador(usuario, senha, apelido) VALUES("joao","gameplays","Louco");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("mariana","abcde","Sara");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("poliana","natural","Leão");
+INSERT INTO jogador(usuario, senha, apelido) VALUES("abinho","abinhoisthebest","Abinho GamePlay");
+INSERT INTO jogador(usuario, senha, apelido) VALUES("a","a","a");
 select * from jogador;
 select * from save order by cod_usuario, slot_save ASC;
 
 DELETE FROM jogador WHERE jogador.cod_usuario = 1;
-
+#SELECT usuario FROM jogador WHERE jogador.usuario = "aa";
 
 #no max22/n por quadro
 
