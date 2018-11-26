@@ -8,10 +8,10 @@ drop table if exists jogador cascade;
 
 create table etapas(
 	cod INT NOT NULL,				   #Ao trocar o local, sobe para o 100 mais próximo
-    descricao VARCHAR(5000) NOT NULL,
-	textobt1 VARCHAR(150) NOT NULL,
-    textobt2 VARCHAR(150) NOT NULL,
-	tipo_quadro INT NOT NULL,          #0 = quadro decisão / 1 = quadro avançar   
+    descricao VARCHAR(2000) NOT NULL,
+	textobt1 VARCHAR(70) NOT NULL,
+    textobt2 VARCHAR(70) NOT NULL,
+	tipo_quadro INT NOT NULL CHECK(tipo_quadro=0 OR tipo_quadro=1),      #0 = quadro decisão / 1 = quadro avançar   
     ref_op1 INT NOT NULL,              #ref_op1 == referência opção 1
 	ref_op2 INT NOT NULL,			   #ref_op2 == referência opção 2
     imp_sanidade1 INT NOT NULL,        #imp == impacto nos status do jogador
@@ -23,7 +23,7 @@ create table etapas(
     imp_carisma2 INT NOT NULL,
     imp_coragem2 INT NOT NULL,
     timer INT NOT NULL,                #timer > 0 = timer ativo / timer == -1 » timer desativado
-	ref_optimer INT NOT NULL,          #ref_optimer == entra quando o usuario nao seleciona nada durante o tempo do timer / colocar -1 quando timer == -1
+	ref_optimer INT NOT NULL CHECK (timer=-1 AND ref_timer=-1 OR ref_timer>0),          #ref_optimer == entra quando o usuario nao seleciona nada durante o tempo do timer / colocar -1 quando timer == -1
     PRIMARY KEY(cod),
     FOREIGN KEY(ref_op1) REFERENCES etapas(cod),
     FOREIGN KEY(ref_op2) REFERENCES etapas(cod),
@@ -41,9 +41,9 @@ create table jogador(
 );
 
 create table save(
-	slot_save INT NOT NULL,
+	slot_save INT NOT NULL CHECK (slot_save>=1 AND slot_save<=4),
 	cod_usuario INT NOT NULL,
-	etapa_atual INT,   #etapa_atual == -2 indica que o save ainda não está em uso
+	etapa_atual INT,   #etapa_atual == 0 indica que o save ainda não está em uso
     tempo_jogo TIME,           #tempo_jogo == null indica que o save ainda não está em uso
     sanidade INT,
     emocional INT,
@@ -82,11 +82,13 @@ DELIMITER ;
 INSERT INTO jogador(usuario, senha, apelido) VALUES("joao","gameplays","Louco");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("mariana","abcde","Sara");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("poliana","natural","Leão");
+INSERT INTO jogador(usuario, senha, apelido) VALUES("abinho","abinhoisthebest","Abinho GamePlay");
+INSERT INTO jogador(usuario, senha, apelido) VALUES("a","a","a");
 select * from jogador;
 select * from save order by cod_usuario, slot_save ASC;
 
 DELETE FROM jogador WHERE jogador.cod_usuario = 1;
-
+#SELECT usuario FROM jogador WHERE jogador.usuario = "aa";
 
 #no max22/n por quadro
 
