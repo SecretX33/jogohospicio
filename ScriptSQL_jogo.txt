@@ -1,6 +1,5 @@
 ﻿create database if not exists projeto_jogo;
 use projeto_jogo;
-create table clayton;
 
 
 drop table if exists etapas cascade;
