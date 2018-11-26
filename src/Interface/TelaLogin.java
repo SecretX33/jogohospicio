@@ -378,6 +378,10 @@ public class TelaLogin extends javax.swing.JFrame {
     }
     
     private void isLoginEmpty(){
+        
+    }
+    
+    private void isRegistroEmpty(){
         if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
            !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
             botaoLogar.setEnabled(true);
@@ -385,7 +389,11 @@ public class TelaLogin extends javax.swing.JFrame {
             botaoLogar.setEnabled(false);
     }
     
-    private void isRegistroEmpty(){
+    private void checkLoginEmpty(){
+        
+    }
+    
+    private void checkRegistroEmpty(){
         if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
            !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
            !String.valueOf(tbApelidoRegistro.getText()).isEmpty())

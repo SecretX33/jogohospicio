@@ -6,7 +6,7 @@
 package BancoDados;
 
 import Elementos.Save;
-import Elementos.Etapas;
+import Elementos.Etapa;
 import Elementos.Jogador;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,12 +22,12 @@ public class OperacoesBD {
     public static boolean Inserir(Object objetoGenerico) throws SQLIntegrityConstraintViolationException{
         if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
         String tipo_dado;
-        Etapas etapa = null;
+        Etapa etapa = null;
         Save save = null;
         Jogador jogador = null;
         
-        if(objetoGenerico instanceof Etapas){
-            etapa = (Etapas)objetoGenerico;
+        if(objetoGenerico instanceof Etapa){
+            etapa = (Etapa)objetoGenerico;
             tipo_dado = "etapa";
         }
         else if(objetoGenerico instanceof Save){
