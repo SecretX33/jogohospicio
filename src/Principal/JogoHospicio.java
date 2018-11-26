@@ -41,7 +41,7 @@ public class JogoHospicio {
             if(OperacoesBD.checkIfUserExists("aa")) System.out.println(String.format("Usuário \'%s\' existe!","aa"));
             else System.out.println(String.format("Usuário \'%s\' não existe!","aa"));*/
             
-            TelaLogin tl = new TelaLogin();
-            tl.setVisible(true);
+        TelaLogin tl = new TelaLogin();
+        tl.setVisible(true);
     } 
 }

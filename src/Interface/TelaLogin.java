@@ -30,23 +30,15 @@ public class TelaLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
         tipoTela=0; // 0 = login, 1 = registro
+        
         loginKL = new KeyAdapter() {
-        public void keyPressed(KeyEvent e) {
-            if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
-               !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
-                botaoLogar.setEnabled(true);
-            else
-                botaoLogar.setEnabled(false);
+        public void keyReleased(KeyEvent e) {
+            isLoginEmpty();
         }};
         
         registroKL = new KeyAdapter() {
-        public void keyPressed(KeyEvent e) {
-            if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
-               !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
-               !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
-                botaoRegistrarRegistro.setEnabled(true);
-            else
-                botaoRegistrarRegistro.setEnabled(false);
+        public void keyReleased(KeyEvent e) {
+            isRegistroEmpty();
         }};
         
         AddKeyListenersOnEvent();
@@ -337,7 +329,8 @@ public class TelaLogin extends javax.swing.JFrame {
             tbUsuarioLogin.setText("");
             tbSenhaRegistro.setText(String.valueOf(tbSenhaLogin.getPassword()));
             tbSenhaLogin.setText("");
-            botaoRegistrarRegistro.setEnabled(false);
+            //botaoRegistrarRegistro.setEnabled(false);
+            isRegistroEmpty();
             tela.add(registro);
         }
         else{
@@ -345,7 +338,8 @@ public class TelaLogin extends javax.swing.JFrame {
             tbUsuarioRegistro.setText("");
             tbSenhaRegistro.setText("");
             tbApelidoRegistro.setText("");
-            botaoLogar.setEnabled(false);
+            //botaoLogar.setEnabled(false);
+            isLoginEmpty();
             tela.add(login);
         }
         tipoTela=1-tipoTela;
@@ -380,16 +374,32 @@ public class TelaLogin extends javax.swing.JFrame {
         tbSenhaLogin.addKeyListener(loginKL);
         tbUsuarioRegistro.addKeyListener(registroKL);
         tbSenhaRegistro.addKeyListener(registroKL);
-        tbApelidoRegistro.addKeyListener(registroKL);
-              
+        tbApelidoRegistro.addKeyListener(registroKL);          
     }
     
-    public void actionPerformed(ActionEvent e) {
+    private void isLoginEmpty(){
+        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
+           !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+            botaoLogar.setEnabled(true);
+        else
+            botaoLogar.setEnabled(false);
+    }
+    
+    private void isRegistroEmpty(){
+        if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
+           !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
+           !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
+                botaoRegistrarRegistro.setEnabled(true);
+            else
+                botaoRegistrarRegistro.setEnabled(false);
+    }
+    
+    /*public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(null, "Você apertou um botão muito bonito!\nDessa vez funcionou", "OMEDETOU", JOptionPane.WARNING_MESSAGE);
         if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
                !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
                 botaoLogar.setEnabled(true);
             else
                 botaoLogar.setEnabled(false);
-    }
+    }*/
 }
