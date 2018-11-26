@@ -397,19 +397,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if(etapaAtual.getRef_op1() > 0){
             Etapa proxEtapa;
             
-            atualizarStatus();
-            if(botao < 2){
-                proxEtapa = OperacoesBD.getEtapa(etapaAtual.getRef_op1());
-            }
-            else{
-                proxEtapa = OperacoesBD.getEtapa(etapaAtual.getRef_op2());
-            }
+            atualizarStatus(botao);
+            if(botao < 2) proxEtapa = OperacoesBD.getEtapa(etapaAtual.getRef_op1());
+            else proxEtapa = OperacoesBD.getEtapa(etapaAtual.getRef_op2());
+
             if(tipoQuadroAtual != proxEtapa.getTipo_quadro()){
                 tipoQuadroAtual = proxEtapa.getTipo_quadro();
             }
             etapaAtual = proxEtapa;
-            atualizarInterface();
-              
+            atualizarInterface();       
         }
         else{
             JOptionPane.showMessageDialog(null, "Parabéns, você terminou o jogo!", "WOW", JOptionPane.WARNING_MESSAGE);
@@ -445,14 +441,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tela.revalidate(); 
     }
     
-    private void atualizarStatus(){
-        if(tipoQuadroAtual == 0){
+    private void atualizarStatus(int botao){
+        if(botao == 1){
             personagem.alterarSanidade(etapaAtual.getImp_sanidade1());
             personagem.alterarEmocional(etapaAtual.getImp_emocional1());
             personagem.alterarCarisma(etapaAtual.getImp_carisma1());
             personagem.alterarCoragem(etapaAtual.getImp_coragem1());
         }
-        else{
+        else if(botao == 2){
             personagem.alterarSanidade(etapaAtual.getImp_sanidade2());
             personagem.alterarEmocional(etapaAtual.getImp_emocional2());
             personagem.alterarCarisma(etapaAtual.getImp_carisma2());
