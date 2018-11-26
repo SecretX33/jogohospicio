@@ -44,50 +44,42 @@ public class Personagem {
         return vivo;
     }
     
-    public void aumentarSanidade(){
-        if(sanidade<maxStatusValue) sanidade++;
-    }
-    
-    public void reduzirSanidade(){
-        if(sanidade>1) sanidade--;
-        else{
+    public void alterarSanidade(int i){
+        if(sanidade+i>0 && sanidade+i<maxStatusValue){
+            sanidade+=i;
+        }
+        else if(sanidade+i<=0){
             sanidade=0;
             death("sanidade");
         }
     }
     
-    public void aumentarEmocional(){
-        if(emocional<maxStatusValue) emocional++;
-    }
-    
-    public void reduzirEmocional(){
-        if(emocional>1) emocional--;
-        else{
-            emocional = 0;
+    public void alterarEmocional(int i){
+        if(emocional+i>0 && emocional+i<maxStatusValue){
+            emocional+=i;
+        }
+        else if(emocional+i<=0){
+            emocional=0;
             death("emocional");
         }
     }
     
-    public void aumentarCarisma(){
-        if(carisma<maxStatusValue) carisma++;
-    }
-    
-    public void reduzirCarisma(){
-        if(carisma>1) carisma--;
-        else{
-            carisma = 0;
+    public void alterarCarisma(int i){
+        if(carisma+i>0 && carisma+i<maxStatusValue){
+            carisma+=i;
+        }
+        else if(carisma+i<=0){
+            carisma=0;
             death("carisma");
         }
     }
     
-    public void aumentarCoragem(){
-        if(coragem<maxStatusValue) coragem++;
-    }
-     
-    public void reduzirCoragem(){
-        if(coragem>1) coragem--;
-        else{
-            coragem = 0;
+    public void alterarCoragem(int i){
+        if(coragem+i>0 && coragem+i<maxStatusValue){
+            coragem+=i;
+        }
+        else if(coragem+i<=0){
+            coragem=0;
             death("coragem");
         }
     }

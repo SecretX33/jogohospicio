@@ -5,24 +5,48 @@
  */
 package Interface;
 
+import BancoDados.OperacoesBD;
+import Elementos.*;
+import Principal.JogoHospicio;
 import java.awt.CardLayout;
 import java.awt.Container;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author User
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
+    private Jogador jogador;
+    private Personagem personagem;
+    private Etapa etapaAtual;
+    private Save saveAtual;
+    
+    private int numEtapaAtual;
+    private int numSlotSaveAtual;
+    private int tipoQuadroAtual;
+    
     /**
      * Creates new form QuadroTemporario
      */
-    public TelaPrincipal() {
+    public TelaPrincipal(){
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
-        atualizarStatus();
-        nomeJogador.setText(Menu.jogador.getNome());
+    }
+    
+    public TelaPrincipal(Jogador j, Personagem p, Save sA, int nSSA) {
+        this();
+        this.jogador = j;
+        this.personagem  = p;
+        this.saveAtual = sA;
+        this.numSlotSaveAtual = nSSA;
+        this.numEtapaAtual = (saveAtual.getEtapa_atual() == 0)? 1 : saveAtual.getEtapa_atual();
+        this.etapaAtual = OperacoesBD.getEtapa(numEtapaAtual); 
+        nomeJogador.setText(jogador.getApelido());
+        this.tipoQuadroAtual = etapaAtual.getTipo_quadro();
+        atualizarInterface();
+        setVisible(true);
     }
 
     /**
@@ -34,6 +58,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tela = new javax.swing.JPanel();
         status = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         barraEmocional = new javax.swing.JProgressBar();
@@ -53,10 +78,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         decisao = new javax.swing.JPanel();
         botaoOpcao1 = new javax.swing.JButton();
         botaoOpcao2 = new javax.swing.JButton();
-        areaTexto = new javax.swing.JFormattedTextField();
+        areaTextoDecisao = new javax.swing.JFormattedTextField();
         avancar = new javax.swing.JPanel();
         botaoAvancar = new javax.swing.JButton();
-        areaTexto1 = new javax.swing.JFormattedTextField();
+        areaTextoAvancar = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -121,9 +146,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(labelCarisma)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(percCarisma)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(473, 473, 473))
+                .addGap(10, 10, 10))
         );
         statusLayout.setVerticalGroup(
             statusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,8 +182,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(percCoragem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraCoragem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 97, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        alternar.setLayout(new java.awt.CardLayout());
 
         botaoOpcao1.setText("Opcao1");
         botaoOpcao1.setMaximumSize(new java.awt.Dimension(75, 25));
@@ -177,36 +204,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        areaTexto.setEditable(false);
-        areaTexto.setText("areaTexto");
-        areaTexto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        areaTexto.setRequestFocusEnabled(false);
+        areaTextoDecisao.setEditable(false);
+        areaTextoDecisao.setText("areaTexto");
+        areaTextoDecisao.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        areaTextoDecisao.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout decisaoLayout = new javax.swing.GroupLayout(decisao);
         decisao.setLayout(decisaoLayout);
         decisaoLayout.setHorizontalGroup(
             decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(decisaoLayout.createSequentialGroup()
-                .addContainerGap(173, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
                 .addGroup(decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, decisaoLayout.createSequentialGroup()
                         .addComponent(botaoOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoOpcao2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(areaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(areaTextoDecisao, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
         decisaoLayout.setVerticalGroup(
             decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, decisaoLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(areaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(areaTextoDecisao, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        alternar.add(decisao, "card2");
 
         botaoAvancar.setText("Avançar");
         botaoAvancar.setMaximumSize(new java.awt.Dimension(75, 25));
@@ -218,20 +247,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        areaTexto1.setEditable(false);
-        areaTexto1.setText("areaTexto");
-        areaTexto1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        areaTexto1.setRequestFocusEnabled(false);
+        areaTextoAvancar.setEditable(false);
+        areaTextoAvancar.setText("areaTexto");
+        areaTextoAvancar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        areaTextoAvancar.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout avancarLayout = new javax.swing.GroupLayout(avancar);
         avancar.setLayout(avancarLayout);
         avancarLayout.setHorizontalGroup(
             avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(avancarLayout.createSequentialGroup()
-                .addContainerGap(173, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
-                        .addComponent(areaTexto1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(areaTextoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
                         .addComponent(botaoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,30 +270,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
             avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(areaTexto1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(areaTextoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botaoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout alternarLayout = new javax.swing.GroupLayout(alternar);
-        alternar.setLayout(alternarLayout);
-        alternarLayout.setHorizontalGroup(
-            alternarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(alternarLayout.createSequentialGroup()
+        alternar.add(avancar, "card3");
+
+        javax.swing.GroupLayout telaLayout = new javax.swing.GroupLayout(tela);
+        tela.setLayout(telaLayout);
+        telaLayout.setHorizontalGroup(
+            telaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(alternarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(avancar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(decisao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(alternar, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        alternarLayout.setVerticalGroup(
-            alternarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(alternarLayout.createSequentialGroup()
+        telaLayout.setVerticalGroup(
+            telaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(alternarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(avancar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(decisao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(telaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(status, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(alternar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -273,30 +304,29 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(alternar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(tela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(alternar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(tela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoOpcao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOpcao2ActionPerformed
-       
+        avancarEtapa(2);
     }//GEN-LAST:event_botaoOpcao2ActionPerformed
 
     private void botaoOpcao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOpcao1ActionPerformed
-
-     
+        avancarEtapa(1);
     }//GEN-LAST:event_botaoOpcao1ActionPerformed
 
     private void botaoAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAvancarActionPerformed
-        // TODO add your handling code here:
+        avancarEtapa(0);
     }//GEN-LAST:event_botaoAvancarActionPerformed
 
     /**
@@ -329,6 +359,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new TelaPrincipal().setVisible(true);
             }
@@ -337,8 +368,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel alternar;
-    private javax.swing.JFormattedTextField areaTexto;
-    private javax.swing.JFormattedTextField areaTexto1;
+    private javax.swing.JFormattedTextField areaTextoAvancar;
+    private javax.swing.JFormattedTextField areaTextoDecisao;
     private javax.swing.JPanel avancar;
     private javax.swing.JProgressBar barraCarisma;
     private javax.swing.JProgressBar barraCoragem;
@@ -359,16 +390,74 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel percEmocional;
     private javax.swing.JLabel percSanidade;
     private javax.swing.JPanel status;
+    private javax.swing.JPanel tela;
     // End of variables declaration//GEN-END:variables
 
-    private void atualizarStatus(){
-        barraSanidade.setValue(Menu.jogador.getSanidade());
+    private void avancarEtapa(int botao){
+        if(etapaAtual.getRef_op1() > 0){
+            Etapa proxEtapa;
+            
+            atualizarStatus();
+            if(botao < 2){
+                proxEtapa = OperacoesBD.getEtapa(etapaAtual.getRef_op1());
+            }
+            else{
+                proxEtapa = OperacoesBD.getEtapa(etapaAtual.getRef_op2());
+            }
+            if(tipoQuadroAtual != proxEtapa.getTipo_quadro()){
+                tipoQuadroAtual = proxEtapa.getTipo_quadro();
+            }
+            etapaAtual = proxEtapa;
+            atualizarInterface();
+              
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Parabéns, você terminou o jogo!", "WOW", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    private void atualizarInterface(){
+        alternar.removeAll();
+        
+        if(etapaAtual.getTipo_quadro() == 0){
+            alternar.add(decisao);
+            botaoOpcao1.setText(etapaAtual.getTextobt1());
+            botaoOpcao2.setText(etapaAtual.getTextobt2());
+            areaTextoDecisao.setText(String.format(etapaAtual.getDescricao()));
+        }
+        else{
+            alternar.add(avancar);
+            botaoOpcao1.setText("");
+            botaoOpcao2.setText("");
+            areaTextoAvancar.setText(String.format(etapaAtual.getDescricao()));
+        }
+        
+        barraSanidade.setValue(personagem.getSanidade());
         percSanidade.setText(String.format("%d%%",(barraSanidade.getValue()*5)));
-        barraEmocional.setValue(Menu.jogador.getEmocional());
+        barraEmocional.setValue(personagem.getEmocional());
         percEmocional.setText(String.format("%d%%",(barraEmocional.getValue()*5)));
-        barraCarisma.setValue(Menu.jogador.getCarisma());
+        barraCarisma.setValue(personagem.getCarisma());
         percCarisma.setText(String.format("%d%%",(barraCarisma.getValue()*5)));
-        barraCoragem.setValue(Menu.jogador.getCoragem());
+        barraCoragem.setValue(personagem.getCoragem());
         percCoragem.setText(String.format("%d%%",(barraCoragem.getValue()*5)));
+
+        tela.repaint();
+        tela.revalidate(); 
+    }
+    
+    private void atualizarStatus(){
+        if(tipoQuadroAtual == 0){
+            personagem.alterarSanidade(etapaAtual.getImp_sanidade1());
+            personagem.alterarEmocional(etapaAtual.getImp_emocional1());
+            personagem.alterarCarisma(etapaAtual.getImp_carisma1());
+            personagem.alterarCoragem(etapaAtual.getImp_coragem1());
+        }
+        else{
+            personagem.alterarSanidade(etapaAtual.getImp_sanidade2());
+            personagem.alterarEmocional(etapaAtual.getImp_emocional2());
+            personagem.alterarCarisma(etapaAtual.getImp_carisma2());
+            personagem.alterarCoragem(etapaAtual.getImp_coragem2());
+        }
+        
     }
 }
