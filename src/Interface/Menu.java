@@ -150,7 +150,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovoJogoActionPerformed
 
     private void botaoNovoJogoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botaoNovoJogoKeyPressed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_botaoNovoJogoKeyPressed
 
     private void botaoContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoContinuarActionPerformed

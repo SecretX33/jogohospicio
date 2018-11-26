@@ -23,7 +23,6 @@ import javax.swing.JPanel;
  */
 public class TelaLogin extends javax.swing.JFrame {
     public Jogador jogador;
-    private JPanel j1;
     private int tipoTela;
     private KeyListener loginKL;
     private KeyListener registroKL;
@@ -36,11 +35,13 @@ public class TelaLogin extends javax.swing.JFrame {
         tipoTela=0; // 0 = login, 1 = registro
         
         loginKL = new KeyAdapter() {
+        @Override
         public void keyReleased(KeyEvent e) {
             checkLoginEmpty();
         }};
         
         registroKL = new KeyAdapter() {
+        @Override
         public void keyReleased(KeyEvent e) {
             checkRegistroEmpty();
         }};
@@ -52,7 +53,7 @@ public class TelaLogin extends javax.swing.JFrame {
             OperacoesBD.InserirJogador(jogador);
         } catch (SQLIntegrityConstraintViolationException ex) {
             Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }    
         setVisible(false);
         Menu m = new Menu(jogador);
         m.setVisible(true);
