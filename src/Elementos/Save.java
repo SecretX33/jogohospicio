@@ -13,10 +13,10 @@ public class Save {
     private int coragem;
     
     // Inicializando um save novo
-    public Save(int slot_save, int cod_usuario){
-        this.slot_save = slot_save;
+    public Save(int cod_usuario){
+        this.slot_save = 0;
         this.cod_usuario = cod_usuario;
-        this.etapa_atual = -2;   // -2 sinaliza que o save nunca foi usado
+        this.etapa_atual = 0;   // 0 sinaliza que o save nunca foi usado
         this.tempo_jogo = null;
         this.sanidade = -1;
         this.emocional = -1;

@@ -9,10 +9,7 @@ public class Jogador {
     private String senha;
     private String apelido;
     private Time tempo_jogo;
-    private Save slot1;
-    private Save slot2;
-    private Save slot3;
-    private Save slot4;
+    private Save[] slot;
     
     public Jogador(String usuario, String senha, String apelido){
         this.usuario = usuario;
@@ -21,21 +18,32 @@ public class Jogador {
         //DataFormat formatter = new SimpleDataFormat("HH:mm:ss");
         //this.tempo_jogo = new Time(formatter.parse("00:00:00").getTime());
         this.tempo_jogo = null;
-        this.slot1 = null;
-        this.slot2 = null;
-        this.slot3 = null;
-        this.slot4 = null;
+        this.slot = new Save[4];      
+        for(int i=0; i<4; i++) this.slot = null;        
     }
     
-    public Jogador(String usuario, String senha, String apelido, Time tempo_jogo, Save slot1, Save slot2, Save slot3, Save slot4) {
+    public Jogador(String usuario, String senha, String apelido, Time tempo_jogo, Save slot0, Save slot1, Save slot2, Save slot3) {
         this.usuario = usuario;
         this.senha = senha;
         this.apelido = apelido;
         this.tempo_jogo = tempo_jogo;
-        this.slot1 = slot1;
-        this.slot2 = slot2;
-        this.slot3 = slot3;
-        this.slot4 = slot4;
+        for(int i=0; i<4; i++){
+            switch(i){
+                case 0:
+                    this.slot[i] = slot0;
+                    break;
+                case 1:
+                    this.slot[i] = slot1;
+                    break;
+                case 2:
+                    this.slot[i] = slot2;
+                    break;
+                case 3:
+                    this.slot[i] = slot3;
+                    break;
+                    
+            }
+        }
     }
 
     public String getUsuario() {
@@ -69,36 +77,14 @@ public class Jogador {
     public void setTempo_jogo(Time tempo_jogo) {
         this.tempo_jogo = tempo_jogo;
     }
-
-    public Save getSlot1() {
-        return slot1;
+    
+    public Save getSave(int numSlot){
+        if(numSlot<0 || numSlot>3) throw new IllegalArgumentException(String.format("O número do slot de save solicitado (%d) não existe.",numSlot));
+        else return slot[numSlot];
     }
-
-    public void setSlot1(Save slot1) {
-        this.slot1 = slot1;
-    }
-
-    public Save getSlot2() {
-        return slot2;
-    }
-
-    public void setSlot2(Save slot2) {
-        this.slot2 = slot2;
-    }
-
-    public Save getSlot3() {
-        return slot3;
-    }
-
-    public void setSlot3(Save slot3) {
-        this.slot3 = slot3;
-    }
-
-    public Save getSlot4() {
-        return slot4;
-    }
-
-    public void setSlot4(Save slot4) {
-        this.slot4 = slot4;
+    
+    public void setSave(Save s, int numSlot){
+        if(numSlot<0 || numSlot>3) throw new IllegalArgumentException(String.format("O número do slot de save solicitado (%d) não existe.",numSlot));
+        else slot[numSlot] = s;
     }
 }

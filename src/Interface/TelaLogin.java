@@ -12,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -20,36 +22,41 @@ import javax.swing.JPanel;
  * @author User
  */
 public class TelaLogin extends javax.swing.JFrame {
-    JPanel j1;
-    int tipoTela;
-    KeyListener loginKL;
-    KeyListener registroKL;
+    public Jogador jogador;
+    private int tipoTela;
+    private KeyListener loginKL;
+    private KeyListener registroKL;
+    
     
     public TelaLogin() {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
         tipoTela=0; // 0 = login, 1 = registro
+        
         loginKL = new KeyAdapter() {
-        public void keyPressed(KeyEvent e) {
-            if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
-               !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
-                botaoLogar.setEnabled(true);
-            else
-                botaoLogar.setEnabled(false);
+        @Override
+        public void keyReleased(KeyEvent e) {
+            checkLoginEmpty();
         }};
         
         registroKL = new KeyAdapter() {
-        public void keyPressed(KeyEvent e) {
-            if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
-               !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
-               !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
-                botaoRegistrarRegistro.setEnabled(true);
-            else
-                botaoRegistrarRegistro.setEnabled(false);
+        @Override
+        public void keyReleased(KeyEvent e) {
+            checkRegistroEmpty();
         }};
         
         AddKeyListenersOnEvent();
+        jogador = new Jogador("abinhogameplay","amigodamariana","Abinho Gameplay");
+        if(!OperacoesBD.checkIfUserExists(jogador.getUsuario())) 
+        try {
+            OperacoesBD.InserirJogador(jogador);
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+        setVisible(false);
+        Menu m = new Menu(jogador);
+        m.setVisible(true);
     }
 
     /**
@@ -278,8 +285,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoRegistrarLoginActionPerformed
 
     private void botaoLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogarActionPerformed
-        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
-           !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+        if(!isLoginEmpty())
         {
             if(!OperacoesBD.verifyLogin(String.valueOf(tbUsuarioLogin.getText()),String.valueOf(tbSenhaLogin.getPassword()))){
                 System.out.println("Erro ao logar, usuario ou senha incorretos.");
@@ -287,6 +293,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }    
             else
                 System.out.println("Login realizado com sucesso.");
+                //
         }
         else JOptionPane.showMessageDialog(null, "Existem campos em branco, então não é possível realizar o cadastro.","Aviso", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_botaoLogarActionPerformed
@@ -337,7 +344,8 @@ public class TelaLogin extends javax.swing.JFrame {
             tbUsuarioLogin.setText("");
             tbSenhaRegistro.setText(String.valueOf(tbSenhaLogin.getPassword()));
             tbSenhaLogin.setText("");
-            botaoRegistrarRegistro.setEnabled(false);
+            //botaoRegistrarRegistro.setEnabled(false);
+            isRegistroEmpty();
             tela.add(registro);
         }
         else{
@@ -345,7 +353,8 @@ public class TelaLogin extends javax.swing.JFrame {
             tbUsuarioRegistro.setText("");
             tbSenhaRegistro.setText("");
             tbApelidoRegistro.setText("");
-            botaoLogar.setEnabled(false);
+            //botaoLogar.setEnabled(false);
+            isLoginEmpty();
             tela.add(login);
         }
         tipoTela=1-tipoTela;
@@ -380,16 +389,40 @@ public class TelaLogin extends javax.swing.JFrame {
         tbSenhaLogin.addKeyListener(loginKL);
         tbUsuarioRegistro.addKeyListener(registroKL);
         tbSenhaRegistro.addKeyListener(registroKL);
-        tbApelidoRegistro.addKeyListener(registroKL);
-              
+        tbApelidoRegistro.addKeyListener(registroKL);          
     }
     
-    public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(null, "Você apertou um botão muito bonito!\nDessa vez funcionou", "OMEDETOU", JOptionPane.WARNING_MESSAGE);
-        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
-               !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
-                botaoLogar.setEnabled(true);
+    private boolean isLoginEmpty(){
+        if(String.valueOf(tbUsuarioLogin.getText()).isEmpty() ||
+           String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+            return true;
+        else
+            return false;
+    }
+    
+    private boolean isRegistroEmpty(){
+        if(String.valueOf(tbUsuarioRegistro.getText()).isEmpty() ||
+           String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() || 
+           String.valueOf(tbApelidoRegistro.getText()).isEmpty())
+                return true;
             else
-                botaoLogar.setEnabled(false);
+                return false;
+    }
+    
+    private void checkLoginEmpty(){
+        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
+           !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+            botaoLogar.setEnabled(true);
+        else
+            botaoLogar.setEnabled(false);
+    }
+    
+    private void checkRegistroEmpty(){
+        if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
+           !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
+           !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
+                botaoRegistrarRegistro.setEnabled(true);
+            else
+                botaoRegistrarRegistro.setEnabled(false);
     }
 }

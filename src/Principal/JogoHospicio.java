@@ -21,8 +21,8 @@ public class JogoHospicio {
     public static void main(String[] args){        
         ConexaoMySQL.getConexaoMySQL();
         System.out.println(ConexaoMySQL.statusConnection());
+
         
-        //Jogador jogador = new Jogador("abinhogameplay","amigodamariana","Abinho Gameplay");
         
         /*try {
             OperacoesBD.InserirJogador(jogador);
@@ -32,8 +32,8 @@ public class JogoHospicio {
             JOptionPane.showMessageDialog()
         }*/
         
-            //Menu menu = new Menu();
-            //menu.setVisible(true);
+        //Menu menu = new Menu();
+        //menu.setVisible(true);
             
             
             /*if(OperacoesBD.checkIfUserExists("a")) System.out.println(String.format("Usuário \'%s\' existe!","a"));
@@ -41,7 +41,9 @@ public class JogoHospicio {
             if(OperacoesBD.checkIfUserExists("aa")) System.out.println(String.format("Usuário \'%s\' existe!","aa"));
             else System.out.println(String.format("Usuário \'%s\' não existe!","aa"));*/
             
-            TelaLogin tl = new TelaLogin();
-            tl.setVisible(true);
+        TelaLogin tl = new TelaLogin();
+        //tl.setVisible(true);
+        
+        
     } 
 }
