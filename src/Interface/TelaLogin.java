@@ -12,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -20,10 +22,12 @@ import javax.swing.JPanel;
  * @author User
  */
 public class TelaLogin extends javax.swing.JFrame {
-    JPanel j1;
-    int tipoTela;
-    KeyListener loginKL;
-    KeyListener registroKL;
+    public Jogador jogador;
+    private JPanel j1;
+    private int tipoTela;
+    private KeyListener loginKL;
+    private KeyListener registroKL;
+    
     
     public TelaLogin() {
         initComponents();
@@ -33,15 +37,25 @@ public class TelaLogin extends javax.swing.JFrame {
         
         loginKL = new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
-            isLoginEmpty();
+            checkLoginEmpty();
         }};
         
         registroKL = new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
-            isRegistroEmpty();
+            checkRegistroEmpty();
         }};
         
         AddKeyListenersOnEvent();
+        jogador = new Jogador("abinhogameplay","amigodamariana","Abinho Gameplay");
+        if(!OperacoesBD.checkIfUserExists(jogador.getUsuario())) 
+        try {
+            OperacoesBD.InserirJogador(jogador);
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        setVisible(false);
+        Menu m = new Menu(jogador);
+        m.setVisible(true);
     }
 
     /**
@@ -270,8 +284,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoRegistrarLoginActionPerformed
 
     private void botaoLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogarActionPerformed
-        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
-           !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+        if(!isLoginEmpty())
         {
             if(!OperacoesBD.verifyLogin(String.valueOf(tbUsuarioLogin.getText()),String.valueOf(tbSenhaLogin.getPassword()))){
                 System.out.println("Erro ao logar, usuario ou senha incorretos.");
@@ -279,6 +292,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }    
             else
                 System.out.println("Login realizado com sucesso.");
+                //
         }
         else JOptionPane.showMessageDialog(null, "Existem campos em branco, então não é possível realizar o cadastro.","Aviso", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_botaoLogarActionPerformed
@@ -378,17 +392,17 @@ public class TelaLogin extends javax.swing.JFrame {
     }
     
     private boolean isLoginEmpty(){
-        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
-           !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+        if(String.valueOf(tbUsuarioLogin.getText()).isEmpty() ||
+           String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
             return true;
         else
             return false;
     }
     
-    private void isRegistroEmpty(){
-        if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
-           !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
-           !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
+    private boolean isRegistroEmpty(){
+        if(String.valueOf(tbUsuarioRegistro.getText()).isEmpty() ||
+           String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() || 
+           String.valueOf(tbApelidoRegistro.getText()).isEmpty())
                 return true;
             else
                 return false;
