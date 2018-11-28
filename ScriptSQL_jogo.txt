@@ -43,12 +43,12 @@ create table jogador(
 create table save(
 	slot_save INT NOT NULL CHECK (slot_save>=1 AND slot_save<=4),
 	cod_usuario INT NOT NULL,
-	etapa_atual INT,           #etapa_atual == 0 indica que o save ainda não está em uso
+	etapa_atual INT DEFAULT 0,           #etapa_atual == 0 indica que o save ainda não está em uso
     tempo_jogo TIME,           #tempo_jogo == null indica que o save ainda não está em uso
-    sanidade INT,
-    emocional INT,
-    carisma INT,
-    coragem INT,
+    sanidade INT default 0,
+    emocional INT default 0,
+    carisma INT default 0,
+    coragem INT default 0,
     escolhas VARCHAR(1000),
     #PRIMARY KEY(slot_save),
 	CONSTRAINT PK_save_cod_usuario FOREIGN KEY(cod_usuario) 
@@ -84,13 +84,13 @@ INSERT INTO jogador(usuario, senha, apelido) VALUES("mariana","abcde","Sara");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("poliana","natural","Leão");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("abinho","abinhoisthebest","Abinho GamePlay");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("a","a","a");
-select * from jogador;
-select * from save order by cod_usuario, slot_save ASC;
-
-DELETE FROM jogador WHERE jogador.cod_usuario = 1;
+#select * from jogador;
+#select * from save order by cod_usuario, slot_save ASC;
+#SELECT * FROM jogador WHERE jogador.usuario = "a";
+#DELETE FROM jogador WHERE jogador.cod_usuario = 1;
 #SELECT usuario FROM jogador WHERE jogador.usuario = "aa";
 
-#no max22\n por quadro
+#no max22/n por quadro
 
 SET foreign_key_checks = 0;
 
@@ -366,5 +366,5 @@ INSERT INTO etapa VALUES
 
 SET foreign_key_checks = 1;
 
-select * from etapa;
-select * from information_schema.table_constraints where constraint_schema = 'projeto_jogo'
+#select * from etapa;
+#select * from information_schema.table_constraints where constraint_schema = 'projeto_jogo'
