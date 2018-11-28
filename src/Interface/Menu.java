@@ -7,12 +7,16 @@ package Interface;
 
 import BancoDados.DAO;
 import Elementos.*;
+import java.sql.Time;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 public class Menu extends javax.swing.JFrame {
     private Jogador jogador;
+    private int tipoTela;
     public Personagem personagem;
     public Save saveAtual;
     public int numSaveAtual;
@@ -23,10 +27,14 @@ public class Menu extends javax.swing.JFrame {
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
     }
     
-    public Menu(Jogador j) {
+    public Menu(Jogador j, int i) {
         this();
         this.jogador = j;
         labelNomeJogador.setText(jogador.getApelido());
+        labelNomeJogador1.setText(jogador.getApelido());
+        tipoTela=i;
+        setTela(i);
+        setVisible(true);
     }
 
     /**
@@ -38,15 +46,38 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tela = new javax.swing.JPanel();
+        menu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         botaoLogout = new javax.swing.JButton();
         labelNomeJogador = new javax.swing.JLabel();
         botaoNovoJogo = new javax.swing.JButton();
         labelLogadoComo = new javax.swing.JLabel();
         botaoContinuar = new javax.swing.JButton();
+        save = new javax.swing.JPanel();
+        rbS2 = new javax.swing.JRadioButton();
+        rbS1 = new javax.swing.JRadioButton();
+        rbS4 = new javax.swing.JRadioButton();
+        rbS3 = new javax.swing.JRadioButton();
+        labelSave = new javax.swing.JLabel();
+        labelLogadoComo1 = new javax.swing.JLabel();
+        labelNomeJogador1 = new javax.swing.JLabel();
+        labelEtapaS1 = new javax.swing.JLabel();
+        labelHorasS1 = new javax.swing.JLabel();
+        labelHorasS2 = new javax.swing.JLabel();
+        labelEtapaS2 = new javax.swing.JLabel();
+        labelHorasS3 = new javax.swing.JLabel();
+        labelEtapaS3 = new javax.swing.JLabel();
+        labelHorasS4 = new javax.swing.JLabel();
+        labelEtapaS4 = new javax.swing.JLabel();
+        botaoVoltar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        tela.setPreferredSize(new java.awt.Dimension(399, 277));
+        tela.setLayout(new java.awt.CardLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -84,7 +115,6 @@ public class Menu extends javax.swing.JFrame {
         labelLogadoComo.setText("Logado como:");
 
         botaoContinuar.setText("Continuar");
-        botaoContinuar.setEnabled(false);
         botaoContinuar.setMaximumSize(new java.awt.Dimension(79, 32));
         botaoContinuar.setMinimumSize(new java.awt.Dimension(79, 32));
         botaoContinuar.setPreferredSize(new java.awt.Dimension(79, 32));
@@ -99,78 +129,272 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
+        menu.setLayout(menuLayout);
+        menuLayout.setHorizontalGroup(
+            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(botaoNovoJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelLogadoComo)
+                            .addComponent(labelNomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(126, 126, 126)
+                        .addComponent(botaoLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        menuLayout.setVerticalGroup(
+            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(botaoNovoJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addComponent(labelLogadoComo)
+                        .addGap(6, 6, 6)
+                        .addComponent(labelNomeJogador))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(botaoLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+
+        tela.add(menu, "card2");
+
+        save.setPreferredSize(new java.awt.Dimension(399, 260));
+
+        rbS2.setText("Save 2");
+        rbS2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbS2ActionPerformed(evt);
+            }
+        });
+
+        rbS1.setText("Save 1");
+        rbS1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbS1ActionPerformed(evt);
+            }
+        });
+
+        rbS4.setText("Save 4");
+        rbS4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbS4ActionPerformed(evt);
+            }
+        });
+
+        rbS3.setText("Save 3");
+        rbS3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbS3ActionPerformed(evt);
+            }
+        });
+
+        labelSave.setFont(new java.awt.Font("Tahoma", 1, 32)); // NOI18N
+        labelSave.setForeground(new java.awt.Color(20, 20, 255));
+        labelSave.setText("Saves");
+
+        labelLogadoComo1.setText("Logado como:");
+
+        labelNomeJogador1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        labelNomeJogador1.setForeground(new java.awt.Color(200, 20, 20));
+        labelNomeJogador1.setText("nomeJogador");
+
+        labelEtapaS1.setText("S1_Etapa");
+
+        labelHorasS1.setText("S1_Horas");
+
+        labelHorasS2.setText("S2_Horas");
+
+        labelEtapaS2.setText("S2_Etapa");
+
+        labelHorasS3.setText("S3_Horas");
+
+        labelEtapaS3.setText("S3_Etapa");
+
+        labelHorasS4.setText("S4_Horas");
+
+        labelEtapaS4.setText("S4_Etapa");
+
+        botaoVoltar.setText("Voltar");
+        botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Salvar");
+
+        javax.swing.GroupLayout saveLayout = new javax.swing.GroupLayout(save);
+        save.setLayout(saveLayout);
+        saveLayout.setHorizontalGroup(
+            saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saveLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelLogadoComo1)
+                    .addComponent(labelNomeJogador1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(saveLayout.createSequentialGroup()
+                .addGap(142, 142, 142)
+                .addComponent(labelSave)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(saveLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(rbS1)
+                    .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelHorasS1)
+                        .addComponent(labelEtapaS1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(rbS2)
+                    .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelHorasS2)
+                        .addComponent(labelEtapaS2)))
+                .addGap(18, 18, 18)
+                .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(rbS3)
+                    .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelHorasS3)
+                        .addComponent(labelEtapaS3)))
+                .addGap(18, 18, 18)
+                .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbS4)
+                    .addComponent(labelEtapaS4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelHorasS4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(53, 53, 53))
+        );
+        saveLayout.setVerticalGroup(
+            saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saveLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelSave)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbS1)
+                    .addComponent(rbS2)
+                    .addComponent(rbS3)
+                    .addComponent(rbS4))
+                .addGap(7, 7, 7)
+                .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(saveLayout.createSequentialGroup()
+                        .addComponent(labelEtapaS1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelHorasS1))
+                    .addGroup(saveLayout.createSequentialGroup()
+                        .addComponent(labelEtapaS2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelHorasS2))
+                    .addGroup(saveLayout.createSequentialGroup()
+                        .addComponent(labelEtapaS4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelHorasS4))
+                    .addGroup(saveLayout.createSequentialGroup()
+                        .addComponent(labelEtapaS3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelHorasS3)))
+                .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(saveLayout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(labelLogadoComo1)
+                        .addGap(6, 6, 6)
+                        .addComponent(labelNomeJogador1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, saveLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoVoltar)
+                            .addComponent(jButton2))
+                        .addContainerGap())))
+        );
+
+        tela.add(save, "card2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(botaoNovoJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelLogadoComo)
-                            .addComponent(labelNomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(126, 126, 126)
-                        .addComponent(botaoLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10))
+                .addGap(5, 5, 5)
+                .addComponent(tela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(botaoNovoJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelLogadoComo)
-                        .addGap(6, 6, 6)
-                        .addComponent(labelNomeJogador))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(botaoLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10))
+                .addGap(5, 5, 5)
+                .addComponent(tela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoNovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoJogoActionPerformed
-        this.setVisible(false);  
-        personagem = new Personagem(jogador.getApelido());
-        saveAtual = new Save(DAO.getIdJogador(jogador));
-        numSaveAtual = 0;
-        TelaPrincipal qt = new TelaPrincipal(jogador,personagem,saveAtual,numSaveAtual);
-    }//GEN-LAST:event_botaoNovoJogoActionPerformed
+    private void botaoContinuarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botaoContinuarKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoContinuarKeyPressed
+
+    private void botaoContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoContinuarActionPerformed
+        setTela(1);
+    }//GEN-LAST:event_botaoContinuarActionPerformed
 
     private void botaoNovoJogoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botaoNovoJogoKeyPressed
 
     }//GEN-LAST:event_botaoNovoJogoKeyPressed
 
-    private void botaoContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoContinuarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoContinuarActionPerformed
-
-    private void botaoContinuarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botaoContinuarKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoContinuarKeyPressed
+    private void botaoNovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoJogoActionPerformed
+        this.setVisible(false);
+        personagem = new Personagem(jogador.getApelido());
+        saveAtual = new Save(DAO.getIdJogador(jogador));
+        numSaveAtual = 0;
+        System.out.println(String.format("Etapa atual: %d\nCoragem: %d", saveAtual.getEtapa_atual(), saveAtual.getCoragem()));
+        TelaPrincipal qt = new TelaPrincipal(jogador,personagem,saveAtual,numSaveAtual);
+    }//GEN-LAST:event_botaoNovoJogoActionPerformed
 
     private void botaoLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogoutActionPerformed
-        this.dispose();   
-        super.setVisible(true);
+        super.dispose();
+        TelaLogin tl = new TelaLogin();
+        this.setVisible(false);
     }//GEN-LAST:event_botaoLogoutActionPerformed
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
+        setTela(0);
+    }//GEN-LAST:event_botaoVoltarActionPerformed
+
+    private void rbS1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbS1ActionPerformed
+
+    }//GEN-LAST:event_rbS1ActionPerformed
+
+    private void rbS2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbS2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbS2ActionPerformed
+
+    private void rbS3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbS3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbS3ActionPerformed
+
+    private void rbS4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbS4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbS4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,13 +430,92 @@ public class Menu extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void setTela(int i){
+        tela.removeAll(); 
+        if(i==0) tela.add(menu);
+        else{
+            updateTelaSave();
+            tela.add(save);
+        }
+        
+        tipoTela = i;
+        tela.repaint();
+        tela.revalidate();
+        
+    }
+    
+    private void updateTelaSave(){
+        for(int i=0; i<4; i++){
+            int et = jogador.getSave(i).getEtapa_atual();
+            if(et==0){
+                switch(i){
+                    case 0:
+                        rbS1.setEnabled(false);
+                        break;
+                    case 1:
+                        rbS2.setEnabled(false);
+                        break;
+                    case 2:
+                        rbS3.setEnabled(false);
+                        break;
+                    case 3:
+                        rbS4.setEnabled(false);
+                        break;
+                }
+            }
+            Time horas = jogador.getSave(i).getTempo_jogo();
+            switch (i) {
+                case 0:
+                    labelEtapaS1.setText((et==0)?"Vazio":Integer.toString(et));
+                    labelHorasS1.setText((horas==null)?"":horas.toString());
+                    break;
+                case 1:
+                    labelEtapaS2.setText((et==0)?"Vazio":Integer.toString(et));
+                    labelHorasS2.setText((horas==null)?"":horas.toString());
+                    break;
+                case 2:
+                    labelEtapaS3.setText((et==0)?"Vazio":Integer.toString(et));
+                    labelHorasS3.setText((horas==null)?"":horas.toString());
+                    break;
+                case 3:
+                    labelEtapaS4.setText((et==0)?"Vazio":Integer.toString(et));
+                    labelHorasS4.setText((horas==null)?"":horas.toString());
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoContinuar;
     private javax.swing.JButton botaoLogout;
     private javax.swing.JButton botaoNovoJogo;
+    private javax.swing.JButton botaoVoltar;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel labelEtapaS1;
+    private javax.swing.JLabel labelEtapaS2;
+    private javax.swing.JLabel labelEtapaS3;
+    private javax.swing.JLabel labelEtapaS4;
+    private javax.swing.JLabel labelHorasS1;
+    private javax.swing.JLabel labelHorasS2;
+    private javax.swing.JLabel labelHorasS3;
+    private javax.swing.JLabel labelHorasS4;
     private javax.swing.JLabel labelLogadoComo;
+    private javax.swing.JLabel labelLogadoComo1;
     private javax.swing.JLabel labelNomeJogador;
+    private javax.swing.JLabel labelNomeJogador1;
+    private javax.swing.JLabel labelSave;
+    private javax.swing.JPanel menu;
+    private javax.swing.JRadioButton rbS1;
+    private javax.swing.JRadioButton rbS2;
+    private javax.swing.JRadioButton rbS3;
+    private javax.swing.JRadioButton rbS4;
+    private javax.swing.JPanel save;
+    private javax.swing.JPanel tela;
     // End of variables declaration//GEN-END:variables
 }

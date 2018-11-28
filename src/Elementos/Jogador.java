@@ -27,6 +27,8 @@ public class Jogador {
         this.senha = senha;
         this.apelido = apelido;
         this.tempo_jogo = tempo_jogo;
+        this.slot = new Save[4]; 
+       
         for(int i=0; i<4; i++){
             switch(i){
                 case 0:

@@ -49,15 +49,14 @@ public class TelaLogin extends javax.swing.JFrame {
         AddKeyListenersOnEvent();
         setVisible(true);
         /*jogador = new Jogador("abinhogameplay","amigodamariana","Abinho Gameplay");
-        if(!OperacoesBD.checkIfUserExists(jogador.getUsuario())) 
+        if(!DAO.checkIfUserExists(jogador.getUsuario())) 
         try {
-            OperacoesBD.InserirJogador(jogador);
+            DAO.InserirJogador(jogador);
         } catch (SQLIntegrityConstraintViolationException ex) {
             Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         setVisible(false);
-        Menu m = new Menu(jogador);
-        m.setVisible(true);*/
+        Menu m = new Menu(jogador,0);*/
     }
 
     /**
@@ -98,8 +97,9 @@ public class TelaLogin extends javax.swing.JFrame {
 
         labelSenhaLogin.setText("Senha");
 
+        tbUsuarioLogin.setText("a");
+
         botaoLogar.setText("Login");
-        botaoLogar.setEnabled(false);
         botaoLogar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoLogarActionPerformed(evt);
@@ -117,6 +117,7 @@ public class TelaLogin extends javax.swing.JFrame {
         labelLogin.setForeground(new java.awt.Color(80, 200, 40));
         labelLogin.setText("Login");
 
+        tbSenhaLogin.setText("a");
         tbSenhaLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbSenhaLoginActionPerformed(evt);
@@ -298,8 +299,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 System.out.println("Login realizado com sucesso.");
                 jogador=DAO.getJogador(tbUsuarioLogin.getText());
                 this.setVisible(false);
-                Menu m = new Menu(jogador);
-                m.setVisible(true);
+                Menu m = new Menu(jogador,0);
             }
         }
         else JOptionPane.showMessageDialog(this, "Existem campos em branco, então não é possível realizar o cadastro.","Aviso", JOptionPane.WARNING_MESSAGE);

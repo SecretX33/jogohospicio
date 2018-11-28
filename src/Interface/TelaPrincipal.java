@@ -25,6 +25,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private int numEtapaAtual;
     private int numSlotSaveAtual;
     private int tipoQuadroAtual;
+    private boolean saved;
     
     /**
      * Creates new form QuadroTemporario
@@ -33,6 +34,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
+        saved = false;
     }
     
     public TelaPrincipal(Jogador j, Personagem p, Save sA, int nSSA) {
@@ -42,8 +44,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.saveAtual = sA;
         this.numSlotSaveAtual = nSSA;
         this.numEtapaAtual = (saveAtual.getEtapa_atual() == 0)? 1 : saveAtual.getEtapa_atual();
-        this.etapaAtual = DAO.getEtapa(numEtapaAtual); 
-        nomeJogador.setText(jogador.getApelido());
+        this.etapaAtual = DAO.getEtapa(numEtapaAtual);
+        System.out.println(etapaAtual.getDescricao());
+        this.nomeJogador.setText(jogador.getApelido());;
         this.tipoQuadroAtual = etapaAtual.getTipo_quadro();
         atualizarInterface();
         setVisible(true);
@@ -74,14 +77,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         percEmocional = new javax.swing.JLabel();
         percCarisma = new javax.swing.JLabel();
         percCoragem = new javax.swing.JLabel();
+        botaoSair = new javax.swing.JButton();
+        botaoSalvar = new javax.swing.JButton();
         alternar = new javax.swing.JPanel();
         decisao = new javax.swing.JPanel();
         botaoOpcao1 = new javax.swing.JButton();
         botaoOpcao2 = new javax.swing.JButton();
-        areaTextoDecisao = new javax.swing.JFormattedTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        areaTextoDecisao = new javax.swing.JTextArea();
         avancar = new javax.swing.JPanel();
         botaoAvancar = new javax.swing.JButton();
-        areaTextoAvancar = new javax.swing.JFormattedTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        areaTextoAvancar = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -118,6 +125,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         percCoragem.setText("%");
 
+        botaoSair.setText("Sair");
+
+        botaoSalvar.setText("Salvar");
+        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout statusLayout = new javax.swing.GroupLayout(status);
         status.setLayout(statusLayout);
         statusLayout.setHorizontalGroup(
@@ -145,7 +161,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addGroup(statusLayout.createSequentialGroup()
                         .addComponent(labelCarisma)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(percCarisma)))
+                        .addComponent(percCarisma))
+                    .addComponent(botaoSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botaoSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
@@ -182,7 +200,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(percCoragem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraCoragem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addComponent(botaoSalvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoSair)
+                .addContainerGap())
         );
 
         alternar.setLayout(new java.awt.CardLayout());
@@ -204,10 +226,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        areaTextoDecisao.setEditable(false);
-        areaTextoDecisao.setText("areaTexto");
-        areaTextoDecisao.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        areaTextoDecisao.setRequestFocusEnabled(false);
+        areaTextoDecisao.setColumns(20);
+        areaTextoDecisao.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+        areaTextoDecisao.setRows(5);
+        areaTextoDecisao.setText("areaTextoDecisao\n");
+        areaTextoDecisao.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(areaTextoDecisao);
 
         javax.swing.GroupLayout decisaoLayout = new javax.swing.GroupLayout(decisao);
         decisao.setLayout(decisaoLayout);
@@ -215,20 +239,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
             decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(decisaoLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, decisaoLayout.createSequentialGroup()
+                .addGroup(decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                    .addGroup(decisaoLayout.createSequentialGroup()
                         .addComponent(botaoOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoOpcao2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(areaTextoDecisao, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                        .addComponent(botaoOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         decisaoLayout.setVerticalGroup(
             decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, decisaoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(areaTextoDecisao, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(decisaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -247,31 +270,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        areaTextoAvancar.setEditable(false);
-        areaTextoAvancar.setText("areaTexto");
-        areaTextoAvancar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        areaTextoAvancar.setRequestFocusEnabled(false);
+        areaTextoAvancar.setColumns(20);
+        areaTextoAvancar.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+        areaTextoAvancar.setRows(5);
+        areaTextoAvancar.setText("areaTextoDecisao\n");
+        areaTextoAvancar.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(areaTextoAvancar);
 
         javax.swing.GroupLayout avancarLayout = new javax.swing.GroupLayout(avancar);
         avancar.setLayout(avancarLayout);
         avancarLayout.setHorizontalGroup(
             avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(avancarLayout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
-                        .addComponent(areaTextoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
-                        .addComponent(botaoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130))))
+                .addContainerGap(141, Short.MAX_VALUE)
+                .addComponent(botaoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130))
+            .addGroup(avancarLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane3)
+                .addContainerGap())
         );
         avancarLayout.setVerticalGroup(
             avancarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avancarLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(areaTextoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -311,7 +334,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(tela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -328,6 +351,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void botaoAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAvancarActionPerformed
         avancarEtapa(0);
     }//GEN-LAST:event_botaoAvancarActionPerformed
+
+    private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+        
+    }//GEN-LAST:event_botaoSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,8 +395,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel alternar;
-    private javax.swing.JFormattedTextField areaTextoAvancar;
-    private javax.swing.JFormattedTextField areaTextoDecisao;
+    private javax.swing.JTextArea areaTextoAvancar;
+    private javax.swing.JTextArea areaTextoDecisao;
     private javax.swing.JPanel avancar;
     private javax.swing.JProgressBar barraCarisma;
     private javax.swing.JProgressBar barraCoragem;
@@ -378,7 +405,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botaoAvancar;
     private javax.swing.JButton botaoOpcao1;
     private javax.swing.JButton botaoOpcao2;
+    private javax.swing.JButton botaoSair;
+    private javax.swing.JButton botaoSalvar;
     private javax.swing.JPanel decisao;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel labelCarisma;
     private javax.swing.JLabel labelCoragem;
@@ -394,6 +425,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void avancarEtapa(int botao){
+        saved = false;
         if(etapaAtual.getRef_op1() > 0){
             Etapa proxEtapa;
             

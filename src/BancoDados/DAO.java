@@ -14,7 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.HashSet;
+import java.util.Set;
 
 public class DAO {  
     private static Connection connection = null;
@@ -87,6 +89,30 @@ public class DAO {
         }
     }
     
+    public static int getIdJogador(String nome){
+       if(nome == null) throw new IllegalArgumentException("Não é possível pegar o ID de um jogador nulo.");
+        else{
+            try
+            {
+                resultado = null;
+                if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
+                statement = (Statement) connection.createStatement();
+
+                statement.executeQuery(String.format("SELECT cod_usuario FROM jogador WHERE jogador.usuario = \"%s\"",nome));
+                resultado = statement.getResultSet();
+                if(resultado.next()){
+                    System.out.println(String.format("O ID do usuario \'%s\' é %d",nome, (int)resultado.getInt(1)));
+                    return (int)resultado.getInt(1);
+                }
+            }
+            catch (SQLException e)
+            {
+                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+            }
+            throw new NullPointerException("O banco de dados retornou um resultado nulo para o jogador.");
+        }
+    }
+    
     public static int getIdJogador(Jogador jogador){
        if(jogador == null) throw new IllegalArgumentException("Não é possível pegar o ID de um jogador nulo.");
         else{
@@ -116,16 +142,49 @@ public class DAO {
         else{
             try{
                 resultado = null;
+                Save s[] = new Save[4];
+                int id=-1;
+                String u=null;
+                String se=null;
+                String a=null;
+                Time tj=null;
+                
                 String query = "SELECT * FROM jogador WHERE jogador.usuario = ?";
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
                 prepstate = connection.prepareStatement(query);
-
                 prepstate.setString(1,usuario);
                 resultado = prepstate.executeQuery();
+  
                 if(resultado.next()){
-                    Jogador j = new Jogador(resultado.getString("usuario"),resultado.getString("senha"),resultado.getString("Apelido"));
-                    return j;
+                    id = resultado.getInt("cod_usuario");
+                    u = resultado.getString("usuario");
+                    se = resultado.getString("senha");
+                    a = resultado.getString("apelido");
+                    tj = resultado.getTime("tempo_jogo");
+                    System.out.println("Tempo de jogo: " + resultado.getTime("tempo_jogo"));
+                    System.out.println(String.format("%d,%s,%s,%s,%s",id,u,se,a,String.valueOf(tj)));
+                    resultado=null;
+                    query="SELECT * FROM save WHERE save.cod_usuario = ? ORDER BY slot_save, cod_usuario";
+                    if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
+                    prepstate = connection.prepareStatement(query);
+                    prepstate.setInt(1,id);
+                    resultado = prepstate.executeQuery();
+                    
+                    for(int i=0; resultado.next() && i<4; i++){
+                        Save gaveta = new Save(i);
+                        gaveta.setSlot_save(resultado.getInt("slot_save"));
+                        gaveta.setCod_usuario(resultado.getInt("cod_usuario"));
+                        gaveta.setEtapa_atual(resultado.getInt("etapa_atual"));
+                        gaveta.setTempo_jogo(resultado.getTime("tempo_jogo"));
+                        gaveta.setSanidade(resultado.getInt("sanidade"));
+                        gaveta.setEmocional(resultado.getInt("emocional"));
+                        gaveta.setCarisma(resultado.getInt("carisma"));
+                        gaveta.setCoragem(resultado.getInt("coragem"));
+                        s[i]=gaveta;
+                    }
+                    return new Jogador(u,se,a,tj,s[0],s[1],s[2],s[3]);     
                 }
+                else throw new NullPointerException("Não foi possível criar o jogador por falta de dados.");
             }
             catch (SQLException e)
             {
@@ -145,7 +204,7 @@ public class DAO {
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
                 prepstate = connection.prepareStatement(query);
 
-                prepstate.setString(1,Integer.toString(codProxEtapa));
+                prepstate.setInt(1,codProxEtapa);
                 resultado = prepstate.executeQuery();
                 if(resultado.next()){
                     Etapa proxEtapa = new Etapa();
@@ -171,6 +230,7 @@ public class DAO {
                     
                     return proxEtapa;
                 }
+                throw new NullPointerException(String.format("O banco de dados retornou um resultado nulo para a etapa %d.",codProxEtapa));
             }
             catch (SQLException e)
             {
