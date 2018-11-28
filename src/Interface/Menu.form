@@ -91,7 +91,6 @@
     <Component class="javax.swing.JButton" name="botaoLogout">
       <Properties>
         <Property name="text" type="java.lang.String" value="Logout"/>
-        <Property name="enabled" type="boolean" value="false"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[65, 20]"/>
         </Property>
@@ -102,6 +101,9 @@
           <Dimension value="[65, 20]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoLogoutActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="labelNomeJogador">
       <Properties>

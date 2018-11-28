@@ -6,7 +6,7 @@
 package Principal;
 
 import BancoDados.ConexaoMySQL;
-import BancoDados.OperacoesBD;
+import BancoDados.DAO;
 import Elementos.Jogador;
 import Interface.*;
 import Interface.Menu.*;

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Interface;
-import BancoDados.OperacoesBD;
+import BancoDados.DAO;
 import Elementos.Jogador;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -24,8 +24,8 @@ import javax.swing.JPanel;
 public class TelaLogin extends javax.swing.JFrame {
     public Jogador jogador;
     private int tipoTela;
-    private KeyListener loginKL;
-    private KeyListener registroKL;
+    private final KeyListener loginKL;
+    private final KeyListener registroKL;
     
     
     public TelaLogin() {
@@ -47,16 +47,17 @@ public class TelaLogin extends javax.swing.JFrame {
         }};
         
         AddKeyListenersOnEvent();
-        jogador = new Jogador("abinhogameplay","amigodamariana","Abinho Gameplay");
+        setVisible(true);
+        /*jogador = new Jogador("abinhogameplay","amigodamariana","Abinho Gameplay");
         if(!OperacoesBD.checkIfUserExists(jogador.getUsuario())) 
         try {
             OperacoesBD.InserirJogador(jogador);
         } catch (SQLIntegrityConstraintViolationException ex) {
             Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }    
+        }
         setVisible(false);
         Menu m = new Menu(jogador);
-        m.setVisible(true);
+        m.setVisible(true);*/
     }
 
     /**
@@ -266,15 +267,17 @@ public class TelaLogin extends javax.swing.JFrame {
            !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
            !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
         {
-            if(OperacoesBD.checkIfUserExists(String.valueOf(tbUsuarioRegistro.getText())))
-                JOptionPane.showMessageDialog(null, "Esse usuário já existe, tente outro nome.", "Erro ao cadastrar", JOptionPane.WARNING_MESSAGE);
+            if(DAO.checkIfUserExists(String.valueOf(tbUsuarioRegistro.getText())))
+                JOptionPane.showMessageDialog(this, "Esse usuário já existe, tente outro nome.", "Erro ao cadastrar", JOptionPane.WARNING_MESSAGE);
             else{
                 try{
-                    OperacoesBD.InserirJogador(new Jogador(tbUsuarioRegistro.getText(), String.valueOf(tbSenhaRegistro.getPassword()), tbApelidoRegistro.getText()));              
+                    DAO.InserirJogador(new Jogador(tbUsuarioRegistro.getText(), String.valueOf(tbSenhaRegistro.getPassword()), tbApelidoRegistro.getText()));              
+                    JOptionPane.showMessageDialog(this, "Usuário registrado com sucesso!", "Êxito", JOptionPane.INFORMATION_MESSAGE);
                     trocarTela();
                 } catch(SQLIntegrityConstraintViolationException e){
-                    JOptionPane.showMessageDialog(null, "Esse usuário já existe, tente outro nome.\n\n" + e, "Erro ao cadastrar", JOptionPane.WARNING_MESSAGE);
-                }     
+                    JOptionPane.showMessageDialog(this, "Esse usuário já existe, tente outro nome.\n\n" + e, "Erro ao cadastrar", JOptionPane.WARNING_MESSAGE);
+                }
+                
             }
         }
         else JOptionPane.showMessageDialog(null, "Existem campos em branco, então não é possível realizar o cadastro.","Aviso", JOptionPane.WARNING_MESSAGE);
@@ -287,15 +290,19 @@ public class TelaLogin extends javax.swing.JFrame {
     private void botaoLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogarActionPerformed
         if(!isLoginEmpty())
         {
-            if(!OperacoesBD.verifyLogin(String.valueOf(tbUsuarioLogin.getText()),String.valueOf(tbSenhaLogin.getPassword()))){
+            if(!DAO.verifyLogin(String.valueOf(tbUsuarioLogin.getText()),String.valueOf(tbSenhaLogin.getPassword()))){
                 System.out.println("Erro ao logar, usuario ou senha incorretos.");
-                JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos, tente novamente.", "Erro ao logar", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos, tente novamente.", "Erro ao logar", JOptionPane.WARNING_MESSAGE);
             }    
-            else
+            else{
                 System.out.println("Login realizado com sucesso.");
-                //
+                jogador=DAO.getJogador(tbUsuarioLogin.getText());
+                this.setVisible(false);
+                Menu m = new Menu(jogador);
+                m.setVisible(true);
+            }
         }
-        else JOptionPane.showMessageDialog(null, "Existem campos em branco, então não é possível realizar o cadastro.","Aviso", JOptionPane.WARNING_MESSAGE);
+        else JOptionPane.showMessageDialog(this, "Existem campos em branco, então não é possível realizar o cadastro.","Aviso", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_botaoLogarActionPerformed
 
     private void tbSenhaLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbSenhaLoginActionPerformed
@@ -345,7 +352,7 @@ public class TelaLogin extends javax.swing.JFrame {
             tbSenhaRegistro.setText(String.valueOf(tbSenhaLogin.getPassword()));
             tbSenhaLogin.setText("");
             //botaoRegistrarRegistro.setEnabled(false);
-            isRegistroEmpty();
+            checkRegistroEmpty();
             tela.add(registro);
         }
         else{
@@ -354,7 +361,7 @@ public class TelaLogin extends javax.swing.JFrame {
             tbSenhaRegistro.setText("");
             tbApelidoRegistro.setText("");
             //botaoLogar.setEnabled(false);
-            isLoginEmpty();
+            checkLoginEmpty();
             tela.add(login);
         }
         tipoTela=1-tipoTela;

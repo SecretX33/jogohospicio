@@ -5,7 +5,7 @@
  */
 package Interface;
 
-import BancoDados.OperacoesBD;
+import BancoDados.DAO;
 import Elementos.*;
 import Principal.JogoHospicio;
 import java.awt.CardLayout;
@@ -42,7 +42,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.saveAtual = sA;
         this.numSlotSaveAtual = nSSA;
         this.numEtapaAtual = (saveAtual.getEtapa_atual() == 0)? 1 : saveAtual.getEtapa_atual();
-        this.etapaAtual = OperacoesBD.getEtapa(numEtapaAtual); 
+        this.etapaAtual = DAO.getEtapa(numEtapaAtual); 
         nomeJogador.setText(jogador.getApelido());
         this.tipoQuadroAtual = etapaAtual.getTipo_quadro();
         atualizarInterface();
@@ -398,8 +398,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             Etapa proxEtapa;
             
             atualizarStatus(botao);
-            if(botao < 2) proxEtapa = OperacoesBD.getEtapa(etapaAtual.getRef_op1());
-            else proxEtapa = OperacoesBD.getEtapa(etapaAtual.getRef_op2());
+            if(botao < 2) proxEtapa = DAO.getEtapa(etapaAtual.getRef_op1());
+            else proxEtapa = DAO.getEtapa(etapaAtual.getRef_op2());
 
             if(tipoQuadroAtual != proxEtapa.getTipo_quadro()){
                 tipoQuadroAtual = proxEtapa.getTipo_quadro();

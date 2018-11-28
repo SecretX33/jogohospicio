@@ -5,8 +5,10 @@
  */
 package Interface;
 
-import BancoDados.OperacoesBD;
+import BancoDados.DAO;
 import Elementos.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Menu extends javax.swing.JFrame {
@@ -51,10 +53,14 @@ public class Menu extends javax.swing.JFrame {
         jLabel1.setText("O HOSPÍCIO");
 
         botaoLogout.setText("Logout");
-        botaoLogout.setEnabled(false);
         botaoLogout.setMaximumSize(new java.awt.Dimension(65, 20));
         botaoLogout.setMinimumSize(new java.awt.Dimension(65, 20));
         botaoLogout.setPreferredSize(new java.awt.Dimension(65, 20));
+        botaoLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoLogoutActionPerformed(evt);
+            }
+        });
 
         labelNomeJogador.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         labelNomeJogador.setForeground(new java.awt.Color(200, 20, 20));
@@ -144,7 +150,7 @@ public class Menu extends javax.swing.JFrame {
     private void botaoNovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoJogoActionPerformed
         this.setVisible(false);  
         personagem = new Personagem(jogador.getApelido());
-        saveAtual = new Save(OperacoesBD.getJogadorId(jogador));
+        saveAtual = new Save(DAO.getIdJogador(jogador));
         numSaveAtual = 0;
         TelaPrincipal qt = new TelaPrincipal(jogador,personagem,saveAtual,numSaveAtual);
     }//GEN-LAST:event_botaoNovoJogoActionPerformed
@@ -160,6 +166,11 @@ public class Menu extends javax.swing.JFrame {
     private void botaoContinuarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botaoContinuarKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoContinuarKeyPressed
+
+    private void botaoLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogoutActionPerformed
+        this.dispose();   
+        super.setVisible(true);
+    }//GEN-LAST:event_botaoLogoutActionPerformed
 
     /**
      * @param args the command line arguments
