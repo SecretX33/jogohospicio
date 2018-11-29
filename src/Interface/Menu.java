@@ -20,12 +20,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Menu extends javax.swing.JFrame {
-
-    private Jogador jogador;
-    private int tipoTela;
+    private Jogador jogador;  
     private Save saveAtual;
+    
+    private int tipoTela;
     private int numSaveAtual;
     private int numEtapaAtual;
+    private long loginHorarioInicio;
 
     public Menu() {
         initComponents();
@@ -43,7 +44,13 @@ public class Menu extends javax.swing.JFrame {
         setTela(i);
         labelNomeJogador.setText(jogador.getApelido());
         labelNomeJogador1.setText(jogador.getApelido());
+        this.loginHorarioInicio=System.currentTimeMillis();
         setVisible(true);
+    }
+    
+    public Menu(Jogador j, int i, long h){
+        this(j,i);
+        this.loginHorarioInicio=h;
     }
 
     public Menu(Jogador j, int i, Save s, int ea) {
@@ -51,7 +58,7 @@ public class Menu extends javax.swing.JFrame {
         this.jogador = j;
         this.tipoTela = i;
         this.saveAtual = s;
-        this.numSaveAtual = s.getSlot_save();
+        this.numSaveAtual = s.getSlot_save()-1;
         this.numEtapaAtual = ea;
         setTela(i);
         labelNomeJogador.setText(jogador.getApelido());
@@ -474,7 +481,8 @@ public class Menu extends javax.swing.JFrame {
                 } catch (SQLIntegrityConstraintViolationException ex) {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                updateTelaSave();             
+                updateTelaSave();
+                createNewGame();
             }
         }
         else System.out.println("Não há botões selecionados.");
@@ -516,8 +524,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     private void createNewGame() {
-        super.dispose();
-        this.setVisible(false);
+        this.dispose();
         TelaPrincipal tp = new TelaPrincipal(jogador, saveAtual, numSaveAtual);
     }
 
@@ -529,7 +536,6 @@ public class Menu extends javax.swing.JFrame {
             botaoSalvarOuCarregar.setEnabled(false);
             return false;
         }
-
     }
 
     private void setTela(int i) {
@@ -579,20 +585,21 @@ public class Menu extends javax.swing.JFrame {
                 }
             }
             else if(tipoTela==2){
-                switch(saveAtual.getSlot_save()){
-                     case 1:
+                switch(numSaveAtual){
+                     case 0:
                         rbS1.setSelected(true);
                         break;
-                    case 2:
+                    case 1:
                         rbS2.setSelected(true);
                         break;
-                    case 3:
+                    case 2:
                         rbS3.setSelected(true);
                         break;
-                    case 4:
+                    case 3:
                         rbS4.setSelected(true);
                         break;
                 }
+                checkSelected();
             }
             switch (i) {
                 case 0:

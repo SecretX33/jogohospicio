@@ -298,6 +298,7 @@ public class TelaLogin extends javax.swing.JFrame {
             else{
                 System.out.println("Login realizado com sucesso.");
                 jogador=DAO.getJogador(tbUsuarioLogin.getText());
+                this.dispose();
                 Menu m = new Menu(jogador,0);
             }
         }

@@ -25,15 +25,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     private int tipoQuadroAtual;
     private boolean saved;
+    private long saveHorarioInicio;
     
-    /**
-     * Creates new form QuadroTemporario
-     */
     public TelaPrincipal(){
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
-        saved = false;
+        saved = true;
     }
     
     public TelaPrincipal(Jogador j, Save sA, int nSSA) {
@@ -45,6 +43,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.tipoQuadroAtual = etapaAtual.getTipo_quadro();
         atualizarInterface();
         setVisible(true);
+    }
+    
+    public TelaPrincipal(Jogador j, Save sA, int nSSA, boolean saved) {
+        this(j,sA,nSSA);
+        this.saved=saved;
     }
 
     /**
@@ -376,14 +379,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
-        super.dispose();
-        this.setVisible(false);
-        Menu m = new Menu(jogador,0);
+        if(!saved){
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(this,"Você deseja salvar antes de sair?","Aviso",dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                this.dispose();
+                Menu m = new Menu(jogador,2, saveAtual, etapaAtual.getCod());
+            }
+            else if(dialogResult == JOptionPane.NO_OPTION){
+                Sair();
+            }
+        }
+        else Sair();
     }//GEN-LAST:event_botaoSairActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void Sair(){
+        this.dispose();
+        Menu m = new Menu(jogador,0);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
