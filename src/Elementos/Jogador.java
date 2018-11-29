@@ -5,6 +5,7 @@ import javafx.scene.input.DataFormat;
 
 
 public class Jogador {
+    private int cod_usuario;
     private String usuario;
     private String senha;
     private String apelido;
@@ -12,6 +13,7 @@ public class Jogador {
     private Save[] slot;
     
     public Jogador(String usuario, String senha, String apelido){
+        this.cod_usuario = 0;
         this.usuario = usuario;
         this.senha = senha;
         this.apelido = apelido;
@@ -22,7 +24,8 @@ public class Jogador {
         for(int i=0; i<4; i++) this.slot = null;        
     }
     
-    public Jogador(String usuario, String senha, String apelido, Time tempo_jogo, Save slot0, Save slot1, Save slot2, Save slot3) {
+    public Jogador(int cod_usuario, String usuario, String senha, String apelido, Time tempo_jogo, Save slot0, Save slot1, Save slot2, Save slot3) {
+        this.cod_usuario = cod_usuario;
         this.usuario = usuario;
         this.senha = senha;
         this.apelido = apelido;
@@ -48,6 +51,14 @@ public class Jogador {
         }
     }
 
+     public int getCod_usuario() {
+        return cod_usuario;
+    }
+
+    public void setCod_usuario(int cod_usuario) {
+        this.cod_usuario = cod_usuario;
+    }
+    
     public String getUsuario() {
         return usuario;
     }

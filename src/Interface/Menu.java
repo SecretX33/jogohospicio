@@ -17,40 +17,37 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 public class Menu extends javax.swing.JFrame {
+
     private Jogador jogador;
     private int tipoTela;
-    public Personagem personagem;
     private Save saveAtual;
     private int numSaveAtual;
     private int numEtapaAtual;
-    
-    public Menu(){
+
+    public Menu() {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
         checkSelected();
     }
-    
+
     public Menu(Jogador j, int i) {
         this();
         this.jogador = j;
+        this.tipoTela = i;
+        this.saveAtual = new Save(jogador.getCod_usuario());
+        this.numSaveAtual = 0;
+        setTela(i);
         labelNomeJogador.setText(jogador.getApelido());
         labelNomeJogador1.setText(jogador.getApelido());
-        this.tipoTela=i;
-        setTela(i);
-        this.personagem = new Personagem(jogador.getApelido());
-        this.saveAtual = new Save(DAO.getIdJogador(jogador));
-        this.numSaveAtual = 0;
         setVisible(true);
     }
-    
-    public Menu(Jogador j, int i, Personagem p, Save s, int ea){
+
+    public Menu(Jogador j, int i, Save s, int ea) {
         this();
         this.jogador = j;
-        this.tipoTela=i;
-        this.personagem = p;
+        this.tipoTela = i;
         this.saveAtual = s;
         this.numSaveAtual = s.getSlot_save();
         this.numEtapaAtual = ea;
@@ -391,20 +388,24 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovoJogoKeyPressed
 
     private void botaoNovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoJogoActionPerformed
+        super.dispose();
         this.setVisible(false);
         System.out.println(String.format("NOVO JOGO(Etapa atual: %d; Coragem: %d)", saveAtual.getEtapa_atual(), saveAtual.getCoragem()));
         createNewGame();
     }//GEN-LAST:event_botaoNovoJogoActionPerformed
 
     private void botaoLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogoutActionPerformed
+        jogador = null;
+        saveAtual = null;
         super.dispose();
         this.setVisible(false);
-        TelaLogin tl = new TelaLogin();     
+        TelaLogin tl = new TelaLogin();
     }//GEN-LAST:event_botaoLogoutActionPerformed
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
-        if(tipoTela==1) setTela(0);
-        else if(tipoTela==2){
+        if (tipoTela == 1)
+            setTela(0);
+        else if (tipoTela == 2) {
             createNewGame();
         }
     }//GEN-LAST:event_botaoVoltarActionPerformed
@@ -439,52 +440,43 @@ public class Menu extends javax.swing.JFrame {
 
     private void botaoSalvarOuCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarOuCarregarActionPerformed
         if(checkSelected()){
-            if(tipoTela==1){
-                if(rbS1.isSelected()){
-                    numSaveAtual = 0;        
-                }
-                else if(rbS2.isSelected()){
+            if(tipoTela == 1){
+                if(rbS1.isSelected())
+                    numSaveAtual = 0;
+                else if (rbS2.isSelected())
                     numSaveAtual = 1;
-                }  
-                else if(rbS3.isSelected()){
+                else if (rbS3.isSelected())
                     numSaveAtual = 2;
-                }
-                else if(rbS4.isSelected()){
+                else if (rbS4.isSelected())
                     numSaveAtual = 3;
-                }
-                else return;
                 //saveAtual.setSlot_save(numSaveAtual);
                 //copyStatus(jogador.getSave(numSaveAtual),saveAtual);
                 saveAtual = jogador.getSave(numSaveAtual);
-                copyStatus(saveAtual,personagem);
                 createNewGame();
             }
-            else if(tipoTela==2){
-                if(rbS1.isSelected()){
-                    numSaveAtual = 0;        
-                }
-                else if(rbS2.isSelected()){
+            else if(tipoTela == 2) {
+                if(rbS1.isSelected())
+                    numSaveAtual = 0;
+                else if (rbS2.isSelected())
                     numSaveAtual = 1;
-                }  
-                else if(rbS3.isSelected()){
+                else if (rbS3.isSelected())
                     numSaveAtual = 2;
-                }
-                else if(rbS4.isSelected()){
+                else if (rbS4.isSelected())
                     numSaveAtual = 3;
-                }
-                else return;
+                    
                 saveAtual.setSlot_save(numSaveAtual);
                 saveAtual.setEtapa_atual(numEtapaAtual);
-                copyStatus(personagem,saveAtual);
-                jogador.setSave(saveAtual,numSaveAtual);
+                jogador.setSave(saveAtual, numSaveAtual);
                 try {
                     DAO.AtualizarSave(saveAtual);
                 } catch (SQLIntegrityConstraintViolationException ex) {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 updateTelaSave();
+                
             }
         }
+        else System.out.println("Não há botões selecionados.");
     }//GEN-LAST:event_botaoSalvarOuCarregarActionPerformed
 
     /**
@@ -521,42 +513,30 @@ public class Menu extends javax.swing.JFrame {
             }
         });
     }
-    private void createNewGame(){
-        this.dispose();
+
+    private void createNewGame() {
+        super.dispose();
         this.setVisible(false);
-        TelaPrincipal tp = new TelaPrincipal(jogador,personagem,saveAtual,numSaveAtual);
+        TelaPrincipal tp = new TelaPrincipal(jogador, saveAtual, numSaveAtual);
     }
-    
-    private void copyStatus(Personagem p, Save s){
-        s.setSanidade(p.getSanidade());
-        s.setEmocional(p.getEmocional());
-        s.setCarisma(p.getCarisma());
-        s.setCoragem(p.getCoragem()); 
-    }
-    private void copyStatus(Save ss, Personagem s){
-        s.setSanidade(ss.getSanidade());
-        s.setEmocional(ss.getEmocional());
-        s.setCarisma(ss.getCarisma());
-        s.setCoragem(ss.getCoragem()); 
-    }
-            
-    private boolean checkSelected(){
-        if(rbS1.isSelected() || rbS2.isSelected() || rbS3.isSelected() || rbS4.isSelected()){
+
+    private boolean checkSelected() {
+        if (rbS1.isSelected() || rbS2.isSelected() || rbS3.isSelected() || rbS4.isSelected()) {
             botaoSalvarOuCarregar.setEnabled(true);
             return true;
-        }        
-        else{
+        } else {
             botaoSalvarOuCarregar.setEnabled(false);
             return false;
         }
-            
+
     }
-    
-    private void setTela(int i){
+
+    private void setTela(int i) {
         tela.removeAll();
         tipoTela = i;
-        
-        if(tipoTela==0) tela.add(menu);
+
+        if(tipoTela == 0)
+            tela.add(menu);
         else{
             updateTelaSave();
             tela.add(save);
@@ -564,61 +544,75 @@ public class Menu extends javax.swing.JFrame {
 
         tela.repaint();
         tela.revalidate();
-        
     }
-    
-    private void updateTelaSave(){
-        if(tipoTela == 1){
+
+    private void updateTelaSave() {
+        if (tipoTela == 1) {
             botaoSalvarOuCarregar.setText("Carregar");
-        }
-        else if(tipoTela == 2){
+        } else if (tipoTela == 2) {
             botaoSalvarOuCarregar.setText("Salvar");
         }
-        
-        for(int i=0; i<4; i++){
+
+        for (int i = 0; i < 4; i++) {
             int et = jogador.getSave(i).getEtapa_atual();
             Time horas = jogador.getSave(i).getTempo_jogo();
-            if(tipoTela==1){
-                switch(i){
+            if(tipoTela == 1) {
+                switch (i) {
                     case 0:
-                        rbS1.setSelected(false);               
+                        rbS1.setSelected(false);
+                        if(et == 0) rbS1.setEnabled(false);
                         break;
                     case 1:
-                        rbS2.setSelected(false);               
+                        rbS2.setSelected(false);
+                        if(et == 0) rbS2.setEnabled(false);
                         break;
                     case 2:
-                        rbS3.setSelected(false);         
+                        rbS3.setSelected(false);
+                        if(et == 0) rbS3.setEnabled(false);
+
                         break;
                     case 3:
-                        rbS4.setSelected(false);           
+                        rbS4.setSelected(false);
+                        if(et == 0) rbS4.setEnabled(false);
+                        break;
+                }
+            }
+            else if(tipoTela==2){
+                switch(saveAtual.getSlot_save()){
+                     case 1:
+                        rbS1.setSelected(true);
+                        break;
+                    case 2:
+                        rbS2.setSelected(true);
+                        break;
+                    case 3:
+                        rbS3.setSelected(true);
+                        break;
+                    case 4:
+                        rbS4.setSelected(true);
                         break;
                 }
             }
             switch (i) {
                 case 0:
-                    labelEtapaS1.setText((et==0)?"Vazio":"Etapa: "+Integer.toString(et));
-                    labelHorasS1.setText((horas==null)?"":horas.toString());
-                    if(et==0)rbS1.setEnabled(false);
+                    labelEtapaS1.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelHorasS1.setText((horas == null) ? "" : horas.toString());
                     break;
                 case 1:
-                    labelEtapaS2.setText((et==0)?"Vazio":"Etapa: "+Integer.toString(et));
-                    labelHorasS2.setText((horas==null)?"":horas.toString());
-                    if(et==0)rbS2.setEnabled(false);
+                    labelEtapaS2.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelHorasS2.setText((horas == null) ? "" : horas.toString());
                     break;
                 case 2:
-                    labelEtapaS3.setText((et==0)?"Vazio":"Etapa: "+Integer.toString(et));
-                    labelHorasS3.setText((horas==null)?"":horas.toString());
-                    if(et==0)rbS3.setEnabled(false);
+                    labelEtapaS3.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelHorasS3.setText((horas == null) ? "" : horas.toString());
                     break;
                 case 3:
-                    labelEtapaS4.setText((et==0)?"Vazio":"Etapa: "+Integer.toString(et));
-                    labelHorasS4.setText((horas==null)?"":horas.toString());
-                    if(et==0)rbS4.setEnabled(false);
+                    labelEtapaS4.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelHorasS4.setText((horas == null) ? "" : horas.toString());
                     break;
                 default:
                     break;
             }
-            
         }
     }
 

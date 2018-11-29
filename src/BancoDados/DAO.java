@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -65,8 +66,8 @@ public class DAO {
         return true;
     }*/
     
-    public static boolean InserirJogador(Jogador jogador) throws SQLIntegrityConstraintViolationException{
-        if(jogador == null) throw new IllegalArgumentException("Não é possível inserir nulo na tabela jogador");
+    public static boolean InserirJogador(String usuario, String senha, String apelido) throws SQLIntegrityConstraintViolationException{
+        if(usuario == null || senha == null || apelido == null) throw new IllegalArgumentException("Não é possível inserir nulo na tabela jogador");
         else{
             try
             {
@@ -74,7 +75,7 @@ public class DAO {
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
                 statement = (Statement) connection.createStatement();
 
-                statement.execute(String.format("INSERT INTO jogador(usuario,senha,apelido) VALUES(\"%s\",\"%s\",\"%s\")",jogador.getUsuario(),jogador.getSenha(),jogador.getApelido()));
+                statement.execute(String.format("INSERT INTO jogador(usuario,senha,apelido) VALUES(\"%s\",\"%s\",\"%s\")",usuario,senha,apelido));
             }  
             catch(SQLIntegrityConstraintViolationException e){
                 throw e;
@@ -99,7 +100,6 @@ public class DAO {
                 String query = "UPDATE save SET etapa_atual = ?, tempo_jogo = ?, sanidade = ?, emocional = ?, carisma = ?, coragem = ? WHERE slot_save = ? AND cod_usuario = ?";
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
                 prepstate = connection.prepareStatement(query);
-
                 
                 prepstate.setInt(1,save.getEtapa_atual());
                 prepstate.setTime(2,save.getTempo_jogo());
@@ -123,8 +123,7 @@ public class DAO {
                 throw e;
             }
             catch (SQLException e)
-            {
-                
+            {  
                 System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
             }
             System.out.println("Erro ao tentar atualizar o save.");
@@ -203,8 +202,8 @@ public class DAO {
                     u = resultado.getString("usuario");
                     se = resultado.getString("senha");
                     a = resultado.getString("apelido");
+                    SimpleDateFormat VAILOGO = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     tj = resultado.getTime("tempo_jogo");
-                    System.out.println("Tempo de jogo: " + resultado.getTime("tempo_jogo"));
                     System.out.println(String.format("%d,%s,%s,%s,%s",id,u,se,a,String.valueOf(tj)));
                     resultado=null;
                     query="SELECT * FROM save WHERE save.cod_usuario = ? ORDER BY slot_save, cod_usuario";
@@ -225,7 +224,7 @@ public class DAO {
                         gaveta.setCoragem(resultado.getInt("coragem"));
                         s[i]=gaveta;
                     }
-                    return new Jogador(u,se,a,tj,s[0],s[1],s[2],s[3]);     
+                    return new Jogador(id,u,se,a,tj,s[0],s[1],s[2],s[3]);     
                 }
                 else throw new NullPointerException("Não foi possível criar o jogador por falta de dados.");
             }

@@ -20,7 +20,6 @@ import javax.swing.JScrollBar;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
     private Jogador jogador;
-    private Personagem personagem;
     private Etapa etapaAtual;
     private Save saveAtual;
     
@@ -37,10 +36,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         saved = false;
     }
     
-    public TelaPrincipal(Jogador j, Personagem p, Save sA, int nSSA) {
+    public TelaPrincipal(Jogador j, Save sA, int nSSA) {
         this();
         this.jogador = j;
-        this.personagem  = p;
         this.saveAtual = sA;
         this.etapaAtual = DAO.getEtapa((saveAtual.getEtapa_atual() == 0)? 1 : saveAtual.getEtapa_atual());
         this.nomeJogador.setText(jogador.getApelido());
@@ -372,13 +370,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAvancarActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        this.dispose();
+        super.dispose();
         this.setVisible(false);
-        Menu m = new Menu(jogador,2, personagem, saveAtual, etapaAtual.getCod());
+        Menu m = new Menu(jogador,2, saveAtual, etapaAtual.getCod());
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
-        this.dispose();
+        super.dispose();
         this.setVisible(false);
         Menu m = new Menu(jogador,0);
     }//GEN-LAST:event_botaoSairActionPerformed
@@ -491,13 +489,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         
         labelEtapaAtual.setText(String.format("Etapa: %d",etapaAtual.getCod()));
-        barraSanidade.setValue(personagem.getSanidade());
+        barraSanidade.setValue(saveAtual.getSanidade());
         percSanidade.setText(String.format("%d%%",(barraSanidade.getValue()*5)));
-        barraEmocional.setValue(personagem.getEmocional());
+        barraEmocional.setValue(saveAtual.getEmocional());
         percEmocional.setText(String.format("%d%%",(barraEmocional.getValue()*5)));
-        barraCarisma.setValue(personagem.getCarisma());
+        barraCarisma.setValue(saveAtual.getCarisma());
         percCarisma.setText(String.format("%d%%",(barraCarisma.getValue()*5)));
-        barraCoragem.setValue(personagem.getCoragem());
+        barraCoragem.setValue(saveAtual.getCoragem());
         percCoragem.setText(String.format("%d%%",(barraCoragem.getValue()*5)));
 
         tela.repaint();
@@ -506,16 +504,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     private void atualizarStatus(int botao){
         if(botao == 1){
-            personagem.alterarSanidade(etapaAtual.getImp_sanidade1());
-            personagem.alterarEmocional(etapaAtual.getImp_emocional1());
-            personagem.alterarCarisma(etapaAtual.getImp_carisma1());
-            personagem.alterarCoragem(etapaAtual.getImp_coragem1());
+            saveAtual.alterarSanidade(etapaAtual.getImp_sanidade1());
+            saveAtual.alterarEmocional(etapaAtual.getImp_emocional1());
+            saveAtual.alterarCarisma(etapaAtual.getImp_carisma1());
+            saveAtual.alterarCoragem(etapaAtual.getImp_coragem1());
         }
         else if(botao == 2){
-            personagem.alterarSanidade(etapaAtual.getImp_sanidade2());
-            personagem.alterarEmocional(etapaAtual.getImp_emocional2());
-            personagem.alterarCarisma(etapaAtual.getImp_carisma2());
-            personagem.alterarCoragem(etapaAtual.getImp_coragem2());
+            saveAtual.alterarSanidade(etapaAtual.getImp_sanidade2());
+            saveAtual.alterarEmocional(etapaAtual.getImp_emocional2());
+            saveAtual.alterarCarisma(etapaAtual.getImp_carisma2());
+            saveAtual.alterarCoragem(etapaAtual.getImp_coragem2());
         }
         
     }
