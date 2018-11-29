@@ -11,6 +11,7 @@ import Principal.JogoHospicio;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Point;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 
@@ -60,7 +61,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void sairParaSave(){
         this.dispose();
         saveHorarioFinal=System.currentTimeMillis();
-        Menu m = new Menu(jogador,2, saveAtual, etapaAtual.getCod(), loginHorarioInicial, loginHorarioFinal, saveHorarioInicial, saveHorarioFinal);
+        Menu m = new Menu(jogador, 2, saveAtual, etapaAtual.getCod(), loginHorarioInicial, loginHorarioFinal, saveHorarioInicial, saveHorarioFinal);
     }
     
     @SuppressWarnings("unchecked")
@@ -481,7 +482,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             atualizarInterface();       
         }
         else{
-            JOptionPane.showMessageDialog(null, "Parabéns, você terminou o jogo!", "WOW", JOptionPane.WARNING_MESSAGE);
+            saveHorarioFinal=System.currentTimeMillis();
+            JOptionPane.showMessageDialog(this, String.format("Parabéns, você terminou o jogo!\n\nTempo jogado: %s",convertLongToString(saveAtual.getTempo_jogo() + (saveHorarioFinal - saveHorarioInicial))), "WOW", JOptionPane.WARNING_MESSAGE);
         }
     }
     
@@ -530,6 +532,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             saveAtual.alterarCarisma(etapaAtual.getImp_carisma2());
             saveAtual.alterarCoragem(etapaAtual.getImp_coragem2());
         }
-        
+    }
+    private String convertLongToString(long l){
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(l),
+        TimeUnit.MILLISECONDS.toMinutes(l) % TimeUnit.HOURS.toMinutes(1),
+        TimeUnit.MILLISECONDS.toSeconds(l) % TimeUnit.MINUTES.toSeconds(1));
+        return hms;
     }
 }

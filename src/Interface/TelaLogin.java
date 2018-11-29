@@ -289,7 +289,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoRegistrarLoginActionPerformed
 
     private void botaoLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogarActionPerformed
-        if(!isLoginEmpty())
+        if(!checkLoginEmpty())
         {
             if(!DAO.verifyLogin(String.valueOf(tbUsuarioLogin.getText()),String.valueOf(tbSenhaLogin.getPassword()))){
                 System.out.println("Erro ao logar, usuario ou senha incorretos.");
@@ -399,37 +399,28 @@ public class TelaLogin extends javax.swing.JFrame {
         tbApelidoRegistro.addKeyListener(registroKL);          
     }
     
-    private boolean isLoginEmpty(){
+    private boolean checkLoginEmpty(){
         if(String.valueOf(tbUsuarioLogin.getText()).isEmpty() ||
-           String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
+           String.valueOf(tbSenhaLogin.getPassword()).isEmpty()){
+            botaoLogar.setEnabled(true);
             return true;
-        else
+        }
+        else{
+            botaoLogar.setEnabled(false);
             return false;
+        }
     }
     
-    private boolean isRegistroEmpty(){
+    private boolean checkRegistroEmpty(){
         if(String.valueOf(tbUsuarioRegistro.getText()).isEmpty() ||
            String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() || 
-           String.valueOf(tbApelidoRegistro.getText()).isEmpty())
-                return true;
-            else
-                return false;
-    }
-    
-    private void checkLoginEmpty(){
-        if(!String.valueOf(tbUsuarioLogin.getText()).isEmpty() && 
-           !String.valueOf(tbSenhaLogin.getPassword()).isEmpty())
-            botaoLogar.setEnabled(true);
-        else
-            botaoLogar.setEnabled(false);
-    }
-    
-    private void checkRegistroEmpty(){
-        if(!String.valueOf(tbUsuarioRegistro.getText()).isEmpty() && 
-           !String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() && 
-           !String.valueOf(tbApelidoRegistro.getText()).isEmpty())
-                botaoRegistrarRegistro.setEnabled(true);
-            else
-                botaoRegistrarRegistro.setEnabled(false);
+           String.valueOf(tbApelidoRegistro.getText()).isEmpty()){
+            botaoRegistrarRegistro.setEnabled(true);    
+            return true;
+        }
+        else{
+            botaoRegistrarRegistro.setEnabled(false);
+            return false;
+        }         
     }
 }

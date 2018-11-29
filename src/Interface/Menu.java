@@ -12,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -485,16 +487,30 @@ public class Menu extends javax.swing.JFrame {
                     numSaveAtual = 2;
                 else if (rbS4.isSelected())
                     numSaveAtual = 3;
-                    
+                
+                // Atualizando as informações do saveAtual com as obtidas da TelaPrincipal
                 saveAtual.setSlot_save(numSaveAtual);
                 saveAtual.setEtapa_atual(numEtapaAtual);
                 saveAtual.setTempo_jogo(saveAtual.getTempo_jogo() + (saveHorarioFinal - saveHorarioInicial));
+                // Atualizando o save no jogador com o saveAtual, no slot escolhido pelo usuário
                 jogador.setSave(saveAtual, numSaveAtual);
+                // Atualizando o save no banco com o saveAtual
                 try {
                     DAO.AtualizarSave(saveAtual);
                 } catch (SQLIntegrityConstraintViolationException ex) {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                loginHorarioFinal = System.currentTimeMillis();
+                // Calculando o novo tempo jogado pelo jogador
+                jogador.setTempo_jogo(jogador.getTempo_jogo() + (loginHorarioInicial - loginHorarioFinal));
+                loginHorarioInicial = loginHorarioFinal;
+                loginHorarioFinal = 0;
+                // Atualizando no banco o tempo de jogo do jogador
+                try {
+                    DAO.AtualizarJogador(jogador);
+                } catch (SQLIntegrityConstraintViolationException ex) {
+                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                }          
                 updateTelaSave();
                 saved=true;
                 createNewGame();
