@@ -6,7 +6,7 @@ public class Save {
     private int slot_save;
     private int cod_usuario;
     private int etapa_atual;
-    private Time tempo_jogo;  
+    private long tempo_jogo;  
     private int sanidade;
     private int emocional;
     private int carisma;
@@ -18,7 +18,7 @@ public class Save {
         this.slot_save = -1;
         this.cod_usuario = cod_usuario;
         this.etapa_atual = 0;   // 0 sinaliza que o save nunca foi usado
-        this.tempo_jogo = null;
+        this.tempo_jogo = 0;
         this.sanidade = 10;
         this.emocional = 10;
         this.carisma = 10;
@@ -26,7 +26,7 @@ public class Save {
     }
     
     // Criando um save já com informações do jogo atual
-    public Save(int slot_save, int cod_usuario, int etapa_atual, Time tempo_jogo, int sanidade, int emocional, int carisma, int coragem) {
+    public Save(int slot_save, int cod_usuario, int etapa_atual, long tempo_jogo, int sanidade, int emocional, int carisma, int coragem) {
         this.slot_save = slot_save;
         this.cod_usuario = cod_usuario;
         this.etapa_atual = etapa_atual;
@@ -61,11 +61,11 @@ public class Save {
         this.etapa_atual = etapa_atual;
     }
 
-    public Time getTempo_jogo() {
+    public long getTempo_jogo() {
         return tempo_jogo;
     }
 
-    public void setTempo_jogo(Time tempo_jogo) {
+    public void setTempo_jogo(long tempo_jogo) {
         this.tempo_jogo = tempo_jogo;
     }
 

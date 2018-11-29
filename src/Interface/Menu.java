@@ -12,8 +12,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.util.Duration.millis;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -472,8 +474,7 @@ public class Menu extends javax.swing.JFrame {
                 } catch (SQLIntegrityConstraintViolationException ex) {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                updateTelaSave();
-                
+                updateTelaSave();             
             }
         }
         else System.out.println("Não há botões selecionados.");
@@ -552,28 +553,28 @@ public class Menu extends javax.swing.JFrame {
         } else if (tipoTela == 2) {
             botaoSalvarOuCarregar.setText("Salvar");
         }
-
+        
+        rbS1.setSelected(false);
+        rbS2.setSelected(false);
+        rbS3.setSelected(false);
+        rbS4.setSelected(false);
+        
         for (int i = 0; i < 4; i++) {
             int et = jogador.getSave(i).getEtapa_atual();
-            Time horas = jogador.getSave(i).getTempo_jogo();
-            if(tipoTela == 1) {
+            long horas = jogador.getSave(i).getTempo_jogo();
+            if(tipoTela == 1 && et==0) {
                 switch (i) {
                     case 0:
-                        rbS1.setSelected(false);
-                        if(et == 0) rbS1.setEnabled(false);
+                        rbS1.setEnabled(false);
                         break;
                     case 1:
-                        rbS2.setSelected(false);
-                        if(et == 0) rbS2.setEnabled(false);
+                        rbS2.setEnabled(false);
                         break;
                     case 2:
-                        rbS3.setSelected(false);
-                        if(et == 0) rbS3.setEnabled(false);
-
+                        rbS3.setEnabled(false);
                         break;
                     case 3:
-                        rbS4.setSelected(false);
-                        if(et == 0) rbS4.setEnabled(false);
+                        rbS4.setEnabled(false);
                         break;
                 }
             }
@@ -596,24 +597,31 @@ public class Menu extends javax.swing.JFrame {
             switch (i) {
                 case 0:
                     labelEtapaS1.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
-                    labelHorasS1.setText((horas == null) ? "" : horas.toString());
+                    labelHorasS1.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 1:
                     labelEtapaS2.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
-                    labelHorasS2.setText((horas == null) ? "" : horas.toString());
+                    labelHorasS2.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 2:
                     labelEtapaS3.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
-                    labelHorasS3.setText((horas == null) ? "" : horas.toString());
+                    labelHorasS3.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 3:
                     labelEtapaS4.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
-                    labelHorasS4.setText((horas == null) ? "" : horas.toString());
+                    labelHorasS4.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 default:
                     break;
             }
         }
+    }
+    
+    private String convertLongToString(long l){
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(l),
+        TimeUnit.MILLISECONDS.toMinutes(l) % TimeUnit.HOURS.toMinutes(1),
+        TimeUnit.MILLISECONDS.toSeconds(l) % TimeUnit.MINUTES.toSeconds(1));
+        return hms;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

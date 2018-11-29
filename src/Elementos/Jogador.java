@@ -1,15 +1,12 @@
 package Elementos;
 
-import java.sql.Time;
-import javafx.scene.input.DataFormat;
-
 
 public class Jogador {
     private int cod_usuario;
     private String usuario;
     private String senha;
     private String apelido;
-    private Time tempo_jogo;
+    private long tempo_jogo;
     private Save[] slot;
     
     public Jogador(String usuario, String senha, String apelido){
@@ -19,12 +16,12 @@ public class Jogador {
         this.apelido = apelido;
         //DataFormat formatter = new SimpleDataFormat("HH:mm:ss");
         //this.tempo_jogo = new Time(formatter.parse("00:00:00").getTime());
-        this.tempo_jogo = null;
+        this.tempo_jogo = 0;
         this.slot = new Save[4];      
         for(int i=0; i<4; i++) this.slot = null;        
     }
     
-    public Jogador(int cod_usuario, String usuario, String senha, String apelido, Time tempo_jogo, Save slot0, Save slot1, Save slot2, Save slot3) {
+    public Jogador(int cod_usuario, String usuario, String senha, String apelido, long tempo_jogo, Save slot0, Save slot1, Save slot2, Save slot3) {
         this.cod_usuario = cod_usuario;
         this.usuario = usuario;
         this.senha = senha;
@@ -83,11 +80,11 @@ public class Jogador {
         this.apelido = apelido;
     }
 
-    public Time getTempo_jogo() {
+    public long getTempo_jogo() {
         return tempo_jogo;
     }
 
-    public void setTempo_jogo(Time tempo_jogo) {
+    public void setTempo_jogo(long tempo_jogo) {
         this.tempo_jogo = tempo_jogo;
     }
     
