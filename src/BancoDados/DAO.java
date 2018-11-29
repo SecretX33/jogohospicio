@@ -110,14 +110,10 @@ public class DAO {
                 prepstate.setInt(7,save.getSlot_save());
                 prepstate.setInt(8,save.getCod_usuario());
                 
-                if(prepstate.executeUpdate()>0){
-                    System.out.println("Erro ao tentar atualizar o save.");
-                    return false;
-                }
-                else{
-                    System.out.println("Save atualizado com sucesso.");
-                    return true;
-                }
+                prepstate.executeUpdate();
+                System.out.println("Save atualizado com sucesso.");
+                return true;
+                
             }  
             catch(SQLIntegrityConstraintViolationException e){
                 throw e;

@@ -14,8 +14,6 @@ public class Jogador {
         this.usuario = usuario;
         this.senha = senha;
         this.apelido = apelido;
-        //DataFormat formatter = new SimpleDataFormat("HH:mm:ss");
-        //this.tempo_jogo = new Time(formatter.parse("00:00:00").getTime());
         this.tempo_jogo = 0;
         this.slot = new Save[4];      
         for(int i=0; i<4; i++) this.slot = null;        

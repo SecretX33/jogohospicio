@@ -26,13 +26,18 @@ public class Menu extends javax.swing.JFrame {
     private int tipoTela;
     private int numSaveAtual;
     private int numEtapaAtual;
-    private long loginHorarioInicio;
+    private long loginHorarioInicial;
+    private long loginHorarioFinal;
+    private long saveHorarioInicial;
+    private long saveHorarioFinal;
+    private boolean saved;
 
     public Menu() {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
         checkSelected();
+        saved=false;
     }
 
     public Menu(Jogador j, int i) {
@@ -41,28 +46,37 @@ public class Menu extends javax.swing.JFrame {
         this.tipoTela = i;
         this.saveAtual = new Save(jogador.getCod_usuario());
         this.numSaveAtual = 0;
+        this.loginHorarioInicial=System.currentTimeMillis();
+        this.loginHorarioFinal=0;
+        this.saveHorarioInicial=0;
+        this.saveHorarioFinal=0;
         setTela(i);
         labelNomeJogador.setText(jogador.getApelido());
         labelNomeJogador1.setText(jogador.getApelido());
-        this.loginHorarioInicio=System.currentTimeMillis();
+        
         setVisible(true);
     }
     
-    public Menu(Jogador j, int i, long h){
+    public Menu(Jogador j, int i, long lHI){
         this(j,i);
-        this.loginHorarioInicio=h;
+        this.loginHorarioInicial=lHI;
     }
 
-    public Menu(Jogador j, int i, Save s, int ea) {
+    public Menu(Jogador j, int i, Save s, int ea, long lHI, long lHF, long sHI, long sHF) {
         this();
         this.jogador = j;
         this.tipoTela = i;
         this.saveAtual = s;
         this.numSaveAtual = s.getSlot_save()-1;
         this.numEtapaAtual = ea;
+        this.loginHorarioInicial=(sHI!=0)?lHI:System.currentTimeMillis();
+        this.loginHorarioFinal=lHF;
+        this.saveHorarioInicial=sHI;
+        this.saveHorarioFinal=sHF;
         setTela(i);
         labelNomeJogador.setText(jogador.getApelido());
         labelNomeJogador1.setText(jogador.getApelido());
+        
         setVisible(true);
     }
 
@@ -406,15 +420,14 @@ public class Menu extends javax.swing.JFrame {
     private void botaoLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogoutActionPerformed
         jogador = null;
         saveAtual = null;
-        super.dispose();
-        this.setVisible(false);
+        this.dispose();
         TelaLogin tl = new TelaLogin();
     }//GEN-LAST:event_botaoLogoutActionPerformed
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
-        if (tipoTela == 1)
+        if(tipoTela == 1)
             setTela(0);
-        else if (tipoTela == 2) {
+        else if(tipoTela == 2) {
             createNewGame();
         }
     }//GEN-LAST:event_botaoVoltarActionPerformed
@@ -475,6 +488,7 @@ public class Menu extends javax.swing.JFrame {
                     
                 saveAtual.setSlot_save(numSaveAtual);
                 saveAtual.setEtapa_atual(numEtapaAtual);
+                saveAtual.setTempo_jogo(saveAtual.getTempo_jogo() + (saveHorarioFinal - saveHorarioInicial));
                 jogador.setSave(saveAtual, numSaveAtual);
                 try {
                     DAO.AtualizarSave(saveAtual);
@@ -482,6 +496,7 @@ public class Menu extends javax.swing.JFrame {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 updateTelaSave();
+                saved=true;
                 createNewGame();
             }
         }
@@ -525,7 +540,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void createNewGame() {
         this.dispose();
-        TelaPrincipal tp = new TelaPrincipal(jogador, saveAtual, numSaveAtual);
+        TelaPrincipal tp = new TelaPrincipal(jogador, saveAtual, numSaveAtual, loginHorarioInicial, loginHorarioFinal, saveHorarioInicial, saveHorarioFinal, saved);
     }
 
     private boolean checkSelected() {
@@ -566,9 +581,9 @@ public class Menu extends javax.swing.JFrame {
         rbS4.setSelected(false);
         
         for (int i = 0; i < 4; i++) {
-            int et = jogador.getSave(i).getEtapa_atual();
+            int etapa_atual = jogador.getSave(i).getEtapa_atual();
             long horas = jogador.getSave(i).getTempo_jogo();
-            if(tipoTela == 1 && et==0) {
+            if(tipoTela == 1 && etapa_atual==0) {
                 switch (i) {
                     case 0:
                         rbS1.setEnabled(false);
@@ -603,19 +618,19 @@ public class Menu extends javax.swing.JFrame {
             }
             switch (i) {
                 case 0:
-                    labelEtapaS1.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelEtapaS1.setText((etapa_atual == 0) ? "Vazio" : "Etapa: " + Integer.toString(etapa_atual));
                     labelHorasS1.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 1:
-                    labelEtapaS2.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelEtapaS2.setText((etapa_atual == 0) ? "Vazio" : "Etapa: " + Integer.toString(etapa_atual));
                     labelHorasS2.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 2:
-                    labelEtapaS3.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelEtapaS3.setText((etapa_atual == 0) ? "Vazio" : "Etapa: " + Integer.toString(etapa_atual));
                     labelHorasS3.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 3:
-                    labelEtapaS4.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelEtapaS4.setText((etapa_atual == 0) ? "Vazio" : "Etapa: " + Integer.toString(etapa_atual));
                     labelHorasS4.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 default:
