@@ -62,10 +62,10 @@ DELIMITER $$
 CREATE TRIGGER TRIGGER_Jogador_Insert AFTER INSERT
 ON jogador FOR EACH ROW
 BEGIN
+	INSERT INTO save(slot_save,cod_usuario) VALUES(0,NEW.cod_usuario);
 	INSERT INTO save(slot_save,cod_usuario) VALUES(1,NEW.cod_usuario);
 	INSERT INTO save(slot_save,cod_usuario) VALUES(2,NEW.cod_usuario);
 	INSERT INTO save(slot_save,cod_usuario) VALUES(3,NEW.cod_usuario);
-	INSERT INTO save(slot_save,cod_usuario) VALUES(4,NEW.cod_usuario);
 END$$
 DELIMITER ;
 

@@ -580,7 +580,7 @@ public class Menu extends javax.swing.JFrame {
         rbS3.setSelected(false);
         rbS4.setSelected(false);
         
-        for (int i = 0; i < 4; i++) {
+        for (int i=0; i<4; i++) {
             int etapa_atual = jogador.getSave(i).getEtapa_atual();
             long horas = jogador.getSave(i).getTempo_jogo();
             if(tipoTela == 1 && etapa_atual==0) {
