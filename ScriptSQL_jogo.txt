@@ -35,7 +35,7 @@ create table jogador(
 	usuario VARCHAR(50) NOT NULL,      
     senha VARCHAR(50) NOT NULL,
     apelido VARCHAR(50) NOT NULL,
-    tempo_jogo TIME,
+    tempo_jogo LONG,
     PRIMARY KEY(cod_usuario),
     CONSTRAINT UNIQUE_jogador_usuario UNIQUE(usuario)  #Se assegura que o login escolhido seja unico para que não haja conflitos
 );
@@ -43,12 +43,12 @@ create table jogador(
 create table save(
 	slot_save INT NOT NULL CHECK (slot_save>=1 AND slot_save<=4),
 	cod_usuario INT NOT NULL,
-	etapa_atual INT default 0,           #etapa_atual == 0 indica que o save ainda não está em uso
-    tempo_jogo TIME default 0,           #tempo_jogo == null indica que o save ainda não está em uso
-    sanidade INT default 0,
-    emocional INT default 0,
-    carisma INT default 0,
-    coragem INT default 0,
+	etapa_atual INT DEFAULT 0,           #etapa_atual == 0 indica que o save ainda não está em uso
+    tempo_jogo LONG,           #tempo_jogo == null indica que o save ainda não está em uso
+    sanidade INT DEFAULT 0,
+    emocional INT DEFAULT 0,
+    carisma INT DEFAULT 0,
+    coragem INT DEFAULT 0,
     escolhas VARCHAR(1000),
     #PRIMARY KEY(slot_save),
 	CONSTRAINT PK_save_cod_usuario FOREIGN KEY(cod_usuario) 
@@ -84,10 +84,10 @@ INSERT INTO jogador(usuario, senha, apelido) VALUES("mariana","abcde","Sara");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("poliana","natural","Leão");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("abinho","abinhoisthebest","Abinho GamePlay");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("a","a","a");
-select * from jogador;
-update save set tempo_jogo="99:59:59" WHERE cod_usuario=1;
-select * from save order by cod_usuario, slot_save ASC;
-update save set etapa_atual=3,sanidade=2 where slot_save=1 AND cod_usuario=1;
+#select * from jogador;
+#update save set tempo_jogo="99:59:59" WHERE cod_usuario=1;
+#select * from save order by cod_usuario, slot_save ASC;
+#update save set etapa_atual=3,sanidade=2 where slot_save=1 AND cod_usuario=1;
 
 #SELECT * FROM jogador WHERE jogador.usuario = "a";
 #DELETE FROM jogador WHERE jogador.cod_usuario = 1;
