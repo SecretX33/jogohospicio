@@ -40,6 +40,24 @@ public class Personagem {
         return coragem;
     }
 
+    public void setSanidade(int sanidade) {
+        this.sanidade = sanidade;
+    }
+
+    public void setEmocional(int emocional) {
+        this.emocional = emocional;
+    }
+
+    public void setCarisma(int carisma) {
+        this.carisma = carisma;
+    }
+
+    public void setCoragem(int coragem) {
+        this.coragem = coragem;
+    }
+
+    
+    
     public boolean isVivo() {
         return vivo;
     }

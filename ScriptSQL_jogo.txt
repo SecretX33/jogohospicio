@@ -85,7 +85,8 @@ INSERT INTO jogador(usuario, senha, apelido) VALUES("poliana","natural","Leão")
 INSERT INTO jogador(usuario, senha, apelido) VALUES("abinho","abinhoisthebest","Abinho GamePlay");
 INSERT INTO jogador(usuario, senha, apelido) VALUES("a","a","a");
 #select * from jogador;
-#select * from save order by cod_usuario, slot_save ASC;
+select * from save order by cod_usuario, slot_save ASC;
+update save set etapa_atual=3,sanidade=2 where slot_save=1 AND cod_usuario=1;
 #SELECT * FROM jogador WHERE jogador.usuario = "a";
 #DELETE FROM jogador WHERE jogador.cod_usuario = 1;
 #SELECT usuario FROM jogador WHERE jogador.usuario = "aa";

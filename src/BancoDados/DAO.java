@@ -24,7 +24,7 @@ public class DAO {
     private static PreparedStatement prepstate = null;
     private static ResultSet resultado = null;
     
-    public static boolean Inserir(Object objetoGenerico) throws SQLIntegrityConstraintViolationException{
+    /*public static boolean Inserir(Object objetoGenerico) throws SQLIntegrityConstraintViolationException{
         if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
         String tipo_dado;
         Etapa etapa = null;
@@ -63,13 +63,14 @@ public class DAO {
             return false;
         }
         return true;
-    }
+    }*/
     
     public static boolean InserirJogador(Jogador jogador) throws SQLIntegrityConstraintViolationException{
         if(jogador == null) throw new IllegalArgumentException("Não é possível inserir nulo na tabela jogador");
         else{
             try
             {
+                resultado=null;
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
                 statement = (Statement) connection.createStatement();
 
@@ -86,6 +87,48 @@ public class DAO {
 
             System.out.println("Jogador inserido com sucesso.");
             return true;
+        }
+    }
+    
+    public static boolean AtualizarSave(Save save) throws SQLIntegrityConstraintViolationException{
+        if(save == null) throw new IllegalArgumentException("Não é possível inserir um Save nulo na tabela save.");
+        else{
+            try
+            {
+                resultado = null;
+                String query = "UPDATE save SET etapa_atual = ?, tempo_jogo = ?, sanidade = ?, emocional = ?, carisma = ?, coragem = ? WHERE slot_save = ? AND cod_usuario = ?";
+                if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
+                prepstate = connection.prepareStatement(query);
+
+                
+                prepstate.setInt(1,save.getEtapa_atual());
+                prepstate.setTime(2,save.getTempo_jogo());
+                prepstate.setInt(3,save.getSanidade());
+                prepstate.setInt(4,save.getEmocional());
+                prepstate.setInt(5,save.getCarisma());
+                prepstate.setInt(6,save.getCoragem());
+                prepstate.setInt(7,save.getSlot_save());
+                prepstate.setInt(8,save.getCod_usuario());
+                
+                if(prepstate.executeUpdate()>0){
+                    System.out.println("Save atualizado com sucesso.");
+                    return true;
+                }
+                else{
+                    System.out.println("Erro ao tentar atualizar o save.");
+                    return false;
+                }
+            }  
+            catch(SQLIntegrityConstraintViolationException e){
+                throw e;
+            }
+            catch (SQLException e)
+            {
+                
+                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+            }
+            System.out.println("Erro ao tentar atualizar o save.");
+            return false;
         }
     }
     
