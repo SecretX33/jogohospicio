@@ -99,6 +99,7 @@ public class Menu extends javax.swing.JFrame {
         botaoNovoJogo = new javax.swing.JButton();
         labelLogadoComo = new javax.swing.JLabel();
         botaoContinuar = new javax.swing.JButton();
+        labelTempoJogo = new javax.swing.JLabel();
         save = new javax.swing.JPanel();
         rbS2 = new javax.swing.JRadioButton();
         rbS1 = new javax.swing.JRadioButton();
@@ -117,6 +118,7 @@ public class Menu extends javax.swing.JFrame {
         labelEtapaS4 = new javax.swing.JLabel();
         botaoVoltar = new javax.swing.JButton();
         botaoSalvarOuCarregar = new javax.swing.JButton();
+        labelTempoJogo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -174,6 +176,8 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        labelTempoJogo.setText("tempoJogo");
+
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
         menu.setLayout(menuLayout);
         menuLayout.setHorizontalGroup(
@@ -186,36 +190,39 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuLayout.createSequentialGroup()
                         .addGap(133, 133, 133)
-                        .addComponent(botaoNovoJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(menuLayout.createSequentialGroup()
-                        .addGap(133, 133, 133)
                         .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuLayout.createSequentialGroup()
                         .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelLogadoComo)
-                            .addComponent(labelNomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(126, 126, 126)
+                            .addComponent(labelNomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(menuLayout.createSequentialGroup()
+                                .addGap(133, 133, 133)
+                                .addComponent(botaoNovoJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelTempoJogo))
+                        .addGap(54, 54, 54)
                         .addComponent(botaoLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(botaoNovoJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
                 .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(botaoLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelLogadoComo)
                         .addGap(6, 6, 6)
-                        .addComponent(labelNomeJogador))
-                    .addGroup(menuLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(botaoLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(labelNomeJogador)
+                        .addGap(8, 8, 8)
+                        .addComponent(labelTempoJogo))))
         );
 
         tela.add(menu, "card2");
@@ -291,6 +298,8 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        labelTempoJogo1.setText("tempoJogo");
+
         javax.swing.GroupLayout saveLayout = new javax.swing.GroupLayout(save);
         save.setLayout(saveLayout);
         saveLayout.setHorizontalGroup(
@@ -299,7 +308,8 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelLogadoComo1)
-                    .addComponent(labelNomeJogador1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelNomeJogador1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTempoJogo1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
@@ -366,16 +376,18 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(labelHorasS3)))
                 .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(saveLayout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(labelLogadoComo1)
-                        .addGap(6, 6, 6)
-                        .addComponent(labelNomeJogador1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, saveLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(70, 70, 70)
                         .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoVoltar)
                             .addComponent(botaoSalvarOuCarregar))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, saveLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelLogadoComo1)
+                        .addGap(6, 6, 6)
+                        .addComponent(labelNomeJogador1)
+                        .addGap(7, 7, 7)
+                        .addComponent(labelTempoJogo1))))
         );
 
         tela.add(save, "card2");
@@ -682,6 +694,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel labelNomeJogador;
     private javax.swing.JLabel labelNomeJogador1;
     private javax.swing.JLabel labelSave;
+    private javax.swing.JLabel labelTempoJogo;
+    private javax.swing.JLabel labelTempoJogo1;
     private javax.swing.JPanel menu;
     private javax.swing.JRadioButton rbS1;
     private javax.swing.JRadioButton rbS2;

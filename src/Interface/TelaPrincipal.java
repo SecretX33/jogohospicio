@@ -30,6 +30,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private long loginHorarioFinal;
     private long saveHorarioInicial;
     private long saveHorarioFinal;
+    private String escolhas;
     
     public TelaPrincipal(){
         initComponents();
@@ -468,6 +469,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void avancarEtapa(int botao){
         saved = false;
+        if(botao==0){
+            escolhas+="0";
+        }
+        else if(botao==1){
+            escolhas+="1";
+        }
+        else{
+            escolhas+="2";
+        }
         if(etapaAtual.getRef_op1() > 0){
             Etapa proxEtapa;
             

@@ -11,6 +11,7 @@ public class Save {
     private int emocional;
     private int carisma;
     private int coragem;
+    private String escolhas;
     private final int maxStatusValue = 20;
     
     // Inicializando um save novo
@@ -26,7 +27,7 @@ public class Save {
     }
     
     // Criando um save já com informações do jogo atual
-    public Save(int slot_save, int cod_usuario, int etapa_atual, long tempo_jogo, int sanidade, int emocional, int carisma, int coragem) {
+    public Save(int slot_save, int cod_usuario, int etapa_atual, long tempo_jogo, int sanidade, int emocional, int carisma, int coragem, String escolhas) {
         this.slot_save = slot_save;
         this.cod_usuario = cod_usuario;
         this.etapa_atual = etapa_atual;
@@ -35,6 +36,7 @@ public class Save {
         this.emocional = emocional;
         this.carisma = carisma;
         this.coragem = coragem;
+        this.escolhas = escolhas;
     }
 
     public int getSlot_save() {
