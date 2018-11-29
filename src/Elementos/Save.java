@@ -18,10 +18,10 @@ public class Save {
         this.cod_usuario = cod_usuario;
         this.etapa_atual = 0;   // 0 sinaliza que o save nunca foi usado
         this.tempo_jogo = null;
-        this.sanidade = -1;
-        this.emocional = -1;
-        this.carisma = -1;
-        this.coragem = -1;
+        this.sanidade = 0;
+        this.emocional = 0;
+        this.carisma = 0;
+        this.coragem = 0;
     }
     
     // Criando um save já com informações do jogo atual
@@ -100,5 +100,14 @@ public class Save {
         this.coragem = coragem;
     }
     
-    
+    public void printDetails(){
+        System.out.println("#######\nSave: " + slot_save);
+        System.out.println("Cod_usuario: " + cod_usuario);
+        System.out.println("Etapa_atual: " + etapa_atual);
+        System.out.println("Tempo de jogo: " + tempo_jogo);
+        System.out.println("Sanidade: " + sanidade);
+        System.out.println("Emocional: " + emocional);
+        System.out.println("Carisma: " + carisma);
+        System.out.println("Coragem: " + coragem);
+    }
 }
