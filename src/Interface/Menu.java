@@ -7,33 +7,55 @@ package Interface;
 
 import BancoDados.DAO;
 import Elementos.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.util.Duration.millis;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 public class Menu extends javax.swing.JFrame {
+
     private Jogador jogador;
     private int tipoTela;
-    public Personagem personagem;
-    public Save saveAtual;
-    public int numSaveAtual;
-    
-    public Menu(){
+    private Save saveAtual;
+    private int numSaveAtual;
+    private int numEtapaAtual;
+
+    public Menu() {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
+        checkSelected();
     }
-    
+
     public Menu(Jogador j, int i) {
         this();
         this.jogador = j;
+        this.tipoTela = i;
+        this.saveAtual = new Save(jogador.getCod_usuario());
+        this.numSaveAtual = 0;
+        setTela(i);
         labelNomeJogador.setText(jogador.getApelido());
         labelNomeJogador1.setText(jogador.getApelido());
-        tipoTela=i;
+        setVisible(true);
+    }
+
+    public Menu(Jogador j, int i, Save s, int ea) {
+        this();
+        this.jogador = j;
+        this.tipoTela = i;
+        this.saveAtual = s;
+        this.numSaveAtual = s.getSlot_save();
+        this.numEtapaAtual = ea;
         setTela(i);
+        labelNomeJogador.setText(jogador.getApelido());
+        labelNomeJogador1.setText(jogador.getApelido());
         setVisible(true);
     }
 
@@ -71,7 +93,7 @@ public class Menu extends javax.swing.JFrame {
         labelHorasS4 = new javax.swing.JLabel();
         labelEtapaS4 = new javax.swing.JLabel();
         botaoVoltar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botaoSalvarOuCarregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -238,7 +260,13 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Salvar");
+        botaoSalvarOuCarregar.setText("Salvar");
+        botaoSalvarOuCarregar.setEnabled(false);
+        botaoSalvarOuCarregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarOuCarregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout saveLayout = new javax.swing.GroupLayout(save);
         save.setLayout(saveLayout);
@@ -252,7 +280,7 @@ public class Menu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoSalvarOuCarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(saveLayout.createSequentialGroup()
                 .addGap(142, 142, 142)
@@ -323,7 +351,7 @@ public class Menu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(saveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoVoltar)
-                            .addComponent(jButton2))
+                            .addComponent(botaoSalvarOuCarregar))
                         .addContainerGap())))
         );
 
@@ -362,39 +390,95 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovoJogoKeyPressed
 
     private void botaoNovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoJogoActionPerformed
+        super.dispose();
         this.setVisible(false);
-        personagem = new Personagem(jogador.getApelido());
-        saveAtual = new Save(DAO.getIdJogador(jogador));
-        numSaveAtual = 0;
-        System.out.println(String.format("Etapa atual: %d\nCoragem: %d", saveAtual.getEtapa_atual(), saveAtual.getCoragem()));
-        TelaPrincipal qt = new TelaPrincipal(jogador,personagem,saveAtual,numSaveAtual);
+        System.out.println(String.format("NOVO JOGO(Etapa atual: %d; Coragem: %d)", saveAtual.getEtapa_atual(), saveAtual.getCoragem()));
+        createNewGame();
     }//GEN-LAST:event_botaoNovoJogoActionPerformed
 
     private void botaoLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogoutActionPerformed
+        jogador = null;
+        saveAtual = null;
         super.dispose();
-        TelaLogin tl = new TelaLogin();
         this.setVisible(false);
+        TelaLogin tl = new TelaLogin();
     }//GEN-LAST:event_botaoLogoutActionPerformed
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
-        setTela(0);
+        if (tipoTela == 1)
+            setTela(0);
+        else if (tipoTela == 2) {
+            createNewGame();
+        }
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     private void rbS1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbS1ActionPerformed
-
+        rbS2.setSelected(false);
+        rbS3.setSelected(false);
+        rbS4.setSelected(false);
+        checkSelected();
     }//GEN-LAST:event_rbS1ActionPerformed
 
     private void rbS2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbS2ActionPerformed
-        // TODO add your handling code here:
+        rbS1.setSelected(false);
+        rbS3.setSelected(false);
+        rbS4.setSelected(false);
+        checkSelected();
     }//GEN-LAST:event_rbS2ActionPerformed
 
     private void rbS3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbS3ActionPerformed
-        // TODO add your handling code here:
+        rbS1.setSelected(false);
+        rbS2.setSelected(false);
+        rbS4.setSelected(false);
+        checkSelected();
     }//GEN-LAST:event_rbS3ActionPerformed
 
     private void rbS4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbS4ActionPerformed
-        // TODO add your handling code here:
+        rbS1.setSelected(false);
+        rbS2.setSelected(false);
+        rbS3.setSelected(false);
+        checkSelected();
     }//GEN-LAST:event_rbS4ActionPerformed
+
+    private void botaoSalvarOuCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarOuCarregarActionPerformed
+        if(checkSelected()){
+            if(tipoTela == 1){
+                if(rbS1.isSelected())
+                    numSaveAtual = 0;
+                else if (rbS2.isSelected())
+                    numSaveAtual = 1;
+                else if (rbS3.isSelected())
+                    numSaveAtual = 2;
+                else if (rbS4.isSelected())
+                    numSaveAtual = 3;
+                //saveAtual.setSlot_save(numSaveAtual);
+                //copyStatus(jogador.getSave(numSaveAtual),saveAtual);
+                saveAtual = jogador.getSave(numSaveAtual);
+                createNewGame();
+            }
+            else if(tipoTela == 2) {
+                if(rbS1.isSelected())
+                    numSaveAtual = 0;
+                else if (rbS2.isSelected())
+                    numSaveAtual = 1;
+                else if (rbS3.isSelected())
+                    numSaveAtual = 2;
+                else if (rbS4.isSelected())
+                    numSaveAtual = 3;
+                    
+                saveAtual.setSlot_save(numSaveAtual);
+                saveAtual.setEtapa_atual(numEtapaAtual);
+                jogador.setSave(saveAtual, numSaveAtual);
+                try {
+                    DAO.AtualizarSave(saveAtual);
+                } catch (SQLIntegrityConstraintViolationException ex) {
+                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                updateTelaSave();             
+            }
+        }
+        else System.out.println("Não há botões selecionados.");
+    }//GEN-LAST:event_botaoSalvarOuCarregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -430,26 +514,56 @@ public class Menu extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void setTela(int i){
-        tela.removeAll(); 
-        if(i==0) tela.add(menu);
+
+    private void createNewGame() {
+        super.dispose();
+        this.setVisible(false);
+        TelaPrincipal tp = new TelaPrincipal(jogador, saveAtual, numSaveAtual);
+    }
+
+    private boolean checkSelected() {
+        if (rbS1.isSelected() || rbS2.isSelected() || rbS3.isSelected() || rbS4.isSelected()) {
+            botaoSalvarOuCarregar.setEnabled(true);
+            return true;
+        } else {
+            botaoSalvarOuCarregar.setEnabled(false);
+            return false;
+        }
+
+    }
+
+    private void setTela(int i) {
+        tela.removeAll();
+        tipoTela = i;
+
+        if(tipoTela == 0)
+            tela.add(menu);
         else{
             updateTelaSave();
             tela.add(save);
         }
-        
-        tipoTela = i;
+
         tela.repaint();
         tela.revalidate();
-        
     }
-    
-    private void updateTelaSave(){
-        for(int i=0; i<4; i++){
+
+    private void updateTelaSave() {
+        if (tipoTela == 1) {
+            botaoSalvarOuCarregar.setText("Carregar");
+        } else if (tipoTela == 2) {
+            botaoSalvarOuCarregar.setText("Salvar");
+        }
+        
+        rbS1.setSelected(false);
+        rbS2.setSelected(false);
+        rbS3.setSelected(false);
+        rbS4.setSelected(false);
+        
+        for (int i = 0; i < 4; i++) {
             int et = jogador.getSave(i).getEtapa_atual();
-            if(et==0){
-                switch(i){
+            long horas = jogador.getSave(i).getTempo_jogo();
+            if(tipoTela == 1 && et==0) {
+                switch (i) {
                     case 0:
                         rbS1.setEnabled(false);
                         break;
@@ -464,38 +578,58 @@ public class Menu extends javax.swing.JFrame {
                         break;
                 }
             }
-            Time horas = jogador.getSave(i).getTempo_jogo();
+            else if(tipoTela==2){
+                switch(saveAtual.getSlot_save()){
+                     case 1:
+                        rbS1.setSelected(true);
+                        break;
+                    case 2:
+                        rbS2.setSelected(true);
+                        break;
+                    case 3:
+                        rbS3.setSelected(true);
+                        break;
+                    case 4:
+                        rbS4.setSelected(true);
+                        break;
+                }
+            }
             switch (i) {
                 case 0:
-                    labelEtapaS1.setText((et==0)?"Vazio":Integer.toString(et));
-                    labelHorasS1.setText((horas==null)?"":horas.toString());
+                    labelEtapaS1.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelHorasS1.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 1:
-                    labelEtapaS2.setText((et==0)?"Vazio":Integer.toString(et));
-                    labelHorasS2.setText((horas==null)?"":horas.toString());
+                    labelEtapaS2.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelHorasS2.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 2:
-                    labelEtapaS3.setText((et==0)?"Vazio":Integer.toString(et));
-                    labelHorasS3.setText((horas==null)?"":horas.toString());
+                    labelEtapaS3.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelHorasS3.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 case 3:
-                    labelEtapaS4.setText((et==0)?"Vazio":Integer.toString(et));
-                    labelHorasS4.setText((horas==null)?"":horas.toString());
+                    labelEtapaS4.setText((et == 0) ? "Vazio" : "Etapa: " + Integer.toString(et));
+                    labelHorasS4.setText((horas == 0) ? "" : convertLongToString(horas));
                     break;
                 default:
                     break;
             }
-            
         }
-        
+    }
+    
+    private String convertLongToString(long l){
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(l),
+        TimeUnit.MILLISECONDS.toMinutes(l) % TimeUnit.HOURS.toMinutes(1),
+        TimeUnit.MILLISECONDS.toSeconds(l) % TimeUnit.MINUTES.toSeconds(1));
+        return hms;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoContinuar;
     private javax.swing.JButton botaoLogout;
     private javax.swing.JButton botaoNovoJogo;
+    private javax.swing.JButton botaoSalvarOuCarregar;
     private javax.swing.JButton botaoVoltar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelEtapaS1;
     private javax.swing.JLabel labelEtapaS2;

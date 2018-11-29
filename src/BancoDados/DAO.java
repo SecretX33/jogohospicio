@@ -14,9 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
-import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class DAO {  
     private static Connection connection = null;
@@ -24,7 +25,7 @@ public class DAO {
     private static PreparedStatement prepstate = null;
     private static ResultSet resultado = null;
     
-    public static boolean Inserir(Object objetoGenerico) throws SQLIntegrityConstraintViolationException{
+    /*public static boolean Inserir(Object objetoGenerico) throws SQLIntegrityConstraintViolationException{
         if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
         String tipo_dado;
         Etapa etapa = null;
@@ -63,17 +64,18 @@ public class DAO {
             return false;
         }
         return true;
-    }
+    }*/
     
-    public static boolean InserirJogador(Jogador jogador) throws SQLIntegrityConstraintViolationException{
-        if(jogador == null) throw new IllegalArgumentException("Não é possível inserir nulo na tabela jogador");
+    public static boolean InserirJogador(String usuario, String senha, String apelido) throws SQLIntegrityConstraintViolationException{
+        if(usuario == null || senha == null || apelido == null) throw new IllegalArgumentException("Não é possível inserir nulo na tabela jogador");
         else{
             try
             {
+                resultado=null;
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
                 statement = (Statement) connection.createStatement();
 
-                statement.execute(String.format("INSERT INTO jogador(usuario,senha,apelido) VALUES(\"%s\",\"%s\",\"%s\")",jogador.getUsuario(),jogador.getSenha(),jogador.getApelido()));
+                statement.execute(String.format("INSERT INTO jogador(usuario,senha,apelido) VALUES(\"%s\",\"%s\",\"%s\")",usuario,senha,apelido));
             }  
             catch(SQLIntegrityConstraintViolationException e){
                 throw e;
@@ -86,6 +88,46 @@ public class DAO {
 
             System.out.println("Jogador inserido com sucesso.");
             return true;
+        }
+    }
+    
+    public static boolean AtualizarSave(Save save) throws SQLIntegrityConstraintViolationException{
+        if(save == null) throw new IllegalArgumentException("Não é possível inserir um Save nulo na tabela save.");
+        else{
+            try
+            {
+                resultado = null;
+                String query = "UPDATE save SET etapa_atual = ?, tempo_jogo = ?, sanidade = ?, emocional = ?, carisma = ?, coragem = ? WHERE slot_save = ? AND cod_usuario = ?";
+                if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
+                prepstate = connection.prepareStatement(query);
+                
+                prepstate.setInt(1,save.getEtapa_atual());
+                prepstate.setLong(2,save.getTempo_jogo());
+                prepstate.setInt(3,save.getSanidade());
+                prepstate.setInt(4,save.getEmocional());
+                prepstate.setInt(5,save.getCarisma());
+                prepstate.setInt(6,save.getCoragem());
+                prepstate.setInt(7,save.getSlot_save());
+                prepstate.setInt(8,save.getCod_usuario());
+                
+                if(prepstate.executeUpdate()>0){
+                    System.out.println("Erro ao tentar atualizar o save.");
+                    return false;
+                }
+                else{
+                    System.out.println("Save atualizado com sucesso.");
+                    return true;
+                }
+            }  
+            catch(SQLIntegrityConstraintViolationException e){
+                throw e;
+            }
+            catch (SQLException e)
+            {  
+                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+            }
+            System.out.println("Erro ao tentar atualizar o save.");
+            return false;
         }
     }
     
@@ -147,7 +189,7 @@ public class DAO {
                 String u=null;
                 String se=null;
                 String a=null;
-                Time tj=null;
+                long tj=0;
                 
                 String query = "SELECT * FROM jogador WHERE jogador.usuario = ?";
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
@@ -160,9 +202,8 @@ public class DAO {
                     u = resultado.getString("usuario");
                     se = resultado.getString("senha");
                     a = resultado.getString("apelido");
-                    tj = resultado.getTime("tempo_jogo");
-                    System.out.println("Tempo de jogo: " + resultado.getTime("tempo_jogo"));
-                    System.out.println(String.format("%d,%s,%s,%s,%s",id,u,se,a,String.valueOf(tj)));
+                    tj = resultado.getLong("tempo_jogo");
+                    System.out.println(String.format("%d,%s,%s,%s,%s",id,u,se,a,convertLongToString(tj)));
                     resultado=null;
                     query="SELECT * FROM save WHERE save.cod_usuario = ? ORDER BY slot_save, cod_usuario";
                     if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
@@ -175,14 +216,14 @@ public class DAO {
                         gaveta.setSlot_save(resultado.getInt("slot_save"));
                         gaveta.setCod_usuario(resultado.getInt("cod_usuario"));
                         gaveta.setEtapa_atual(resultado.getInt("etapa_atual"));
-                        gaveta.setTempo_jogo(resultado.getTime("tempo_jogo"));
+                        gaveta.setTempo_jogo(resultado.getLong("tempo_jogo"));
                         gaveta.setSanidade(resultado.getInt("sanidade"));
                         gaveta.setEmocional(resultado.getInt("emocional"));
                         gaveta.setCarisma(resultado.getInt("carisma"));
                         gaveta.setCoragem(resultado.getInt("coragem"));
                         s[i]=gaveta;
                     }
-                    return new Jogador(u,se,a,tj,s[0],s[1],s[2],s[3]);     
+                    return new Jogador(id,u,se,a,tj,s[0],s[1],s[2],s[3]);     
                 }
                 else throw new NullPointerException("Não foi possível criar o jogador por falta de dados.");
             }
@@ -298,7 +339,10 @@ public class DAO {
         }
     }
     
-    public static ResultSet getResultado(){
-        return resultado;
+    private static String convertLongToString(long l){
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(l),
+        TimeUnit.MILLISECONDS.toMinutes(l) % TimeUnit.HOURS.toMinutes(1),
+        TimeUnit.MILLISECONDS.toSeconds(l) % TimeUnit.MINUTES.toSeconds(1));
+        return hms;
     }
 }

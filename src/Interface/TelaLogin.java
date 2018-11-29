@@ -272,7 +272,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Esse usuário já existe, tente outro nome.", "Erro ao cadastrar", JOptionPane.WARNING_MESSAGE);
             else{
                 try{
-                    DAO.InserirJogador(new Jogador(tbUsuarioRegistro.getText(), String.valueOf(tbSenhaRegistro.getPassword()), tbApelidoRegistro.getText()));              
+                    DAO.InserirJogador(tbUsuarioRegistro.getText(), String.valueOf(tbSenhaRegistro.getPassword()), tbApelidoRegistro.getText());              
                     JOptionPane.showMessageDialog(this, "Usuário registrado com sucesso!", "Êxito", JOptionPane.INFORMATION_MESSAGE);
                     trocarTela();
                 } catch(SQLIntegrityConstraintViolationException e){
@@ -298,7 +298,6 @@ public class TelaLogin extends javax.swing.JFrame {
             else{
                 System.out.println("Login realizado com sucesso.");
                 jogador=DAO.getJogador(tbUsuarioLogin.getText());
-                this.setVisible(false);
                 Menu m = new Menu(jogador,0);
             }
         }
