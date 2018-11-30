@@ -281,7 +281,7 @@ public class DAO {
                     Etapa proxEtapa = new Etapa();
 
                     proxEtapa.setCod(resultado.getInt("cod"));
-                    System.out.println("Etapa solicitada: " + proxEtapa.getCod());
+                    System.out.println("[BD] Etapa solicitada: " + proxEtapa.getCod());
                     proxEtapa.setDescricao(resultado.getString("descricao"));
                     proxEtapa.setTextobt1(resultado.getString("textobt1"));
                     proxEtapa.setTextobt2(resultado.getString("textobt2"));
@@ -352,11 +352,11 @@ public class DAO {
                 statement.execute(String.format("SELECT usuario FROM jogador WHERE jogador.usuario = \"%s\" AND jogador.senha = \"%s\"",nomeUsuario,senha));
                 resultado = statement.getResultSet();
                 if(resultado.next()){
-                    System.out.println("Usuário e senha conferem.");
+                    System.out.println("[BD] Usuário e senha conferem.");
                     return true;
                 }
                 else{
-                    System.out.println("Usuário ou senha incorretos.");
+                    System.out.println("[BD] Usuário ou senha incorretos.");
                     return false;
                 }     
             }

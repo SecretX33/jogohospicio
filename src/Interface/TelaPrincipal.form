@@ -360,6 +360,7 @@
                         <Property name="text" type="java.lang.String" value="areaTextoDecisao&#xa;"/>
                         <Property name="wrapStyleWord" type="boolean" value="true"/>
                         <Property name="caretPosition" type="int" value="0"/>
+                        <Property name="focusable" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -438,6 +439,7 @@
                         <Property name="text" type="java.lang.String" value="areaTextoDecisao&#xa;"/>
                         <Property name="wrapStyleWord" type="boolean" value="true"/>
                         <Property name="caretPosition" type="int" value="0"/>
+                        <Property name="focusable" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>

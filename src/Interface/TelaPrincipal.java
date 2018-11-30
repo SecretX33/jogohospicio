@@ -61,10 +61,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.dispose();
         Menu m = new Menu(jogador,0,loginHorarioInicial);
     }
+    
     private void sairParaSave(){
         this.dispose();
         saveHorarioFinal=System.currentTimeMillis();
-        Menu m = new Menu(jogador, 2, saveAtual, etapaAtual.getCod(), loginHorarioInicial, loginHorarioFinal, saveHorarioInicial, saveHorarioFinal);
+        Menu m = new Menu(jogador, 2, saveAtual, etapaAtual.getCod(), loginHorarioInicial, loginHorarioFinal, saveHorarioInicial, saveHorarioFinal, escolhas);
     }
     
     @SuppressWarnings("unchecked")
@@ -260,6 +261,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         areaTextoDecisao.setText("areaTextoDecisao\n");
         areaTextoDecisao.setWrapStyleWord(true);
         areaTextoDecisao.setCaretPosition(0);
+        areaTextoDecisao.setFocusable(false);
         jScrollPane1.setViewportView(areaTextoDecisao);
 
         javax.swing.GroupLayout decisaoLayout = new javax.swing.GroupLayout(decisao);
@@ -308,6 +310,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         areaTextoAvancar.setText("areaTextoDecisao\n");
         areaTextoAvancar.setWrapStyleWord(true);
         areaTextoAvancar.setCaretPosition(0);
+        areaTextoAvancar.setFocusable(false);
         jScrollPane2.setViewportView(areaTextoAvancar);
 
         javax.swing.GroupLayout avancarLayout = new javax.swing.GroupLayout(avancar);
@@ -484,25 +487,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
             Etapa proxEtapa;
             
             atualizarStatus(botao);
-            if(botao < 2) proxEtapa = DAO.getEtapa(etapaAtual.getRef_op1());
-            else proxEtapa = DAO.getEtapa(etapaAtual.getRef_op2());
+            if(isPlayerAlive()){
+                if(botao < 2) proxEtapa = DAO.getEtapa(etapaAtual.getRef_op1());
+                else proxEtapa = DAO.getEtapa(etapaAtual.getRef_op2());
 
-            if(tipoQuadroAtual != proxEtapa.getTipo_quadro()){
                 tipoQuadroAtual = proxEtapa.getTipo_quadro();
+                etapaAtual = proxEtapa;
             }
-            etapaAtual = proxEtapa;
+            else{
+                saveHorarioFinal=System.currentTimeMillis();
+                JOptionPane.showMessageDialog(this, String.format("Que droga, você falhou!\n\nTempo jogado: %s\nEscolhas feitas: %s",convertLongToString(saveAtual.getTempo_jogo() + (saveHorarioFinal - saveHorarioInicial)),saveAtual.getEscolhas()+escolhas), "Que pena", JOptionPane.ERROR_MESSAGE);
+                sairParaMenu();
+            }
             atualizarInterface();       
         }
         else{
+            if(tipoQuadroAtual==0){
+                 botaoOpcao1.setEnabled(false);
+                 botaoOpcao2.setEnabled(false);
+            }
+            else botaoAvancar.setEnabled(false);
             saveHorarioFinal=System.currentTimeMillis();
             JOptionPane.showMessageDialog(this, String.format("Parabéns, você terminou o jogo!\n\nTempo jogado: %s",convertLongToString(saveAtual.getTempo_jogo() + (saveHorarioFinal - saveHorarioInicial))), "WOW", JOptionPane.WARNING_MESSAGE);
+            
+            
         }
     }
     
     private void atualizarInterface(){
         alternar.removeAll();
         
-        if(etapaAtual.getTipo_quadro() == 0){
+        if(tipoQuadroAtual == 0){
             alternar.add(decisao);
             botaoOpcao1.setText(etapaAtual.getTextobt1());
             botaoOpcao2.setText(etapaAtual.getTextobt2());
@@ -532,7 +547,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     
     private void atualizarStatus(int botao){
-        if(botao == 1){
+        if(botao < 2){
             saveAtual.alterarSanidade(etapaAtual.getImp_sanidade1());
             saveAtual.alterarEmocional(etapaAtual.getImp_emocional1());
             saveAtual.alterarCarisma(etapaAtual.getImp_carisma1());
@@ -545,6 +560,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             saveAtual.alterarCoragem(etapaAtual.getImp_coragem2());
         }
     }
+    
+    private boolean isPlayerAlive(){
+        if(saveAtual.getSanidade()>0 && saveAtual.getEmocional()>0 &&
+           saveAtual.getCarisma()>0 && saveAtual.getCoragem()>0)
+            return true;
+        else return false;
+    }
+    
     private String convertLongToString(long l){
         String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(l),
         TimeUnit.MILLISECONDS.toMinutes(l) % TimeUnit.HOURS.toMinutes(1),

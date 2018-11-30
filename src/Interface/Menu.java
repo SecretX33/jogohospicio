@@ -54,16 +54,34 @@ public class Menu extends javax.swing.JFrame {
         this.loginHorarioFinal=0;
         this.saveHorarioInicial=0;
         this.saveHorarioFinal=0;
-        setTela(i);
         labelNomeJogador.setText(jogador.getApelido());
         labelNomeJogador1.setText(jogador.getApelido());
+        labelTempoJogo.setText(convertLongToString(jogador.getTempo_jogo()));
+        labelTempoJogo1.setText(convertLongToString(jogador.getTempo_jogo()));
+        setTela(i);
         
         setVisible(true);
     }
     
     public Menu(Jogador j, int i, long lHI){
-        this(j,i);
+        this();
+        this.jogador = j;
+        this.tipoTela = i;
+        this.saveAtual = new Save(jogador.getCod_usuario());
+        this.numSaveAtual = 0;
+        this.loginHorarioInicial=System.currentTimeMillis();
+        this.loginHorarioFinal=0;
+        this.saveHorarioInicial=0;
+        this.saveHorarioFinal=0;
         this.loginHorarioInicial=lHI;
+        atualizarHorasJogador();   
+        labelNomeJogador.setText(jogador.getApelido());
+        labelNomeJogador1.setText(jogador.getApelido());
+        labelTempoJogo.setText(convertLongToString(jogador.getTempo_jogo()));
+        labelTempoJogo1.setText(convertLongToString(jogador.getTempo_jogo()));
+        setTela(i);
+        
+        setVisible(true);
     }
 
     public Menu(Jogador j, int i, Save s, int ea, long lHI, long lHF, long sHI, long sHF, String escolhas) {
@@ -77,10 +95,12 @@ public class Menu extends javax.swing.JFrame {
         this.loginHorarioFinal=lHF;
         this.saveHorarioInicial=sHI;
         this.saveHorarioFinal=sHF;
-        this.escolhas = escolhas;
-        setTela(i);
+        this.escolhas = escolhas;     
         labelNomeJogador.setText(jogador.getApelido());
         labelNomeJogador1.setText(jogador.getApelido());
+        labelTempoJogo.setText(convertLongToString(jogador.getTempo_jogo()));
+        labelTempoJogo1.setText(convertLongToString(jogador.getTempo_jogo()));
+        setTela(i);
         
         setVisible(true);
     }
@@ -430,7 +450,7 @@ public class Menu extends javax.swing.JFrame {
     private void botaoNovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoJogoActionPerformed
         super.dispose();
         this.setVisible(false);
-        System.out.println(String.format("NOVO JOGO(Etapa atual: %d; Coragem: %d)", saveAtual.getEtapa_atual(), saveAtual.getCoragem()));
+        System.out.println(String.format("[Menu] NOVO JOGO » Etapa atual: %d, Coragem: %d.", saveAtual.getEtapa_atual(), saveAtual.getCoragem()));
         createNewGame();
     }//GEN-LAST:event_botaoNovoJogoActionPerformed
 
@@ -507,6 +527,7 @@ public class Menu extends javax.swing.JFrame {
                 saveAtual.setSlot_save(numSaveAtual);
                 saveAtual.setEtapa_atual(numEtapaAtual);
                 saveAtual.setTempo_jogo(saveAtual.getTempo_jogo() + (saveHorarioFinal - saveHorarioInicial));
+                saveAtual.setEscolhas(saveAtual.getEscolhas() + escolhas);
                 // Atualizando o save no jogador com o saveAtual, no slot escolhido pelo usuário
                 jogador.setSave(saveAtual, numSaveAtual);
                 // Atualizando o save no banco com o saveAtual
@@ -515,17 +536,7 @@ public class Menu extends javax.swing.JFrame {
                 } catch (SQLIntegrityConstraintViolationException ex) {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                loginHorarioFinal = System.currentTimeMillis();
-                // Calculando o novo tempo jogado pelo jogador
-                jogador.setTempo_jogo(jogador.getTempo_jogo() + (loginHorarioInicial - loginHorarioFinal));
-                loginHorarioInicial = loginHorarioFinal;
-                loginHorarioFinal = 0;
-                // Atualizando no banco o tempo de jogo do jogador
-                try {
-                    DAO.AtualizarJogador(jogador);
-                } catch (SQLIntegrityConstraintViolationException ex) {
-                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-                }          
+                atualizarHorasJogador();
                 updateTelaSave();
                 saved=true;
                 createNewGame();
@@ -534,9 +545,19 @@ public class Menu extends javax.swing.JFrame {
         else System.out.println("Não há botões selecionados.");
     }//GEN-LAST:event_botaoSalvarOuCarregarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void atualizarHorasJogador(){
+        loginHorarioFinal = System.currentTimeMillis();
+        // Calculando o novo tempo jogado pelo jogador
+        jogador.setTempo_jogo(jogador.getTempo_jogo() + (loginHorarioFinal - loginHorarioInicial));
+        loginHorarioInicial = loginHorarioFinal;
+        loginHorarioFinal = 0;
+        // Atualizando no banco o tempo de jogo do jogador
+        try {
+            DAO.AtualizarJogador(jogador);
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }         
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -571,7 +592,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void createNewGame() {
         this.dispose();
-        TelaPrincipal tp = new TelaPrincipal(jogador, saveAtual, numSaveAtual, loginHorarioInicial, loginHorarioFinal, saveHorarioInicial, saveHorarioFinal, saved);
+        TelaPrincipal tp = new TelaPrincipal(jogador, saveAtual, numSaveAtual, loginHorarioInicial, loginHorarioFinal, saveHorarioInicial, saveHorarioFinal, saved, escolhas);
     }
 
     private boolean checkSelected() {

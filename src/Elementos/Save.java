@@ -36,7 +36,7 @@ public class Save {
         this.emocional = emocional;
         this.carisma = carisma;
         this.coragem = coragem;
-        this.escolhas = escolhas;
+        this.escolhas = (escolhas==null)? "" : escolhas;
     }
 
     public String getEscolhas() {
@@ -111,11 +111,12 @@ public class Save {
         this.coragem = coragem;
     }
     
-        public void alterarSanidade(int i){
+    public void alterarSanidade(int i){
         if(sanidade+i>0 && sanidade+i<maxStatusValue){
             sanidade+=i;
         }
         else if(sanidade+i<=0){
+            sanidade=0;
         }
     }
     

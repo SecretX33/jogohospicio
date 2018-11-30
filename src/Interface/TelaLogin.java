@@ -37,13 +37,13 @@ public class TelaLogin extends javax.swing.JFrame {
         loginKL = new KeyAdapter() {
         @Override
         public void keyReleased(KeyEvent e) {
-            checkLoginEmpty();
+            checkLoginCanProceed();
         }};
         
         registroKL = new KeyAdapter() {
         @Override
         public void keyReleased(KeyEvent e) {
-            checkRegistroEmpty();
+            checkRegistroCanProceed();
         }};
         
         AddKeyListenersOnEvent();
@@ -289,14 +289,14 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoRegistrarLoginActionPerformed
 
     private void botaoLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogarActionPerformed
-        if(!checkLoginEmpty())
+        if(checkLoginCanProceed())
         {
             if(!DAO.verifyLogin(String.valueOf(tbUsuarioLogin.getText()),String.valueOf(tbSenhaLogin.getPassword()))){
-                System.out.println("Erro ao logar, usuario ou senha incorretos.");
+                System.out.println("[Login] Erro ao logar, usuario ou senha incorretos.");
                 JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos, tente novamente.", "Erro ao logar", JOptionPane.WARNING_MESSAGE);
             }    
             else{
-                System.out.println("Login realizado com sucesso.");
+                System.out.println("[Login] Login realizado com sucesso.");
                 jogador=DAO.getJogador(tbUsuarioLogin.getText());
                 this.dispose();
                 Menu m = new Menu(jogador,0);
@@ -344,32 +344,6 @@ public class TelaLogin extends javax.swing.JFrame {
         });
     }
     
-    private void trocarTela(){
-        tela.removeAll(); // Famoso cascade
-        if(tipoTela==0){
-            tbUsuarioRegistro.setText(tbUsuarioLogin.getText());
-            tbUsuarioLogin.setText("");
-            tbSenhaRegistro.setText(String.valueOf(tbSenhaLogin.getPassword()));
-            tbSenhaLogin.setText("");
-            //botaoRegistrarRegistro.setEnabled(false);
-            checkRegistroEmpty();
-            tela.add(registro);
-        }
-        else{
-            tbUsuarioLogin.setText(tbUsuarioRegistro.getText());
-            tbUsuarioRegistro.setText("");
-            tbSenhaRegistro.setText("");
-            tbApelidoRegistro.setText("");
-            //botaoLogar.setEnabled(false);
-            checkLoginEmpty();
-            tela.add(login);
-        }
-        tipoTela=1-tipoTela;
-
-        tela.repaint();
-        tela.revalidate();   
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoLogar;
     private javax.swing.JButton botaoRegistrarLogin;
@@ -391,6 +365,46 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JPanel tela;
     // End of variables declaration//GEN-END:variables
 
+    private boolean checkRegistroCanProceed(){
+        if(String.valueOf(tbUsuarioRegistro.getText()).isEmpty() ||
+           String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() || 
+           String.valueOf(tbApelidoRegistro.getText()).isEmpty()){
+            botaoRegistrarRegistro.setEnabled(false);    
+            return false;
+        }
+        else{
+            botaoRegistrarRegistro.setEnabled(true);
+            return true;
+        }         
+    }
+    
+    private void trocarTela(){
+        tela.removeAll(); // Famoso cascade
+        if(tipoTela==0){
+            tbUsuarioRegistro.setText(tbUsuarioLogin.getText());
+            tbUsuarioLogin.setText("");
+            tbSenhaRegistro.setText(String.valueOf(tbSenhaLogin.getPassword()));
+            tbSenhaLogin.setText("");
+            //botaoRegistrarRegistro.setEnabled(false);
+            checkRegistroCanProceed();
+            tela.add(registro);
+            tipoTela=1;
+        }
+        else{
+            tbUsuarioLogin.setText(tbUsuarioRegistro.getText());
+            tbUsuarioRegistro.setText("");
+            tbSenhaRegistro.setText("");
+            tbApelidoRegistro.setText("");
+            //botaoLogar.setEnabled(false);
+            checkLoginCanProceed();
+            tela.add(login);
+            tipoTela=0;
+        }
+
+        tela.repaint();
+        tela.revalidate();   
+    }
+    
     private void AddKeyListenersOnEvent() {   
         tbUsuarioLogin.addKeyListener(loginKL);
         tbSenhaLogin.addKeyListener(loginKL);
@@ -399,28 +413,15 @@ public class TelaLogin extends javax.swing.JFrame {
         tbApelidoRegistro.addKeyListener(registroKL);          
     }
     
-    private boolean checkLoginEmpty(){
+    private boolean checkLoginCanProceed(){
         if(String.valueOf(tbUsuarioLogin.getText()).isEmpty() ||
            String.valueOf(tbSenhaLogin.getPassword()).isEmpty()){
-            botaoLogar.setEnabled(true);
-            return true;
-        }
-        else{
             botaoLogar.setEnabled(false);
             return false;
         }
-    }
-    
-    private boolean checkRegistroEmpty(){
-        if(String.valueOf(tbUsuarioRegistro.getText()).isEmpty() ||
-           String.valueOf(tbSenhaRegistro.getPassword()).isEmpty() || 
-           String.valueOf(tbApelidoRegistro.getText()).isEmpty()){
-            botaoRegistrarRegistro.setEnabled(true);    
+        else{
+            botaoLogar.setEnabled(true);
             return true;
         }
-        else{
-            botaoRegistrarRegistro.setEnabled(false);
-            return false;
-        }         
     }
 }
