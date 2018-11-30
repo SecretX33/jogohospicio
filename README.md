@@ -2,7 +2,8 @@
 
 O jogo é bom, joga aí!
 
-Prerequisitos
+
+Pré-requisitos
 
 1. Servidor e workbench MySQL já instalados
 2. Netbeans
