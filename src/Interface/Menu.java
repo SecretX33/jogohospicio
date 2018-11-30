@@ -229,7 +229,7 @@ public class Menu extends javax.swing.JFrame {
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(botaoNovoJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,7 +244,7 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(labelLogadoComo)
                         .addGap(6, 6, 6)
                         .addComponent(labelNomeJogador)
-                        .addGap(8, 8, 8)
+                        .addGap(2, 2, 2)
                         .addComponent(labelTempoJogo))))
         );
 
@@ -409,7 +409,7 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(labelLogadoComo1)
                         .addGap(6, 6, 6)
                         .addComponent(labelNomeJogador1)
-                        .addGap(7, 7, 7)
+                        .addGap(2, 2, 2)
                         .addComponent(labelTempoJogo1))))
         );
 
