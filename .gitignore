@@ -1,6 +1,5 @@
 
 *.properties
 *.lock
-*.lock
-*.properties
 *.tmp
+~$*.docx
