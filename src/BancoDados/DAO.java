@@ -251,6 +251,7 @@ public class DAO {
                         gaveta.setEmocional(resultado.getInt("emocional"));
                         gaveta.setCarisma(resultado.getInt("carisma"));
                         gaveta.setCoragem(resultado.getInt("coragem"));
+                        gaveta.setEscolhas(resultado.getString("escolhas"));
                         s[i]=gaveta;
                     }
                     return new Jogador(id,u,se,a,tj,s[0],s[1],s[2],s[3]);     

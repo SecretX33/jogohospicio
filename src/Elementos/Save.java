@@ -36,11 +36,12 @@ public class Save {
         this.emocional = emocional;
         this.carisma = carisma;
         this.coragem = coragem;
-        this.escolhas = (escolhas==null)? "" : escolhas;
+        this.escolhas = escolhas;
     }
 
     public String getEscolhas() {
-        return escolhas;
+        if(escolhas==null) return "";
+        else return escolhas;
     }
 
     public void setEscolhas(String escolhas) {

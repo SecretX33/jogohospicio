@@ -495,6 +495,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 etapaAtual = proxEtapa;
             }
             else{
+                atualizarInterface();
                 saveHorarioFinal=System.currentTimeMillis();
                 JOptionPane.showMessageDialog(this, String.format("Que droga, você falhou!\n\nTempo jogado: %s\nEscolhas feitas: %s",convertLongToString(saveAtual.getTempo_jogo() + (saveHorarioFinal - saveHorarioInicial)),saveAtual.getEscolhas()+escolhas), "Que pena", JOptionPane.ERROR_MESSAGE);
                 sairParaMenu();
