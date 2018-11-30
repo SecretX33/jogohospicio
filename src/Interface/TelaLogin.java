@@ -97,9 +97,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
         labelSenhaLogin.setText("Senha");
 
-        tbUsuarioLogin.setText("a");
-
         botaoLogar.setText("Login");
+        botaoLogar.setEnabled(false);
         botaoLogar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoLogarActionPerformed(evt);
@@ -117,7 +116,6 @@ public class TelaLogin extends javax.swing.JFrame {
         labelLogin.setForeground(new java.awt.Color(80, 200, 40));
         labelLogin.setText("Login");
 
-        tbSenhaLogin.setText("a");
         tbSenhaLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbSenhaLoginActionPerformed(evt);
