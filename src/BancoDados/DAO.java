@@ -14,9 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
-import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class DAO {  
     private static Connection connection = null;
@@ -24,7 +25,7 @@ public class DAO {
     private static PreparedStatement prepstate = null;
     private static ResultSet resultado = null;
     
-    public static boolean Inserir(Object objetoGenerico) throws SQLIntegrityConstraintViolationException{
+    /*public static boolean Inserir(Object objetoGenerico) throws SQLIntegrityConstraintViolationException{
         if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
         String tipo_dado;
         Etapa etapa = null;
@@ -63,17 +64,18 @@ public class DAO {
             return false;
         }
         return true;
-    }
+    }*/
     
-    public static boolean InserirJogador(Jogador jogador) throws SQLIntegrityConstraintViolationException{
-        if(jogador == null) throw new IllegalArgumentException("Não é possível inserir nulo na tabela jogador");
+    public static boolean InserirJogador(String usuario, String senha, String apelido) throws SQLIntegrityConstraintViolationException{
+        if(usuario == null || senha == null || apelido == null) throw new IllegalArgumentException("Não é possível inserir nulo na tabela jogador");
         else{
             try
             {
+                resultado=null;
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
                 statement = (Statement) connection.createStatement();
 
-                statement.execute(String.format("INSERT INTO jogador(usuario,senha,apelido) VALUES(\"%s\",\"%s\",\"%s\")",jogador.getUsuario(),jogador.getSenha(),jogador.getApelido()));
+                statement.execute(String.format("INSERT INTO jogador(usuario,senha,apelido) VALUES(\"%s\",\"%s\",\"%s\")",usuario,senha,apelido));
             }  
             catch(SQLIntegrityConstraintViolationException e){
                 throw e;
@@ -89,8 +91,78 @@ public class DAO {
         }
     }
     
+    public static boolean AtualizarSave(Save save) throws SQLIntegrityConstraintViolationException{
+        if(save == null) throw new IllegalArgumentException("Não é possível inserir um Save nulo na tabela save.");
+        else{
+            try
+            {
+                resultado = null;
+                String query = "UPDATE save SET etapa_atual = ?, tempo_jogo = ?, sanidade = ?, emocional = ?, carisma = ?, coragem = ?, escolhas = ? WHERE slot_save = ? AND cod_usuario = ?";
+                if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
+                prepstate = connection.prepareStatement(query);
+                
+                prepstate.setInt(1,save.getEtapa_atual());
+                prepstate.setLong(2,save.getTempo_jogo());
+                prepstate.setInt(3,save.getSanidade());
+                prepstate.setInt(4,save.getEmocional());
+                prepstate.setInt(5,save.getCarisma());
+                prepstate.setInt(6,save.getCoragem());
+                prepstate.setString(7,save.getEscolhas());
+                prepstate.setInt(8,save.getSlot_save());
+                prepstate.setInt(9,save.getCod_usuario());
+                
+                prepstate.executeUpdate();
+                System.out.println("Save atualizado com sucesso.");
+                return true;
+                
+            }  
+            catch(SQLIntegrityConstraintViolationException e){
+                throw e;
+            }
+            catch (SQLException e)
+            {  
+                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+            }
+            System.out.println("Erro ao tentar atualizar o save.");
+            return false;
+        }
+    }
+    
+    public static boolean AtualizarJogador(Jogador jogador) throws SQLIntegrityConstraintViolationException{
+        if(jogador == null) throw new IllegalArgumentException("[BD] Não é possível atualizar um jogador nulo.");
+        else{
+            try
+            {
+                resultado = null;
+                String query = "UPDATE jogador SET usuario = ?, senha = ?, apelido = ?, tempo_jogo = ? WHERE cod_usuario = ?";
+                if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
+                prepstate = connection.prepareStatement(query);
+                
+                prepstate.setString(1,jogador.getUsuario());
+                prepstate.setString(2,jogador.getSenha());
+                prepstate.setString(3,jogador.getApelido());
+                prepstate.setLong(4,jogador.getTempo_jogo());
+                prepstate.setInt(5,jogador.getCod_usuario());
+                
+                prepstate.executeUpdate();
+                System.out.println("[BD] Jogador atualizado com sucesso.");
+                return true;
+                
+            }  
+            catch(SQLIntegrityConstraintViolationException e){
+                throw e;
+            }
+            catch (SQLException e)
+            {  
+                System.out.println("[BD] Erro na operacão do Banco de Dados\nErro: " + e);
+            }
+            System.out.println("[BD] Erro ao tentar atualizar o save.");
+            return false;
+        }
+    }
+    
     public static int getIdJogador(String nome){
-       if(nome == null) throw new IllegalArgumentException("Não é possível pegar o ID de um jogador nulo.");
+       if(nome == null) throw new IllegalArgumentException("[BD] Não é possível pegar o ID de um jogador nulo.");
         else{
             try
             {
@@ -107,14 +179,14 @@ public class DAO {
             }
             catch (SQLException e)
             {
-                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+                System.out.println("[BD] Erro na operacão do Banco de Dados\nErro: " + e);
             }
-            throw new NullPointerException("O banco de dados retornou um resultado nulo para o jogador.");
+            throw new NullPointerException("[BD] O banco de dados retornou um resultado nulo para o jogador.");
         }
     }
     
     public static int getIdJogador(Jogador jogador){
-       if(jogador == null) throw new IllegalArgumentException("Não é possível pegar o ID de um jogador nulo.");
+       if(jogador == null) throw new IllegalArgumentException("[BD] Não é possível pegar o ID de um jogador nulo.");
         else{
             try
             {
@@ -131,14 +203,14 @@ public class DAO {
             }
             catch (SQLException e)
             {
-                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+                System.out.println("[BD] Erro na operacão do Banco de Dados\nErro: " + e);
             }
-            throw new NullPointerException("O banco de dados retornou um resultado nulo para o jogador.");
+            throw new NullPointerException("[BD] O banco de dados retornou um resultado nulo para o jogador.");
         }
     }
     
     public static Jogador getJogador(String usuario){
-        if(usuario == null) throw new IllegalArgumentException("Não é possível pesquisar jogadores com login nulo.");
+        if(usuario == null) throw new IllegalArgumentException("[BD] Não é possível pesquisar jogadores com login nulo.");
         else{
             try{
                 resultado = null;
@@ -147,7 +219,7 @@ public class DAO {
                 String u=null;
                 String se=null;
                 String a=null;
-                Time tj=null;
+                long tj=0;
                 
                 String query = "SELECT * FROM jogador WHERE jogador.usuario = ?";
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
@@ -160,9 +232,8 @@ public class DAO {
                     u = resultado.getString("usuario");
                     se = resultado.getString("senha");
                     a = resultado.getString("apelido");
-                    tj = resultado.getTime("tempo_jogo");
-                    System.out.println("Tempo de jogo: " + resultado.getTime("tempo_jogo"));
-                    System.out.println(String.format("%d,%s,%s,%s,%s",id,u,se,a,String.valueOf(tj)));
+                    tj = resultado.getLong("tempo_jogo");
+                    //System.out.println(String.format("[BD] Dados do jogador solicitado: %d,%s,%s,%s,%s",id,u,se,a,convertLongToString(tj)));
                     resultado=null;
                     query="SELECT * FROM save WHERE save.cod_usuario = ? ORDER BY slot_save, cod_usuario";
                     if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
@@ -175,27 +246,28 @@ public class DAO {
                         gaveta.setSlot_save(resultado.getInt("slot_save"));
                         gaveta.setCod_usuario(resultado.getInt("cod_usuario"));
                         gaveta.setEtapa_atual(resultado.getInt("etapa_atual"));
-                        gaveta.setTempo_jogo(resultado.getTime("tempo_jogo"));
+                        gaveta.setTempo_jogo(resultado.getLong("tempo_jogo"));
                         gaveta.setSanidade(resultado.getInt("sanidade"));
                         gaveta.setEmocional(resultado.getInt("emocional"));
                         gaveta.setCarisma(resultado.getInt("carisma"));
                         gaveta.setCoragem(resultado.getInt("coragem"));
+                        gaveta.setEscolhas(resultado.getString("escolhas"));
                         s[i]=gaveta;
                     }
-                    return new Jogador(u,se,a,tj,s[0],s[1],s[2],s[3]);     
+                    return new Jogador(id,u,se,a,tj,s[0],s[1],s[2],s[3]);     
                 }
-                else throw new NullPointerException("Não foi possível criar o jogador por falta de dados.");
+                else throw new NullPointerException("[BD] Não foi possível criar o jogador por falta de dados.");
             }
             catch (SQLException e)
             {
-                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+                System.out.println("[BD] Erro na operacão do Banco de Dados\nErro: " + e);
             }
-            throw new NullPointerException("O banco de dados retornou um resultado nulo para o jogador.");
+            throw new NullPointerException("[BD] O banco de dados retornou um resultado nulo para o jogador.");
         }
     }
     
     public static Etapa getEtapa(int codProxEtapa){
-        if(codProxEtapa<1) throw new IllegalArgumentException(String.format("Erro, não é possível obter uma etapa de valor negativo (valor solicitado: %d).",codProxEtapa));
+        if(codProxEtapa<1) throw new IllegalArgumentException(String.format("[BD] Erro, não é possível obter uma etapa de valor negativo (valor solicitado: %d).",codProxEtapa));
         else{
             try
             {    
@@ -210,7 +282,7 @@ public class DAO {
                     Etapa proxEtapa = new Etapa();
 
                     proxEtapa.setCod(resultado.getInt("cod"));
-                    System.out.println("Etapa solicitada: " + proxEtapa.getCod());
+                    System.out.println("[BD] Etapa solicitada: " + proxEtapa.getCod());
                     proxEtapa.setDescricao(resultado.getString("descricao"));
                     proxEtapa.setTextobt1(resultado.getString("textobt1"));
                     proxEtapa.setTextobt2(resultado.getString("textobt2"));
@@ -230,18 +302,18 @@ public class DAO {
                     
                     return proxEtapa;
                 }
-                throw new NullPointerException(String.format("O banco de dados retornou um resultado nulo para a etapa %d.",codProxEtapa));
+                throw new NullPointerException(String.format("[BD] O banco de dados retornou um resultado nulo para a etapa %d.",codProxEtapa));
             }
             catch (SQLException e)
             {
-                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+                System.out.println("[BD] Erro na operacão do Banco de Dados\nErro: " + e);
             }
             return null;
         }
     }
     
     public static boolean checkIfUserExists(String nomeUsuario){
-        if(nomeUsuario.isEmpty()) throw new IllegalArgumentException("Não é possível verificar um nome nulo na tabela jogador");
+        if(nomeUsuario.isEmpty()) throw new IllegalArgumentException("[BD] Não é possível verificar um nome nulo na tabela jogador");
         else{
             try
             {
@@ -262,7 +334,7 @@ public class DAO {
             }
             catch (SQLException e)
             {
-                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+                System.out.println("[BD] Erro na operacão do Banco de Dados\nErro: " + e);
             }
 
             return true;
@@ -270,7 +342,7 @@ public class DAO {
     }
     
     public static boolean verifyLogin(String nomeUsuario, String senha){
-        if(nomeUsuario.isEmpty() || senha.isEmpty()) throw new IllegalArgumentException("Não é possível verificar um logim com valores nulos na tabela jogador");
+        if(nomeUsuario.isEmpty() || senha.isEmpty()) throw new IllegalArgumentException("[BD] Não é possível verificar um logim com valores nulos na tabela jogador");
         else{
             try
             {
@@ -281,24 +353,27 @@ public class DAO {
                 statement.execute(String.format("SELECT usuario FROM jogador WHERE jogador.usuario = \"%s\" AND jogador.senha = \"%s\"",nomeUsuario,senha));
                 resultado = statement.getResultSet();
                 if(resultado.next()){
-                    System.out.println("Usuário e senha conferem.");
+                    System.out.println("[BD] Usuário e senha conferem.");
                     return true;
                 }
                 else{
-                    System.out.println("Usuário ou senha incorretos.");
+                    System.out.println("[BD] Usuário ou senha incorretos.");
                     return false;
                 }     
             }
             catch (SQLException e)
             {
-                System.out.println("Erro na operacão do Banco de Dados\nErro: " + e);
+                System.out.println("[BD] Erro na operacão do Banco de Dados\nErro: " + e);
             }
 
             return true;
         }
     }
     
-    public static ResultSet getResultado(){
-        return resultado;
+    private static String convertLongToString(long l){
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(l),
+        TimeUnit.MILLISECONDS.toMinutes(l) % TimeUnit.HOURS.toMinutes(1),
+        TimeUnit.MILLISECONDS.toSeconds(l) % TimeUnit.MINUTES.toSeconds(1));
+        return hms;
     }
 }

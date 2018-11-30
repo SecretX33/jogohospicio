@@ -6,26 +6,28 @@ public class Save {
     private int slot_save;
     private int cod_usuario;
     private int etapa_atual;
-    private Time tempo_jogo;  
+    private long tempo_jogo;  
     private int sanidade;
     private int emocional;
     private int carisma;
     private int coragem;
+    private String escolhas;
+    private final int maxStatusValue = 20;
     
     // Inicializando um save novo
     public Save(int cod_usuario){
-        this.slot_save = 0;
+        this.slot_save = -1;
         this.cod_usuario = cod_usuario;
         this.etapa_atual = 0;   // 0 sinaliza que o save nunca foi usado
-        this.tempo_jogo = null;
-        this.sanidade = 0;
-        this.emocional = 0;
-        this.carisma = 0;
-        this.coragem = 0;
+        this.tempo_jogo = 0;
+        this.sanidade = 10;
+        this.emocional = 10;
+        this.carisma = 10;
+        this.coragem = 10;
     }
     
     // Criando um save já com informações do jogo atual
-    public Save(int slot_save, int cod_usuario, int etapa_atual, Time tempo_jogo, int sanidade, int emocional, int carisma, int coragem) {
+    public Save(int slot_save, int cod_usuario, int etapa_atual, long tempo_jogo, int sanidade, int emocional, int carisma, int coragem, String escolhas) {
         this.slot_save = slot_save;
         this.cod_usuario = cod_usuario;
         this.etapa_atual = etapa_atual;
@@ -34,6 +36,16 @@ public class Save {
         this.emocional = emocional;
         this.carisma = carisma;
         this.coragem = coragem;
+        this.escolhas = escolhas;
+    }
+
+    public String getEscolhas() {
+        if(escolhas==null) return "";
+        else return escolhas;
+    }
+
+    public void setEscolhas(String escolhas) {
+        this.escolhas = escolhas;
     }
 
     public int getSlot_save() {
@@ -60,11 +72,11 @@ public class Save {
         this.etapa_atual = etapa_atual;
     }
 
-    public Time getTempo_jogo() {
+    public long getTempo_jogo() {
         return tempo_jogo;
     }
 
-    public void setTempo_jogo(Time tempo_jogo) {
+    public void setTempo_jogo(long tempo_jogo) {
         this.tempo_jogo = tempo_jogo;
     }
 
@@ -99,6 +111,47 @@ public class Save {
     public void setCoragem(int coragem) {
         this.coragem = coragem;
     }
+    
+    public void alterarSanidade(int i){
+        if(sanidade+i>0){
+            if(sanidade+i<=maxStatusValue) sanidade+=i;
+            else sanidade=maxStatusValue;
+        }
+        else if(sanidade+i<=0){
+            sanidade=0;
+        }
+    }
+    
+    public void alterarEmocional(int i){
+        if(emocional+i>0){
+            if(emocional+i<=maxStatusValue) emocional+=i;
+            else emocional = maxStatusValue;
+        }
+        else if(emocional+i<=0){
+            emocional=0;
+        }
+    }
+    
+    public void alterarCarisma(int i){
+        if(carisma+i>0){
+            if(carisma+i<=maxStatusValue) carisma+=i;
+            else carisma = maxStatusValue;
+        }
+        else if(carisma+i<=0){
+            carisma=0;
+        }
+    }
+    
+    public void alterarCoragem(int i){
+        if(coragem+i>0){
+            if(coragem+i<=maxStatusValue) coragem+=i;
+            else coragem = maxStatusValue;
+        }
+        else if(coragem+i<=0){
+            coragem=0;
+        }
+    }
+
     
     public void printDetails(){
         System.out.println("#######\nSave: " + slot_save);
