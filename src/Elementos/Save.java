@@ -113,8 +113,9 @@ public class Save {
     }
     
     public void alterarSanidade(int i){
-        if(sanidade+i>0 && sanidade+i<maxStatusValue){
-            sanidade+=i;
+        if(sanidade+i>0){
+            if(sanidade+i<=maxStatusValue) sanidade+=i;
+            else sanidade=maxStatusValue;
         }
         else if(sanidade+i<=0){
             sanidade=0;
@@ -122,8 +123,9 @@ public class Save {
     }
     
     public void alterarEmocional(int i){
-        if(emocional+i>0 && emocional+i<maxStatusValue){
-            emocional+=i;
+        if(emocional+i>0){
+            if(emocional+i<=maxStatusValue) emocional+=i;
+            else emocional = maxStatusValue;
         }
         else if(emocional+i<=0){
             emocional=0;
@@ -131,8 +133,9 @@ public class Save {
     }
     
     public void alterarCarisma(int i){
-        if(carisma+i>0 && carisma+i<maxStatusValue){
-            carisma+=i;
+        if(carisma+i>0){
+            if(carisma+i<=maxStatusValue) carisma+=i;
+            else carisma = maxStatusValue;
         }
         else if(carisma+i<=0){
             carisma=0;
@@ -140,8 +143,9 @@ public class Save {
     }
     
     public void alterarCoragem(int i){
-        if(coragem+i>0 && coragem+i<maxStatusValue){
-            coragem+=i;
+        if(coragem+i>0){
+            if(coragem+i<=maxStatusValue) coragem+=i;
+            else coragem = maxStatusValue;
         }
         else if(coragem+i<=0){
             coragem=0;
