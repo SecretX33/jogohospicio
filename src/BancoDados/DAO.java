@@ -97,7 +97,7 @@ public class DAO {
             try
             {
                 resultado = null;
-                String query = "UPDATE save SET etapa_atual = ?, tempo_jogo = ?, sanidade = ?, emocional = ?, carisma = ?, coragem = ? WHERE slot_save = ? AND cod_usuario = ?";
+                String query = "UPDATE save SET etapa_atual = ?, tempo_jogo = ?, sanidade = ?, emocional = ?, carisma = ?, coragem = ?, escolhas = ? WHERE slot_save = ? AND cod_usuario = ?";
                 if(connection == null) connection = ConexaoMySQL.getConexaoMySQL();
                 prepstate = connection.prepareStatement(query);
                 
@@ -107,8 +107,9 @@ public class DAO {
                 prepstate.setInt(4,save.getEmocional());
                 prepstate.setInt(5,save.getCarisma());
                 prepstate.setInt(6,save.getCoragem());
-                prepstate.setInt(7,save.getSlot_save());
-                prepstate.setInt(8,save.getCod_usuario());
+                prepstate.setString(7,save.getEscolhas());
+                prepstate.setInt(8,save.getSlot_save());
+                prepstate.setInt(9,save.getCod_usuario());
                 
                 prepstate.executeUpdate();
                 System.out.println("Save atualizado com sucesso.");

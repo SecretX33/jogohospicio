@@ -37,9 +37,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
         saved = true;
+        escolhas = "";
     }
     
-    public TelaPrincipal(Jogador j, Save sA, int nSSA, long lHI, long lHF, long sHI, long sHF, boolean saved) {
+    public TelaPrincipal(Jogador j, Save sA, int nSSA, long lHI, long lHF, long sHI, long sHF, boolean saved, String escolhas) {
         this();
         this.jogador = j;
         this.saveAtual = sA;
@@ -51,6 +52,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.saveHorarioInicial=(sHI!=0)?sHI:System.currentTimeMillis();
         this.saveHorarioFinal=sHF;
         this.saved=saved;
+        this.escolhas=escolhas;
         atualizarInterface();
         setVisible(true);
     }

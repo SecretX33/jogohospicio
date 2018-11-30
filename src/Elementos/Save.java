@@ -39,6 +39,14 @@ public class Save {
         this.escolhas = escolhas;
     }
 
+    public String getEscolhas() {
+        return escolhas;
+    }
+
+    public void setEscolhas(String escolhas) {
+        this.escolhas = escolhas;
+    }
+
     public int getSlot_save() {
         return slot_save;
     }

@@ -33,6 +33,7 @@ public class Menu extends javax.swing.JFrame {
     private long saveHorarioInicial;
     private long saveHorarioFinal;
     private boolean saved;
+    private String escolhas;
 
     public Menu() {
         initComponents();
@@ -40,6 +41,7 @@ public class Menu extends javax.swing.JFrame {
         setDefaultCloseOperation(Menu.EXIT_ON_CLOSE);
         checkSelected();
         saved=false;
+        escolhas="";
     }
 
     public Menu(Jogador j, int i) {
@@ -64,7 +66,7 @@ public class Menu extends javax.swing.JFrame {
         this.loginHorarioInicial=lHI;
     }
 
-    public Menu(Jogador j, int i, Save s, int ea, long lHI, long lHF, long sHI, long sHF) {
+    public Menu(Jogador j, int i, Save s, int ea, long lHI, long lHF, long sHI, long sHF, String escolhas) {
         this();
         this.jogador = j;
         this.tipoTela = i;
@@ -75,6 +77,7 @@ public class Menu extends javax.swing.JFrame {
         this.loginHorarioFinal=lHF;
         this.saveHorarioInicial=sHI;
         this.saveHorarioFinal=sHF;
+        this.escolhas = escolhas;
         setTela(i);
         labelNomeJogador.setText(jogador.getApelido());
         labelNomeJogador1.setText(jogador.getApelido());
