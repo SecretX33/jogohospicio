@@ -160,7 +160,7 @@ INSERT INTO etapa VALUES
 (13,"- Acho que sim. De qualquer forma, ele está preso.\nEle nos olhava diretamente, sem piscar. Sabia que tínhamos medo. Que de certa forma, o respeitamos. Clotilde e eu respiramos com mais intensidade, parados, tomando coragem para iniciarmos uma possível conversa.\n- Robert? – Clotilde o chamou.\n- Eu. – ele respondeu.\nO falar era lento, muito lento, uma voz bufante, que parecia se arrastar pelo ar ao final de cada sílaba. Até o momento, seu rosto ainda era carismático, fora as roupas, nenhum sinal de que fosse perigoso. Foi quando eu o desafiei:\n- Quantas pessoas matou?
 \n- Mais do que possa imaginar, Doutor.     ",
 "Mais do que eu posso imaginar?","Ficar calado",
-0,15,16,-1,-1,3,-1,-1,-1,-1,-1,-1,-1);
+0,15,16,-1,-1,2,-1,-1,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (14,"- Acho que não estou preparado.\nDe qualquer forma, ele está preso, vamos. Ele nos olhava diretamente, sem piscar. Sabia que tínhamos medo. Que de certa forma, o respeitamos. Clotilde e eu respiramos com mais intensidade, parados, tomando coragem para iniciarmos uma possível conversa.\n- Robert? – Clotilde o chamou.\n- Eu. – ele respondeu.\nO falar era lento, muito lento, uma voz bufante, que parecia se arrastar pelo ar ao final de cada sílaba. Até o momento, seu rosto ainda era carismático, fora as roupas, nenhum sinal de que fosse perigoso. Foi quando eu o desafiei:\n- Quantas pessoas matou? - Mais do que possa imaginar, Doutor.     ",
@@ -265,7 +265,7 @@ INSERT INTO etapa VALUES
 INSERT INTO etapa VALUES
 (34,"No último dia naquele lugar, nós não nos desgrudamos. Fizemos todas as tarefas juntos. E ficamos junto dos outros sempre que podíamos. Não precisávamos correr o risco de uma possível suspeita.\n- Teobaldo? – Clotilde me chamou em um trecho do dia.\n- O que foi?\n- Estou assustada.\n- O que houve?\n- O inspetor, ele estava na frente do meu dormitório pela manhã. Eu gelei. Sei que contei minhas atitudes e o que eu pensava sobre elas com determinada firmeza, mas quando Clotilde me contou aquilo, meu peito encolheu. Acho que no fundo  até eu mesmo achava que aquilo fosse loucura.\n- Ele falou com você?\n- Não. Nem olhou pra mim.\n- Porra!\n- O que vamos fazer? ",
 "Gritar de raiva","Manter o silêncio",
-0,35,35,0,-1,0,0,0,-1,0,0,-1,-1);
+0,36,36,0,-1,0,0,0,-1,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (35,"- Robert foi ajudado. – disse Clotilde sem nenhum aviso prévio.\n- O que? – parei com a caneta quase instantaneamente.\n- Eu fui até a sala de arquivos de madrugada.\n- Você sabe onde fica? Espera, você conhece esse lugar? Não.\n- O que está dizendo, Clotilde? Eu não o culpo por ter ficado confuso. Muito menos de não ter acreditado em mim num primeiro momento. Mas contei tudo a ela:\n- Lembra do incêndio? – ela disse.\n- Que o inspetor comentou...\n- Sim.\n- O que tem?\n- Eu achei a sala de arquivos pela madrugada. Achei o relatório completo do Robert Sósia. Ele incendiou uma das salas.\n- Está dizendo que se arriscou só pra confirmar a informação do incêndio.",
@@ -285,42 +285,42 @@ INSERT INTO etapa VALUES
 INSERT INTO etapa VALUES
 (38,"- Acordem!\n– eu gritei o mais alto que pude. Ninguém levantou.\n– Acorda! – Eu sacodi um colega com toda força. Ele nem se mexeu.\n- Não adianta, eles não vão acordar. – disse o inspetor já a porta.\n- O que fez?\n- Só estamos lavando a roupa suja, eu não pensei duas vezes.\nMe joguei pelo Basculante. Cai de costas no chão, completamente mal. Corri em direção ao saguão aos berros, mas ninguém apareceu. Só o inspetor, com aquela lamina brilhante nas mãos. Disparei em direção ao dormitório de Clotilde. Soquei a porta, quebrei alguns copos que estavam em cima da cabeceira, mas nenhuma mulher levantou. Clotilde não estava lá. Naquele momento, começava a pensar na possibilidade de que minha morte seria algo daqueles que um indivíduo pensa que só acontece com os outros.",
 "","",
-1,39,-1,-2,-3,-1,-1,0,0,0,0,-1,-1);
+1,39,-1,0,-3,0,-1,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (39,"- Já disse que não adianta, Teobaldo.\n- O que está fazendo? – perguntei novamente, indo para perto da janela.\n- Não gosto de gente como você. – ele disse.\nNão ia me responder, ia me encher de facadas sem pestanejar. Então, agi por impulso. Me joguei pela janela, por uns quatro metros de altura até a grama. Bati com tudo no chão, e senti minhas costelas colarem, espetando as infladas de meus pulmões. Foi quando meus olhos fecharam.\n- Sua desgraçada! – era o que eu escutava no escuro.\n– Essa vadia cortou o meu rosto. Meu rosto! – Sósia murmurava.\n- Teobaldo!\n– A voz de Clotilde...\n- Seu amigo tá bem ferrado. – A voz do inspetor Eu consegui abrir os olhos depois. Estávamos próximos ao lago, como Margareth. Clotilde estava amarrada, jogada no chão, enquanto o inspetor preparava a corda na árvore. Robert estava lavando o rosto no lago. Nossa! Minha coluna doía demais. Minha cabeça também. Mas minhas pernas ainda funcionavam. ",
 "","",
-1,40,-1,0,-2,-2,-1,0,0,0,0,-1,-1);
+1,40,-1,0,-2,0,-1,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (40,"- Olha quem acordou. – disse o inspetor.\n– Lembra de eu dizer sobre não gostar de pessoas como você? Pessoas que percebem quando há planos alheios. - Do que está falando? – eu rebati com dificuldade. - Vi você entrar na sala arquivada. Ou você achou que tudo daria certo? - Como fizeram? – perguntei. - O que? – o inspetor respondeu com naturalidade. - Como fizeram!? - Quer mesmo saber, hã? Tudo bem. Robert queria incendiar esse lugar. Sumir com tudo. Ele achou que pegaria pena de morte ou algo do tipo, mas o mandaram pra cá. Ele não suporta esse lugar. - Ora... Ora... Ora... Olha quem acabou de abrir os olhos. – Robert disse. - Estava começando a contar pra ele o que fizemos da primeira vez. Robert não respondeu.",
 "","",
-1,41,-1,-1,-1,-1,0,0,0,0,0,-1,-1);
+1,41,-1,0,0,0,0,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (41,"Nos primeiros dias de trabalho no recanto da coroa, o inspetor foi designado a auxiliar todos os profissionais do hospício. Sua função era simples: Vigiar o bloco durante a madrugada. Haviam duas regras: Não abrir as portas sem permissão e nunca os alimentar fora do horário. Só isso. O problema é que nessa época, Sósia podia caminhar livremente dentro de sua cela, fora o erro gravíssimo dos funcionários em desacreditar  em seu poder persuasão. No início do turno do então novato, aquela voz bufante atravessou o bloco... Chamando. Robert, adorável como de costume, entrou na cabeça do rapaz que trabalhava. O convenceu a solta-lo, prometendo sensações que o dinheiro não poderia comprar. Disse, que se o ajudasse, ele poderia acompanha-lo para onde quisesse. Que seria seu melhor amigo.",
 "","",
-1,42,-1,-2,-1,-2,-1,0,0,0,0,-1,-1);
+1,42,-1,5,0,5,-1,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (42,"O passado do inspetor talvez tenha contribuído. A julgar pelo tom de sua voz, e seu olhar admirado, ele com certeza teve um passado triste. Sem amigos, sem namorada. Talvez boas notas e muito empenho. Com o passar das noites, infringiu-se a primeira regra: A porta 403 foi aberta sem permissão, e então os dois amigos passavam o tempo juntos. Sósia contou seu plano, alegando que aquele lugar o fazia mal, que o enfraquecia. Disse,  que a única maneira de acabar com esta sensação era que o hospício não existisse mais. Mas antes, Margareth, a sentinela que vigiava o terreno, precisava ser amada. O plano era o seguinte: O inspetor abriria a porta, e deixaria que Robert o golpeasse na cabeça. Depois, Margareth seria atacada. Em seguida, o fogo “acidental”. Perfeito! Mas algo deu errado: Margareth, antes de ser morta, conseguiu disparar um alarme silencioso, notificando a polícia, que chegou a tempo de conter o incêndio. O corpo da sentinela foi encontrado estendido próximo a árvore, e um dos pacientes havia desaparecido.",
 "","",
-1,43,-1,-3,-2,-1,-2,0,0,0,0,-1,-1);
+1,43,-1,-1,-1,-1,-1,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (43,"O inspetor não acreditaria, já que se iludiu com sua suposta amizade, mas Sósia tentou  fugir. Só não contava em encontrar seu amigo inspetor à beira da estrada. E pelo que entendi da história, Sósia retornou sem nenhuma tentativa de fuga por algum motivo. - E foi assim que acabou. – ele terminou a curta biografia interrompida. Minhas coluna doía menos. Sentia as minhas pernas. E minha cabeça não girava. Eu conseguiria correr até o hospício, tentaria encontrar alguém acordado, e enfrentaria aqueles dois. Isso era melhor que morrer daquele jeito.\n- Dessa vez tudo dará certo, você e sua amiga deram um pouco mais de trabalho, mas dessa vez a queima do recanto da coroa é inevitável. – dizia o inspetor.\n- Não enrole muito. – disse Robert.\n– Não temos a noite toda.\nO inspetor veio em minha direção, enquanto Robert acariciava o rosto de Clotilde. Eu precisava reagir. Então levantei com toda a força que me restava, e o empurrei em meio algumas pedras. Logo depois, soquei o rosto de Robert com um golpe certeiro. Puxei Clotilde pelo braço, e fugimos para o recanto.",
 "","",
-1,44,-1,-2,-2,-2,-2,0,0,0,0,-1,-1);
+1,44,-1,0,-2,0,-2,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (44,"Corremos pela trilha de barro em direção aquele lugar macabro. Eu, fazia um esforço tremendo para não cair, ao mesmo tempo que puxava Clotilde, com as mãos amarradas. Eu tinha certeza absoluta de que aqueles dois estavam logo atrás, Talvez desesperados por deixarem um cara ferido e uma mulher de mãos atadas escaparem. Nós chegamos até uma entrada lateral, com a maçaneta suja, e raízes presas na porta.Estava emperrada, e aqueles dois estavam saindo da trilha. Mais uma solada, dessa vez mais estrondosa, e mesmo assim ninguém notou o barulho.\n- Derrube tudo que possa fazer barulho. – eu disse.\nPrecisávamos que alguém aparecesse. Nenhuma ajuda vinha e nós não entendemos o porquê. Sósia e o Inspetor se aproximavam. Nós tínhamos que nos esconder. Eu, fui direto para baixo de um criado mudo que estava num canto, enquanto Clotilde desapareceu da minha vista. De novo. Parecia um filme. Uma cena horripilante. Dois homens em formato de sombra parados frente a porta por onde havíamos passado ainda pouco. Um parecia um doutor maluco, enquanto seu parceiro assemelhava-se há um monstro de laboratório: Descalço, magrelo e sem camisa.",
 "","",
-1,45,-1,-1,-2,-3,-1,0,0,0,0,-1,-1);
+1,45,-1,-1,0,0,-1,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (45,"- Onde os ratinhos estão? – Sósia perguntou.\n- Precisamos acha-los, Robert.\n- Nós vamos.\n- Isso não aconteceria se você não insistisse nessa doença de matar essa garota.\nEntão era isso! Tudo o que eu havia pensado estava batendo, com apenas uma exceção: O segundo incêndio não seria naquela noite, o motivo era Clotilde, e o incêndio ser adiantado não era mera facilitação, e sim, a evitação de suspeitas internas. A entrada de  Clotilde na sala 403 mudou tudo. Afinal, Sósia é movido por seus desejos. E o desejo daquele momento era Clotilde. Sósia derrubou uma mesa. Estava começando a se irritar, talvez estivesse começando a pensar na possibilidade de seu plano dar errado pela segunda vez. Havia cometido um erro, com muitas possibilidades. Ele encarava o parceiro, que andava a sua frente. Com certeza arrependia-se de o ter colocado naquela equação. Ele provavelmente sugeriu a minha morte, mas o inspetor queria me torturar.",
 "","",
-1,46,-1,-3,-3,-3,3,0,0,0,0,-1,-1);
+1,46,-1,-1,-1,-1,3,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (46,"Um arrastar de móveis veio do andar de cima. Clotilde! Estava tentando atrair a atenção em sua direção para que eu pudesse sair daquela espreitada. Deu certo, ambos correram instantaneamente para o andar de cima. Desejei sorte a ela, pois demoraria um tempo para subir. Precisava de uma faca, ou qualquer coisa cortante. Estava longe da cozinha, e ir até lá para achar um instrumento de defesa, seria um abuso de tempo. Não consegui nada, então segui o mesmo caminho armado de meus punhos. Atravessei o curto corredor, e subi as escadas. Fazia um silêncio estranho. Daqueles que te assustam e mexem com sua imaginação. Eu abri porta por porta, até encontra-los. Clotilde estava pendurada pelos pulsos, enquanto Sósia a ameaçava. O doente do inspetor apenas observava.\n- Teobaldo, por favor. Me ajude! – Clotilde disse ao prantos.\n- Ai está ele. – disse o inspetor.\n- Não deixe que escape dessa vez. Mate-o! – Sósia disse.\n- Não se preocupe. Com a amiga dele aqui, duvido que vá à algum lugar.",
@@ -330,17 +330,17 @@ INSERT INTO etapa VALUES
 INSERT INTO etapa VALUES
 (47,"Ele veio em minha direção, jogando a faca de uma mão para outra. Naquele momento, eu sabia que morreria. Tinha certeza! Foi quando vi minha mão ser perfurada num primeiro golpe. Puro reflexo. Nem me recordo de como fiz. Mas me lembro de puxar a lamina para mim, a arrancando em uma só tentativa. O inspetor me encarava, assustado de certa forma, com os olhos arregalados. Atrai-lo para a beira da escada não foi tão difícil. Pessoas, quando querem muito algo, principalmente vingança imediata, não pensam direito. É nesse momento que ficam vulneráveis. Isso facilitou para que eu o empurrasse de escada abaixo. Eu voltei aquele cômodo, onde uma atrocidade quase teve início. Por sorte, essas mentes são metódicas. Por vezes tem seu ritual próprio antes de fazer o que fazem. Isso salvou Clotilde do que poderia atormenta-la pelo resto de sua vida. Peguei a faca que o próprio havia deixado no chão, e coloquei a ponta na sua nuca. Naquele momento, ele sentiu pela primeira vez como era ver a morte de perto. Talvez tenha gostado da sensação, pela intensidade em que inspirou o ar. Mas achou melhor não forçar uma morte, pois sabia que nos veríamos de novo.\n- Clotilde, eu preciso que desça as escadas e prenda o inspetor. – Eu disse.",
 "","",
-1,48,-1,-2,3,-2,-2,0,0,0,0,-1,-1);
+1,48,-1,-1,3,0,-2,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (48,"Ela não se moveu em um primeiro momento. O choque costuma paralisar um indivíduo atordoando seus sentidos logo depois. Sósia se divertia ao vê-la daquele jeito, talvez atordoando seus sentidos logo depois. Sósia se divertia ao vê-la daquele jeito, talvez aquilo o instigasse mais do que os próprios pesadelos que causava.\n- Clotilde, tem que levantar! Por favor! Levante!\nEla chorava, chorava muito! Sósia tinha o rosto mais deslavado do mundo, deliciando aquela cena. O desviar dos seus olhos em minha direção indicavam que ele desejava que eu me distraísse. Que tentasse acalma-la mais de perto. Então, teria a oportunidade de me tomar a lâmina.\n- Clotilde! – eu berrei.\n- Levanta! Tem que levantar! Nossas vidas dependem da sua recomposição.\n- Clotilde!!!\nJuro que estava desistindo, juro mesmo! Ela dava todos os indícios do medo extremo. Daqueles traumas psicológicos tão intensos, que fazem uma pessoa preferir ficar paralisada no escuro esperando pela sorte do que tentar o revide. Mas ela levantou. Ainda bem! Veio até mim com as mãos ainda atadas, trêmulas de desespero. Naquele momento, ela tentaria me abraçar, mas eu não poderia desgrudar os olhos do Sósia nem por um segundo. Eu a soltei e disse:",
 "","",
-1,49,-1,-1,-1,-1,-1,0,0,0,0,-1,-1);
+1,49,-1,-1,1,-1,-1,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (49,"- Tem que descer e prender o inspetor. Está ouvindo?\n- E se ele acordar? – disse ela aos tremores.\n- Ele não vai. Desça e o prenda ao pé da escada. Rápido! Depois eu preciso que ache um telefone, e ligue para a polícia. \n- Não há telefones funcionando nesse hospício. – disse ele aos risos.\nEu pedi para que logo depois que prendesse o inspetor, caminhasse até a primeira casa, e que lá pedisse um telefone e ligasse para a polícia. Eu ficaria ali, de guarda. Ela atravessou a porta e me deixou lá com o monstro. Aquele lugar medíocre estava todo sabotado: Linhas telefônicas e elétricas cortadas, gasolina em quartos pré-determinados, e alguns mortos no terreno de trás. Era pra aquela noite ser uma verdadeira chacina, e por uma suspeita ao caso, aquilo não se concretizou. Clotilde andou alguns quilômetros até a primeira casa, e por sorte, conseguiu um telefonema com os residentes. Contou tudo o que estava acontecendo naquele hospício largado no final da estrada e que precisava de ajuda.",
 "","",
-1,50,-1,-2,-1,1,3,0,0,0,0,-1,-1);
+1,50,-1,1,-1,1,3,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (50,"Passei boa parte daquela madrugada frente a frente com o pior ser que conheci. Naqueles momentos, um elo se formava sem que eu percebesse. Robert Sósia se tornaria meu nemesis. Foi um alivio quando vi no vidro encardido as luzes de sirene piscando. E ver o rosto do monstro a minha frente contorcer-se de raiva, me fez ver que talvez eu fosse diferente. Um estagiário de psiquiatria comportamental, que acabara de capturar o pior serial killer do recanto da coroa. Desde sua segunda aparição, tive a sensação de que aquele idiota havia se deixado prender. Mas na manhã após aquela madrugada, eu estava mais calmo. Achava que tudo tinha acabado, ainda mais naquela cena clichê em que enfermeiros cobrem suas costas com uma manta e lhe dão uma xícara de café.\n- Como se sente? – Perguntei a Clotilde.\n- Melhor. - isso é bom.\nO engraçado, é que os outros residentes e funcionários começaram a sair como se nada tivesse acontecido.",
