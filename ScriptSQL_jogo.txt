@@ -153,8 +153,8 @@ INSERT INTO etapa VALUES
 
 INSERT INTO etapa VALUES
 (12,"Lá vimos a figura. Não era amedrontadora. E foi justamente por isso que fiquei apavorado. Com certeza era um serial killer da pior espécie, daqueles que são capazes de manter uma amizade durante anos, e talvez cortar algumas gargantas por esporte. Vestia duas camisas de força, e suas pernas estavam presas por algemas descartáveis. Havia uma pequena ficha no chão, com seu nome e atos: “Robert Sósia, serial killer. Foi responsável pelo desaparecimento de dezoito mulheres em 2 anos.\n- Vamos nos aproximar dele? – Clotilde perguntou.",
-"Não","Sim",
-0,13,14,-1,-1,-1,-1,0,0,0,0,-1,-1);
+"Sim","Não",
+0,13,14,-1,-1,0,-1,0,0,0,0,-1,-1);
 
 INSERT INTO etapa VALUES
 (13,"- Acho que sim. De qualquer forma, ele está preso.\nEle nos olhava diretamente, sem piscar. Sabia que tínhamos medo. Que de certa forma, o respeitamos. Clotilde e eu respiramos com mais intensidade, parados, tomando coragem para iniciarmos uma possível conversa.\n- Robert? – Clotilde o chamou.\n- Eu. – ele respondeu.\nO falar era lento, muito lento, uma voz bufante, que parecia se arrastar pelo ar ao final de cada sílaba. Até o momento, seu rosto ainda era carismático, fora as roupas, nenhum sinal de que fosse perigoso. Foi quando eu o desafiei:\n- Quantas pessoas matou?
