@@ -12,7 +12,7 @@ public class Save {
     private int carisma;
     private int coragem;
     private String escolhas;
-    private final int maxStatusValue = 20;
+    private final int MAX_STATS_VALUE = 20;
     
     // Inicializando um save novo
     public Save(int cod_usuario){
@@ -114,8 +114,8 @@ public class Save {
     
     public void alterarSanidade(int i){
         if(sanidade+i>0){
-            if(sanidade+i<=maxStatusValue) sanidade+=i;
-            else sanidade=maxStatusValue;
+            if(sanidade+i<=MAX_STATS_VALUE) sanidade+=i;
+            else sanidade=MAX_STATS_VALUE;
         }
         else if(sanidade+i<=0){
             sanidade=0;
@@ -124,8 +124,8 @@ public class Save {
     
     public void alterarEmocional(int i){
         if(emocional+i>0){
-            if(emocional+i<=maxStatusValue) emocional+=i;
-            else emocional = maxStatusValue;
+            if(emocional+i<=MAX_STATS_VALUE) emocional+=i;
+            else emocional = MAX_STATS_VALUE;
         }
         else if(emocional+i<=0){
             emocional=0;
@@ -134,8 +134,8 @@ public class Save {
     
     public void alterarCarisma(int i){
         if(carisma+i>0){
-            if(carisma+i<=maxStatusValue) carisma+=i;
-            else carisma = maxStatusValue;
+            if(carisma+i<=MAX_STATS_VALUE) carisma+=i;
+            else carisma = MAX_STATS_VALUE;
         }
         else if(carisma+i<=0){
             carisma=0;
@@ -144,8 +144,8 @@ public class Save {
     
     public void alterarCoragem(int i){
         if(coragem+i>0){
-            if(coragem+i<=maxStatusValue) coragem+=i;
-            else coragem = maxStatusValue;
+            if(coragem+i<=MAX_STATS_VALUE) coragem+=i;
+            else coragem = MAX_STATS_VALUE;
         }
         else if(coragem+i<=0){
             coragem=0;
