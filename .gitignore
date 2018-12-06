@@ -2,6 +2,7 @@
 ~$*.docx
 *.tmp
 *.lock
+*.properties
 
 ### Java files ###
 *.class
@@ -118,4 +119,3 @@ nb-configuration.xml
 ### Git ###
 # Don't exclude the .gitignore itself
 !.gitignore
-*.properties
