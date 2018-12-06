@@ -1,0 +1,115 @@
+JFDML JFormDesigner: "6.0.4.1.172" Java: "1.8.0_152-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {comp tela::l::288:x}"
+			"$verticalGroup": "par l {seq l {comp tela:::p:200:p, space :0:0:x}}"
+		} ) {
+			name: "this"
+			"defaultCloseOperation": 3
+			"resizable": false
+			"size": new java.awt.Dimension( 400, 300 )
+			"$sizePolicy": 1
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.CardLayout ) ) {
+				name: "tela"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {seq l {space :p:19:p, par l {comp labelUsuarioLogin:::p::p, comp labelSenhaLogin:::p::p}, space :::p, par l {comp tbUsuarioLogin::l:::x, comp tbSenhaLogin::l:::x}, space :p:51:p}, seq l {space :p:104:p, comp labelLogin:::p::p, space ::107:x}, seq t {space :0:31:x, comp botaoRegistrarLogin:::p:92:p, space s:::p, comp botaoLogar:::p:99:p, space :p:43:p}}"
+					"$verticalGroup": "par l {seq l {space :::p, comp labelLogin:::p::p, space :p:29:p, par b {comp labelUsuarioLogin::b:p::p, comp tbUsuarioLogin::b:p::p}, space :::x, par b {comp labelSenhaLogin::b:p::p, comp tbSenhaLogin::b:p::p}, space s:::p, par b {comp botaoRegistrarLogin::b:p::p, comp botaoLogar::b:p::p}, space :p:36:p}}"
+				} ) {
+					name: "login"
+					"minimumSize": new java.awt.Dimension( 1, 1 )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "labelUsuarioLogin"
+						"text": "Usuário"
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "labelSenhaLogin"
+						"text": "Senha"
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tbUsuarioLogin"
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "botaoLogar"
+						"text": "Login"
+						"enabled": false
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "botaoLogarActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "botaoRegistrarLogin"
+						"text": "Registrar"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "botaoRegistrarLoginActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "labelLogin"
+						"font": new java.awt.Font( "Tahoma", 1, 26 )
+						"foreground": new java.awt.Color( 80, 200, 40, 255 )
+						"text": "Login"
+					} )
+					add( new FormComponent( "javax.swing.JPasswordField" ) {
+						name: "tbSenhaLogin"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "tbSenhaLoginActionPerformed", true ) )
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "card2"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {seq {par l {seq l {space :p:96:p, comp labelRegistro:::::p}, seq l {space :p:20:p, par l {seq {comp labelApelidoRegistro:::p::p, space :::p, comp tbApelidoRegistro:::p:187:p, space :0:0:x}, seq {par l {comp labelUsuarioRegistro:::p::p, comp labelSenhaRegistro:::p::p}, space :::p, par l {comp tbUsuarioRegistro:::p:186:p, comp tbSenhaRegistro:::::x}}}}}, space ::29:x}, seq t {space ::34:x, comp botaoVoltar:::p::p, space s:::p, comp botaoRegistrarRegistro:::p:87:p, space :p:67:p}}"
+					"$verticalGroup": "par l {seq t {comp labelRegistro:::::x, space u:::p, par b {comp labelUsuarioRegistro::b:p::p, comp tbUsuarioRegistro::b:p::p}, space :p:10:p, par b {comp labelSenhaRegistro::b:p::p, comp tbSenhaRegistro::b:p::p}, space :p:10:p, par b {comp labelApelidoRegistro::b:p::p, comp tbApelidoRegistro::b:p::p}, space :p:18:p, par b {comp botaoRegistrarRegistro::b:p::p, comp botaoVoltar::b:p::p}, space :::p}}"
+				} ) {
+					name: "registro"
+					"preferredSize": new java.awt.Dimension( 286, 202 )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "labelUsuarioRegistro"
+						"text": "Usuário"
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "labelSenhaRegistro"
+						"text": "Senha"
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tbUsuarioRegistro"
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "botaoRegistrarRegistro"
+						"text": "Registrar"
+						"enabled": false
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "botaoRegistrarRegistroActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "labelApelidoRegistro"
+						"text": "Apelido"
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tbApelidoRegistro"
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "labelRegistro"
+						"font": new java.awt.Font( "Tahoma", 1, 24 )
+						"foreground": new java.awt.Color( 20, 20, 240, 255 )
+						"text": "Registro"
+						"cursor": new java.awt.Cursor( 0 )
+					} )
+					add( new FormComponent( "javax.swing.JPasswordField" ) {
+						name: "tbSenhaRegistro"
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "botaoVoltar"
+						"text": "Voltar"
+						"maximumSize": new java.awt.Dimension( 77, 23 )
+						"minimumSize": new java.awt.Dimension( 77, 23 )
+						"preferredSize": new java.awt.Dimension( 77, 23 )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "botaoVoltarActionPerformed", true ) )
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "telaRegistro"
+				} )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 290, 230 )
+			"location": new java.awt.Point( 0, 0 )
+		} )
+	}
+}

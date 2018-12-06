@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package Interface;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle;
 import BancoDados.DAO;
 import Elementos.Jogador;
 import java.awt.event.ActionEvent;
@@ -16,6 +20,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import com.intellij.uiDesigner.core.*;
+import com.jgoodies.forms.factories.*;
+import com.jgoodies.forms.layout.*;
+import org.jdesktop.beansbinding.*;
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 
 /**
  *
@@ -27,7 +36,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private final KeyListener loginKL;
     private final KeyListener registroKL;
     
-    
+
     public TelaLogin() {
         initComponents();
         setLocationRelativeTo(null);
@@ -66,199 +75,224 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // Generated using JFormDesigner Evaluation license - Gabriel
     private void initComponents() {
+        tela = new JPanel();
+        login = new JPanel();
+        labelUsuarioLogin = new JLabel();
+        labelSenhaLogin = new JLabel();
+        tbUsuarioLogin = new JTextField();
+        botaoLogar = new JButton();
+        botaoRegistrarLogin = new JButton();
+        labelLogin = new JLabel();
+        tbSenhaLogin = new JPasswordField();
+        registro = new JPanel();
+        labelUsuarioRegistro = new JLabel();
+        labelSenhaRegistro = new JLabel();
+        tbUsuarioRegistro = new JTextField();
+        botaoRegistrarRegistro = new JButton();
+        labelApelidoRegistro = new JLabel();
+        tbApelidoRegistro = new JTextField();
+        labelRegistro = new JLabel();
+        tbSenhaRegistro = new JPasswordField();
+        botaoVoltar = new JButton();
 
-        tela = new javax.swing.JPanel();
-        login = new javax.swing.JPanel();
-        labelUsuarioLogin = new javax.swing.JLabel();
-        labelSenhaLogin = new javax.swing.JLabel();
-        tbUsuarioLogin = new javax.swing.JTextField();
-        botaoLogar = new javax.swing.JButton();
-        botaoRegistrarLogin = new javax.swing.JButton();
-        labelLogin = new javax.swing.JLabel();
-        tbSenhaLogin = new javax.swing.JPasswordField();
-        registro = new javax.swing.JPanel();
-        labelUsuarioRegistro = new javax.swing.JLabel();
-        labelSenhaRegistro = new javax.swing.JLabel();
-        tbUsuarioRegistro = new javax.swing.JTextField();
-        botaoRegistrarRegistro = new javax.swing.JButton();
-        labelApelidoRegistro = new javax.swing.JLabel();
-        tbApelidoRegistro = new javax.swing.JTextField();
-        labelRegistro = new javax.swing.JLabel();
-        tbSenhaRegistro = new javax.swing.JPasswordField();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //======== this ========
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(new java.awt.Dimension(400, 300));
+        setSize(new Dimension(400, 300));
+        Container contentPane = getContentPane();
 
-        tela.setLayout(new java.awt.CardLayout());
+        //======== tela ========
+        {
 
-        labelUsuarioLogin.setText("Usuário");
+            // JFormDesigner evaluation mark
+            tela.setBorder(new javax.swing.border.CompoundBorder(
+                new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                    "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+                    javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    java.awt.Color.red), tela.getBorder())); tela.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
 
-        labelSenhaLogin.setText("Senha");
+            tela.setLayout(new CardLayout());
 
-        botaoLogar.setText("Login");
-        botaoLogar.setEnabled(false);
-        botaoLogar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoLogarActionPerformed(evt);
-            }
-        });
+            //======== login ========
+            {
+                login.setMinimumSize(new Dimension(1, 1));
 
-        botaoRegistrarLogin.setText("Registrar");
-        botaoRegistrarLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRegistrarLoginActionPerformed(evt);
-            }
-        });
+                //---- labelUsuarioLogin ----
+                labelUsuarioLogin.setText("Usu\u00e1rio");
 
-        labelLogin.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
-        labelLogin.setForeground(new java.awt.Color(80, 200, 40));
-        labelLogin.setText("Login");
+                //---- labelSenhaLogin ----
+                labelSenhaLogin.setText("Senha");
 
-        tbSenhaLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tbSenhaLoginActionPerformed(evt);
-            }
-        });
+                //---- botaoLogar ----
+                botaoLogar.setText("Login");
+                botaoLogar.setEnabled(false);
+                botaoLogar.addActionListener(e -> botaoLogarActionPerformed(e));
 
-        javax.swing.GroupLayout loginLayout = new javax.swing.GroupLayout(login);
-        login.setLayout(loginLayout);
-        loginLayout.setHorizontalGroup(
-            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(loginLayout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(labelLogin))
-                    .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                //---- botaoRegistrarLogin ----
+                botaoRegistrarLogin.setText("Registrar");
+                botaoRegistrarLogin.addActionListener(e -> botaoRegistrarLoginActionPerformed(e));
+
+                //---- labelLogin ----
+                labelLogin.setFont(new Font("Tahoma", Font.BOLD, 26));
+                labelLogin.setForeground(new Color(80, 200, 40));
+                labelLogin.setText("Login");
+
+                //---- tbSenhaLogin ----
+                tbSenhaLogin.addActionListener(e -> tbSenhaLoginActionPerformed(e));
+
+                GroupLayout loginLayout = new GroupLayout(login);
+                login.setLayout(loginLayout);
+                loginLayout.setHorizontalGroup(
+                    loginLayout.createParallelGroup()
                         .addGroup(loginLayout.createSequentialGroup()
-                            .addComponent(botaoRegistrarLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(19, 19, 19)
+                            .addGroup(loginLayout.createParallelGroup()
+                                .addComponent(labelUsuarioLogin)
+                                .addComponent(labelSenhaLogin))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(loginLayout.createParallelGroup()
+                                .addComponent(tbUsuarioLogin)
+                                .addComponent(tbSenhaLogin))
+                            .addGap(51, 51, 51))
+                        .addGroup(loginLayout.createSequentialGroup()
+                            .addGap(104, 104, 104)
+                            .addComponent(labelLogin)
+                            .addContainerGap(107, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, loginLayout.createSequentialGroup()
+                            .addGap(0, 31, Short.MAX_VALUE)
+                            .addComponent(botaoRegistrarLogin, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(botaoLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(botaoLogar, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+                            .addGap(43, 43, 43))
+                );
+                loginLayout.setVerticalGroup(
+                    loginLayout.createParallelGroup()
                         .addGroup(loginLayout.createSequentialGroup()
-                            .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginLayout.createSequentialGroup()
-                                    .addComponent(labelUsuarioLogin)
-                                    .addGap(10, 10, 10))
-                                .addGroup(loginLayout.createSequentialGroup()
-                                    .addComponent(labelSenhaLogin)
-                                    .addGap(16, 16, 16)))
-                            .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(tbSenhaLogin)
-                                .addComponent(tbUsuarioLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
-        loginLayout.setVerticalGroup(
-            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelLogin)
-                .addGap(29, 29, 29)
-                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(loginLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(labelUsuarioLogin))
-                    .addComponent(tbUsuarioLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelSenhaLogin)
-                    .addComponent(tbSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoRegistrarLogin)
-                    .addComponent(botaoLogar))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        tela.add(login, "card2");
-
-        registro.setPreferredSize(new java.awt.Dimension(286, 202));
-
-        labelUsuarioRegistro.setText("Usuário");
-
-        labelSenhaRegistro.setText("Senha");
-
-        botaoRegistrarRegistro.setText("Registrar");
-        botaoRegistrarRegistro.setEnabled(false);
-        botaoRegistrarRegistro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRegistrarRegistroActionPerformed(evt);
+                            .addContainerGap()
+                            .addComponent(labelLogin)
+                            .addGap(29, 29, 29)
+                            .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelUsuarioLogin)
+                                .addComponent(tbUsuarioLogin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelSenhaLogin)
+                                .addComponent(tbSenhaLogin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(botaoRegistrarLogin)
+                                .addComponent(botaoLogar))
+                            .addGap(36, 36, 36))
+                );
             }
-        });
+            tela.add(login, "card2");
 
-        labelApelidoRegistro.setText("Apelido");
+            //======== registro ========
+            {
+                registro.setPreferredSize(new Dimension(286, 202));
 
-        labelRegistro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        labelRegistro.setForeground(new java.awt.Color(20, 20, 240));
-        labelRegistro.setText("Registro");
-        labelRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                //---- labelUsuarioRegistro ----
+                labelUsuarioRegistro.setText("Usu\u00e1rio");
 
-        javax.swing.GroupLayout registroLayout = new javax.swing.GroupLayout(registro);
-        registro.setLayout(registroLayout);
-        registroLayout.setHorizontalGroup(
-            registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(registroLayout.createSequentialGroup()
-                .addGroup(registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(registroLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(registroLayout.createSequentialGroup()
+                //---- labelSenhaRegistro ----
+                labelSenhaRegistro.setText("Senha");
+
+                //---- botaoRegistrarRegistro ----
+                botaoRegistrarRegistro.setText("Registrar");
+                botaoRegistrarRegistro.setEnabled(false);
+                botaoRegistrarRegistro.addActionListener(e -> botaoRegistrarRegistroActionPerformed(e));
+
+                //---- labelApelidoRegistro ----
+                labelApelidoRegistro.setText("Apelido");
+
+                //---- labelRegistro ----
+                labelRegistro.setFont(new Font("Tahoma", Font.BOLD, 24));
+                labelRegistro.setForeground(new Color(20, 20, 240));
+                labelRegistro.setText("Registro");
+                labelRegistro.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
+                //---- botaoVoltar ----
+                botaoVoltar.setText("Voltar");
+                botaoVoltar.setMaximumSize(new Dimension(77, 23));
+                botaoVoltar.setMinimumSize(new Dimension(77, 23));
+                botaoVoltar.setPreferredSize(new Dimension(77, 23));
+                botaoVoltar.addActionListener(e -> botaoVoltarActionPerformed(e));
+
+                GroupLayout registroLayout = new GroupLayout(registro);
+                registro.setLayout(registroLayout);
+                registroLayout.setHorizontalGroup(
+                    registroLayout.createParallelGroup()
+                        .addGroup(registroLayout.createSequentialGroup()
+                            .addGroup(registroLayout.createParallelGroup()
+                                .addGroup(registroLayout.createSequentialGroup()
+                                    .addGap(96, 96, 96)
+                                    .addComponent(labelRegistro))
+                                .addGroup(registroLayout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addGroup(registroLayout.createParallelGroup()
+                                        .addGroup(registroLayout.createSequentialGroup()
+                                            .addComponent(labelApelidoRegistro)
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(tbApelidoRegistro, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(registroLayout.createSequentialGroup()
+                                            .addGroup(registroLayout.createParallelGroup()
+                                                .addComponent(labelUsuarioRegistro)
+                                                .addComponent(labelSenhaRegistro))
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(registroLayout.createParallelGroup()
+                                                .addComponent(tbUsuarioRegistro, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(tbSenhaRegistro))))))
+                            .addContainerGap(29, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, registroLayout.createSequentialGroup()
+                            .addContainerGap(34, Short.MAX_VALUE)
+                            .addComponent(botaoVoltar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(botaoRegistrarRegistro, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+                            .addGap(67, 67, 67))
+                );
+                registroLayout.setVerticalGroup(
+                    registroLayout.createParallelGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, registroLayout.createSequentialGroup()
+                            .addComponent(labelRegistro, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(registroLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelUsuarioRegistro)
+                                .addComponent(tbUsuarioRegistro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(10, 10, 10)
+                            .addGroup(registroLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelSenhaRegistro)
+                                .addComponent(tbSenhaRegistro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(10, 10, 10)
+                            .addGroup(registroLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(labelApelidoRegistro)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tbApelidoRegistro))
-                            .addGroup(registroLayout.createSequentialGroup()
-                                .addGroup(registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelUsuarioRegistro)
-                                    .addComponent(labelSenhaRegistro))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tbUsuarioRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                    .addComponent(tbSenhaRegistro)))))
-                    .addGroup(registroLayout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(botaoRegistrarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(registroLayout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(labelRegistro)))
-                .addContainerGap(40, Short.MAX_VALUE))
-        );
-        registroLayout.setVerticalGroup(
-            registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, registroLayout.createSequentialGroup()
-                .addComponent(labelRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelUsuarioRegistro)
-                    .addComponent(tbUsuarioRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelSenhaRegistro)
-                    .addComponent(tbSenhaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tbApelidoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelApelidoRegistro))
-                .addGap(18, 18, 18)
-                .addComponent(botaoRegistrarRegistro)
-                .addContainerGap())
-        );
+                                .addComponent(tbApelidoRegistro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(registroLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(botaoRegistrarRegistro)
+                                .addComponent(botaoVoltar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addContainerGap())
+                );
+            }
+            tela.add(registro, "telaRegistro");
+        }
 
-        tela.add(registro, "telaRegistro");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tela, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
+        contentPane.setLayout(contentPaneLayout);
+        contentPaneLayout.setHorizontalGroup(
+            contentPaneLayout.createParallelGroup()
+                .addComponent(tela, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tela, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+        contentPaneLayout.setVerticalGroup(
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addComponent(tela, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        pack();
+        setSize(290, 230);
+        setLocationRelativeTo(getOwner());
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoRegistrarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarRegistroActionPerformed
@@ -285,7 +319,11 @@ public class TelaLogin extends javax.swing.JFrame {
     private void botaoRegistrarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarLoginActionPerformed
         trocarTela();
     }//GEN-LAST:event_botaoRegistrarLoginActionPerformed
-
+    
+    private void botaoVoltarActionPerformed(ActionEvent e) {
+        trocarTela();
+    }
+    
     private void botaoLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogarActionPerformed
         if(checkLoginCanProceed())
         {
@@ -343,24 +381,26 @@ public class TelaLogin extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoLogar;
-    private javax.swing.JButton botaoRegistrarLogin;
-    private javax.swing.JButton botaoRegistrarRegistro;
-    private javax.swing.JLabel labelApelidoRegistro;
-    private javax.swing.JLabel labelLogin;
-    private javax.swing.JLabel labelRegistro;
-    private javax.swing.JLabel labelSenhaLogin;
-    private javax.swing.JLabel labelSenhaRegistro;
-    private javax.swing.JLabel labelUsuarioLogin;
-    private javax.swing.JLabel labelUsuarioRegistro;
-    private javax.swing.JPanel login;
-    private javax.swing.JPanel registro;
-    private javax.swing.JTextField tbApelidoRegistro;
-    private javax.swing.JPasswordField tbSenhaLogin;
-    private javax.swing.JPasswordField tbSenhaRegistro;
-    private javax.swing.JTextField tbUsuarioLogin;
-    private javax.swing.JTextField tbUsuarioRegistro;
-    private javax.swing.JPanel tela;
+    // Generated using JFormDesigner Evaluation license - Gabriel
+    private JPanel tela;
+    private JPanel login;
+    private JLabel labelUsuarioLogin;
+    private JLabel labelSenhaLogin;
+    private JTextField tbUsuarioLogin;
+    private JButton botaoLogar;
+    private JButton botaoRegistrarLogin;
+    private JLabel labelLogin;
+    private JPasswordField tbSenhaLogin;
+    private JPanel registro;
+    private JLabel labelUsuarioRegistro;
+    private JLabel labelSenhaRegistro;
+    private JTextField tbUsuarioRegistro;
+    private JButton botaoRegistrarRegistro;
+    private JLabel labelApelidoRegistro;
+    private JTextField tbApelidoRegistro;
+    private JLabel labelRegistro;
+    private JPasswordField tbSenhaRegistro;
+    private JButton botaoVoltar;
     // End of variables declaration//GEN-END:variables
 
     private boolean checkRegistroCanProceed(){
