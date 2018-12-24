@@ -1,5 +1,23 @@
 # jogohospicio
 
+EN-US
+
+It's a good game, play it!
+
+Prerequisites
+
+1. MySQL server and workbench already installed
+2. Netbeans
+
+Instructions
+
+1. Run the SQL script in the MySQL workbench;
+2. Change into BancoDados/ConexaoMySQL classes's user and password to be the same as your database.
+3. Okay, now you're ready to go! ;)
+
+-----
+PT-BR
+
 O jogo é bom, joga aí!
 
 
